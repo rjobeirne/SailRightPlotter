@@ -38,7 +38,7 @@
     <string name="kts">Speed\nkts</string>
     <string name="nm">nm</string>
     <string name="_105">-105</string>
-    <string name="discrepancy">Discrepancy</string>
+    <string name="variance">Variance</string>
     <string name="dist_to_mark">Dist to Mark</string>
     <string name="distance">Dist</string>
     <string name="accuracy">Accuracy</string>

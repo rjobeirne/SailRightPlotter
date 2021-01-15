@@ -33,7 +33,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.provider.Settings;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     int bearingToMark;
     int displayBearingToMark;
     String distUnits;
-    int bearingDiscrepancy;
+    int bearingVariance;
 
     float distDisplay;
     String displayDistToMark;
@@ -302,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         mDistanceTextView = (TextView) findViewById(R.id.distance_text);
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
-        mDiscrepTextView = (TextView) findViewById(R.id.discrepancy_text);
+        mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
 //        mLastUpdateTimeTextView = (TextView) findViewById(R.id.last_update_time_text);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
@@ -701,7 +700,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             // Calculate discrepancy between heading and bearing to mark
-            bearingDiscrepancy = mSmoothHeading - displayBearingToMark;
+            bearingVariance = mSmoothHeading - displayBearingToMark;
 
             // Get time since last update
             lastUpdateTime = mCurrentLocation.getTime();
@@ -714,7 +713,7 @@ public class MainActivity extends AppCompatActivity {
             currentTimeDisplay = time.format(currentTime);
 
             // Calc time to mark
-            vmgToMark = Math.cos(Math.toRadians(bearingDiscrepancy)) * mSmoothSpeed;
+            vmgToMark = Math.cos(Math.toRadians(bearingVariance)) * mSmoothSpeed;
 
             ttm2 = ttm1;
             ttm1 = timeToMark;
@@ -755,11 +754,11 @@ public class MainActivity extends AppCompatActivity {
             mDistanceTextView.setText(displayDistToMark);
             mDistanceUnitTextView.setText(distUnits);
             mBearingTextView.setText(String.format("%03d", displayBearingToMark));
-            mDiscrepTextView.setText(String.format("%03d", bearingDiscrepancy));
-            if ( bearingDiscrepancy < -2) {
+            mDiscrepTextView.setText(String.format("%03d", bearingVariance));
+            if ( bearingVariance < -2) {
                 mDiscrepTextView.setTextColor(Color.RED);
             }
-            if ( bearingDiscrepancy > 2) {
+            if ( bearingVariance > 2) {
                 mDiscrepTextView.setTextColor(Color.GREEN);
             }
 //            mLastUpdateTimeTextView.setText(mLastUpdateTimeLabel + ": " + timeSinceLastUpdate);updateValuesFromBundle

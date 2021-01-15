@@ -122,27 +122,27 @@
         android:gravity="center"
         android:text="@string/heading"
         android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/discrepancy_text"
+        app:layout_constraintEnd_toStartOf="@+id/variance_text"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/heading_title"
         app:layout_constraintTop_toBottomOf="@+id/course_name" />
 
     <TextView
-        android:id="@+id/discrepancy_title"
+        android:id="@+id/variance_title"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/discrepancy"
+        android:text="@string/variance"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/discrepancy_text"
+        app:layout_constraintBottom_toTopOf="@+id/variance_text"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
         app:layout_constraintTop_toBottomOf="@+id/minus" />
 
     <TextView
-        android:id="@+id/discrepancy_text"
+        android:id="@+id/variance_text"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -150,7 +150,7 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/discrepancy_title" />
+        app:layout_constraintTop_toBottomOf="@+id/variance_title" />
 
     <TextView
         android:id="@+id/bearing_text"
@@ -161,7 +161,7 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@+id/bearing_title"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/discrepancy_text"
+        app:layout_constraintStart_toEndOf="@id/variance_text"
         app:layout_constraintTop_toBottomOf="@+id/next_mark_name" />
 
     <TextView
@@ -290,7 +290,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/discrepancy"
+        android:text="@string/variance"
         android:textColor="@color/titles"
         android:textSize="18sp"
         app:layout_constraintHorizontal_bias="1.0"
