@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
     int bearingToMark;
     int displayBearingToMark;
     String distUnits;
+    int rawVariance;
     int bearingVariance;
 
     float distDisplay;
@@ -692,7 +693,8 @@ public class MainActivity extends AppCompatActivity {
             // Get bearing to mark
             bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
 
-                // Correct negative bearings
+                // Correct negative bearings                        // Get time since last update
+
                 if ( bearingToMark < 0) {
                     displayBearingToMark = bearingToMark + 360;
                 } else {
@@ -700,11 +702,20 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             // Calculate discrepancy between heading and bearing to mark
-            bearingVariance = mSmoothHeading - displayBearingToMark;
+            rawVariance = mSmoothHeading - displayBearingToMark;
+            if (rawVariance < -180) {
+                bearingVariance = rawVariance + 360;
+            } else {
+                if (rawVariance > 180) {
+                    bearingVariance = rawVariance - 360;
+                } else {
+                    bearingVariance = rawVariance;
+                }
+            }
 
             // Get time since last update
             lastUpdateTime = mCurrentLocation.getTime();
-            currentTime = Calendar.getInstance().getTimeInMillis();
+             currentTime = Calendar.getInstance().getTimeInMillis();
             timeSinceLastUpdate = (currentTime - lastUpdateTime)/1000;
 
             SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
