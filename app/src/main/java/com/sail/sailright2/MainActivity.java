@@ -656,13 +656,14 @@ public class MainActivity extends AppCompatActivity {
         if (mCurrentLocation != null) {
 
         // Process gps data for display on UI
-            // Convert speed to knots and format and smooth
+            // Get speed in m/s and smooth for 4 readings
             mSpeed3 = mSpeed2;
             mSpeed2 = mSpeed1;
             mSpeed1 = mSpeed;
-            mSpeed = mCurrentLocation.getSpeed() * 1.943844;
+            mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3)/4;
-            speedDisplay = new DecimalFormat( "##0.0").format( mSmoothSpeed);
+            // Convert to knots and display
+            speedDisplay = new DecimalFormat( "##0.0").format( mSmoothSpeed * 1.943844); //convert to knots
 
             // Change heading to correct format and smooth
             mHeading3 = mHeading2;
