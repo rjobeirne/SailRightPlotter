@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.NonNull;
@@ -55,6 +56,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -278,6 +283,26 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String appDirectory = "SailRight";
+        int out;
+
+        // Update course number to that of SailStart
+        File dir = new File(Environment.getExternalStorageDirectory(), appDirectory);
+        File file = new File(dir, "currentCourse.txt");
+                FileOutputStream os = null;
+                StringBuilder ntext = new StringBuilder();
+                try {
+                   BufferedReader br = new BufferedReader(new FileReader(file));
+                   String line;
+                   while ((line = br.readLine()) != null) {
+                      ntext.append(line);
+                   }
+                   br.close();
+                } catch (IOException e) {
+                   //You'll need to add proper error handling here
+                }
+                posCourse = Integer.parseInt(ntext.toString());
 
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Finish line data
