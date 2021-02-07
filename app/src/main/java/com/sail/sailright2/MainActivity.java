@@ -289,20 +289,21 @@ public class MainActivity extends AppCompatActivity {
 
         File dir = new File(Environment.getExternalStorageDirectory(), appDirectory);
         File file = new File(dir, "currentCourse.txt");
-                FileOutputStream os = null;
-                StringBuilder ntext = new StringBuilder();
-                try {
-                   BufferedReader br = new BufferedReader(new FileReader(file));
-                   String line;
-                   while ((line = br.readLine()) != null) {
-                      ntext.append(line);
-                   }
-                   br.close();
-                } catch (IOException e) {
-                   //You'll need to add proper error handling here
+        if(file.exists()) {
+            FileOutputStream os = null;
+            StringBuilder ntext = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    ntext.append(line);
                 }
-                posCourse = Integer.parseInt(ntext.toString());
-
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+            posCourse = Integer.parseInt(ntext.toString());
+        }
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Finish line data
         String h = "H"; // Finish Line Data
@@ -330,18 +331,6 @@ public class MainActivity extends AppCompatActivity {
 //        mLastUpdateTimeTextView = (TextView) findViewById(R.id.last_update_time_text);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
-
-        // Set labels.
-//        mNextMarkLabel = getResources().getString(R.string.next_mark);
-//        mLatitudeLabel = getResources().getString(R.string.latitude_label);
-//        mLongitudeLabel = getResources().getString(R.string.longitude_label);
-//        mSpeedLabel = getResources().getString(R.string.speed_label);
-//        mHeadingLabel = getResources().getString(R.string.heading_label);
-//        mAccuracyTextViewLabel = getResources().getString(R.string.accuracy);
-//        mDistanceTextViewLabel = getResources().getString(R.string.distance_label);
-//        mBearingTextViewLabel = getResources().getString(R.string.bearing_label);
-//        mLastUpdateTimeLabel = getResources().getString(R.string.last_update_time_label);
-//        mTimeToMarkTextViewLabel =getResources().getString(R.string.time_to_mark_label);
 
         mRequestingLocationUpdates = true;
         mLastUpdateTime = "";
@@ -636,28 +625,6 @@ public class MainActivity extends AppCompatActivity {
      * Updates all UI fields.
      *///
     private void updateUI() {
-
-//        if (nextMark.equals("Start")) {
-//            openStartActivity();
-//        }
-//
-//        // Check to see if next mark is not the finish
-//        if (nextMark.equals("Finish")) {
-//
-//            // Find the the target point on the finish line (A Mark, H Mark or Line)
-//            // Pass in the currentLocation
-//            String nextMarkFin =  theFinish.getFinishTarget(mCurrentLocation);
-//            Log.e("NextMark ", nextMarkFin);
-//
-//            if (nextMarkFin.equals("Line")) {
-//                // Insert the finish line crossing point
-//                destMark = theFinish.getFinishPoint(mCurrentLocation);
-//            } else {
-//                // Set the next mark to either A or H
-//                mNextMarkTextView.setText("Fin - " + nextMarkFin + " Mark");
-//                destMark = theMarks.getNextMark(nextMarkFin);
-//            }
-//        }
 
         updateLocationUI();
     }
