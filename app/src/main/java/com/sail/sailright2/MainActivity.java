@@ -284,10 +284,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String appDirectory = "SailRight";
-        int out;
-
         // Update course number to that of SailStart
+        String appDirectory = "SailRight";
+
         File dir = new File(Environment.getExternalStorageDirectory(), appDirectory);
         File file = new File(dir, "currentCourse.txt");
                 FileOutputStream os = null;
