@@ -291,18 +291,18 @@ public class MainActivity extends AppCompatActivity {
         File file = new File(dir, "currentCourse.txt");
         if(file.exists()) {
             FileOutputStream os = null;
-            StringBuilder ntext = new StringBuilder();
+            StringBuilder nText = new StringBuilder();
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = br.readLine()) != null) {
-                    ntext.append(line);
+                    nText.append(line);
                 }
                 br.close();
             } catch (IOException e) {
                 //You'll need to add proper error handling here
             }
-            posCourse = Integer.parseInt(ntext.toString());
+            posCourse = Integer.parseInt(nText.toString());
         }
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Finish line data
@@ -598,26 +598,26 @@ public class MainActivity extends AppCompatActivity {
 
         mNextMarkTextView.setText(nextMarkFull);
 
-//        // Check to see if next mark is not the finish
-//        if (nextMark.equals("Finish")) {
-//
-//            // Find the the target point on the finish line (A Mark, H Mark or Line)
-//            // Pass in the currentLocation
-//            nextMark =  theFinish.getFinishTarget(mCurrentLocation);
-//
-//            if (nextMark.equals("Line")) {
-//                // Insert the finish line crossing point
-//                destMark = theFinish.getFinishPoint(mCurrentLocation);
-//            } else {
-//                // Set the next mark to either A or H
-//                mNextMarkTextView.setText("Fin - " + nextMark + " Mark");
-//                destMark = theMarks.getNextMark(nextMark);
-//            }
-//        } else {
+        // Check to see if next mark is not the finish
+        if (nextMark.equals("Finish")) {
+
+            // Find the the target point on the finish line (A Mark, H Mark or Line)
+            // Pass in the currentLocation
+            nextMark =  theFinish.getFinishTarget(mCurrentLocation);
+
+            if (nextMark.equals("Line")) {
+                // Insert the finish line crossing point
+                destMark = theFinish.getFinishPoint(mCurrentLocation);
+            } else {
+                // Set the next mark to either A or H
+                mNextMarkTextView.setText("Fin - " + nextMark + " Mark");
+                destMark = theMarks.getNextMark(nextMark);
+            }
+        } else {
          // Not the finish, set the next mark normally
         destMark = theMarks.getNextMark(nextMark);
         updateUI();
-//        }
+        }
 
     }
 
@@ -685,7 +685,7 @@ public class MainActivity extends AppCompatActivity {
             // Get bearing to mark
             bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
 
-                // Correct negative bearings                        // Get time since last update
+                // Correct negative bearings
 
                 if ( bearingToMark < 0) {
                     displayBearingToMark = bearingToMark + 360;

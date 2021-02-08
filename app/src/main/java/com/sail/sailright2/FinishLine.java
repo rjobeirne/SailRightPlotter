@@ -30,6 +30,7 @@ public class FinishLine {
     double latBoat = 0;
     double lonBoat = 0;
     float boatHeading, bearingToA, bearingToH;
+    float displayBearingToA, displayBearingToH;
     double slopeBoat = 0;
     double constBoat = 0;
 
@@ -46,7 +47,17 @@ public class FinishLine {
         constBoat = latBoat - (slopeBoat * lonBoat);
 
         bearingToA = mCurrentLocation.bearingTo(markA);
+                if ( bearingToA < 0) {
+                    displayBearingToA = bearingToA + 360;
+                } else {
+                    displayBearingToA = bearingToA;
+                }
         bearingToH = mCurrentLocation.bearingTo(markH);
+                if ( bearingToH < 0) {
+                    displayBearingToH = bearingToH + 360;
+                } else {
+                    displayBearingToH = bearingToH;
+                }
 
 
         // Define finish line as linear equation lat = slope * lon + constant
@@ -67,9 +78,9 @@ public class FinishLine {
 
         if (latBoat > latA) {
             // Approaching from the north
-            if (boatHeading > bearingToA) {
+            if (boatHeading > displayBearingToA) {
                 finishTarget = "A";
-            } else if (boatHeading < bearingToH) {
+            } else if (boatHeading < displayBearingToH) {
                 finishTarget = "H";
             } else {
                 Log.e("Heading for line", finishTarget);
@@ -90,9 +101,9 @@ public class FinishLine {
                 bearingToH = bearingToH - 360;
             }
 
-            if (boatHeading < bearingToA) {
+            if (boatHeading < displayBearingToA) {
                 finishTarget = "A";
-            } else if (boatHeading > bearingToH) {
+            } else if (boatHeading > displayBearingToH) {
                 finishTarget = "H";
             } else {
                 finishTarget = "Line";

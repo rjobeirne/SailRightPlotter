@@ -52,7 +52,6 @@ public class Courses {
                 model.setCourseRoute(element.getAttribute("route"));
                 courses.add(model);
             }
-            Log.e("course array", String.valueOf(courses));
 
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
