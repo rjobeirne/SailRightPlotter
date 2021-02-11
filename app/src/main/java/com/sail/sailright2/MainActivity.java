@@ -79,7 +79,13 @@ import java.util.concurrent.TimeUnit;
  * obtaining the location data that it needs. For example, GPS or Wi-Fi scanning may be switched
  * off. The {@code SettingsApi} makes it possible to determine if a device's system settings are
  * adequate for the location request, and to optionally invoke a dialog that allows the user to
- * enable the necessary settings.
+ * enable the necessary settings.           mDiscrepTextView.setText(String.format("%03d", bearingVariance));
+            if ( bearingVariance < -2) {
+                mDiscrepTextView.setTextColor(appRedColor);
+            }
+            if ( bearingVariance > 2) {
+                mDiscrepTextView.setTextColor(appGreenColor);
+            }
 
  * <p/>
  * This sample allows the user to request location updates using the ACCESS_FINE_LOCATION setting
@@ -262,7 +268,9 @@ public class MainActivity extends AppCompatActivity {
         int grant = ContextCompat.checkSelfPermission(this, permission);
 
         if (grant != PackageManager.PERMISSION_GRANTED) {
-            String[] permission_list = new String[1];
+            String[] permission_list = new String[1];// Import red and green colours
+        int appRedColor = getResources().getColor(R.color.app_red);
+        int appGreenColor = getResources().getColor(R.color.app_green);
             permission_list[0] = permission;
             ActivityCompat.requestPermissions(this, permission_list, 1);
         }
@@ -271,7 +279,9 @@ public class MainActivity extends AppCompatActivity {
         theMarks = new Marks();
         theCourses = new Courses();
 
-        // Create the ArrayList in the constructor, so only done once
+        // Create the ArrayList in the constructor, so only done once// Import red and green colours
+        int appRedColor = getResources().getColor(R.color.app_red);
+        int appGreenColor = getResources().getColor(R.color.app_green);
         try {
             theMarks.parseXML();
         } catch (IOException e) {
@@ -379,6 +389,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (savedInstanceState.keySet().contains("Mark Pos")) {
                posMark = savedInstanceState.getInt("Mark Pos");
+        // Import red and green colours
+        int appRedColor = getResources().getColor(R.color.app_red);
+        int appGreenColor = getResources().getColor(R.color.app_green);
                nextMark = savedInstanceState.getString("Next Mark");
                posCourse = savedInstanceState.getInt("Course Pos");
                raceCourse = savedInstanceState.getString("Course");
@@ -646,6 +659,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (mCurrentLocation != null) {
 
+
+
         // Process gps data for display on UI
             // Get speed in m/s and smooth for 4 readings
             mSpeed3 = mSpeed2;
@@ -759,10 +774,10 @@ public class MainActivity extends AppCompatActivity {
             mBearingTextView.setText(String.format("%03d", displayBearingToMark));
             mDiscrepTextView.setText(String.format("%03d", bearingVariance));
             if ( bearingVariance < -2) {
-                mDiscrepTextView.setTextColor(Color.RED);
+                mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
             }
             if ( bearingVariance > 2) {
-                mDiscrepTextView.setTextColor(Color.GREEN);
+                mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
             }
 //            mLastUpdateTimeTextView.setText(mLastUpdateTimeLabel + ": " + timeSinceLastUpdate);updateValuesFromBundle
             mTimeToMarkTextView.setText(ttmDisplay);

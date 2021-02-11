@@ -43,7 +43,7 @@ public class Marks {
             Document doc = dBuilder.parse(yourFile);
             doc.getDocumentElement().normalize();
 
-            Log.e("Root_element" , doc.getDocumentElement().getNodeName());
+//            Log.e("Root_element" , doc.getDocumentElement().getNodeName());
             NodeList nodeList = doc.getElementsByTagName("mark");
 
             marks = new ArrayList<Mark>();

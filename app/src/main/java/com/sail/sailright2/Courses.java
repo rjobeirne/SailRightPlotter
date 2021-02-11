@@ -37,7 +37,7 @@ public class Courses {
             Document doc = dBuilder.parse(courseFile);
             doc.getDocumentElement().normalize();
 
-            Log.e("Root_element courses" , doc.getDocumentElement().getNodeName());
+//            Log.e("Root_element courses" , doc.getDocumentElement().getNodeName());
             NodeList nodeList = doc.getElementsByTagName("course");
 
             courses = new ArrayList<Course>();
