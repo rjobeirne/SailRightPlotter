@@ -69,6 +69,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 
 /**
  * Using location settings.
@@ -232,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
     String distUnits;
     int rawVariance;
     int bearingVariance;
+    boolean flagFinish = FALSE;
 
     float distDisplay;
     String displayDistToMark;
@@ -613,25 +617,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Check to see if next mark is not the finish
         if (nextMark.equals("Finish")) {
-
-            // Find the the target point on the finish line (A Mark, H Mark or Line)
-            // Pass in the currentLocation
-            nextMark =  theFinish.getFinishTarget(mCurrentLocation);
-
-            if (nextMark.equals("Line")) {
-                // Insert the finish line crossing point
-                destMark = theFinish.getFinishPoint(mCurrentLocation);
-            } else {
-                // Set the next mark to either A or H
-                mNextMarkTextView.setText("Fin - " + nextMark + " Mark");
-                destMark = theMarks.getNextMark(nextMark);
-            }
+            flagFinish = TRUE;
         } else {
          // Not the finish, set the next mark normally
         destMark = theMarks.getNextMark(nextMark);
+        flagFinish = FALSE;
         updateUI();
         }
-
     }
 
     /**
@@ -656,12 +648,30 @@ public class MainActivity extends AppCompatActivity {
             setCourse();
             setNextMark();
         }
-
         if (mCurrentLocation != null) {
+//            flagFinish = TRUE;
+            // Check to see if next mark is not the finish
+            if (flagFinish) {
+
+                // Find the the target point on the finish line (A Mark, H Mark or Line)
+                // Pass in the currentLocation
+                nextMark =  theFinish.getFinishTarget(mCurrentLocation);
+
+                if (nextMark.equals("Line")) {
+                    // Insert the finish line crossing point
+                    destMark = theFinish.getFinishPoint(mCurrentLocation);
+                } else {
+                    // Insert the finishing mark
+                    destMark = theMarks.getNextMark(nextMark);
+                }
+                    // Display the finishing point to either A, H or Line
+                    mNextMarkTextView.setText("Fin - " + nextMark);
+            }
 
 
 
-        // Process gps data for display on UI
+
+            // Process gps data for display on UI
             // Get speed in m/s and smooth for 4 readings
             mSpeed3 = mSpeed2;
             mSpeed2 = mSpeed1;
