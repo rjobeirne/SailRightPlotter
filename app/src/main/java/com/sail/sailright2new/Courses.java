@@ -1,7 +1,6 @@
-package com.sail.sailright2;
+package com.sail.sailright2new;
 
 import android.os.Environment;
-import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

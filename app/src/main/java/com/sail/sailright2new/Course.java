@@ -1,4 +1,4 @@
-package com.sail.sailright2;
+package com.sail.sailright2new;
 
 public class Course {
 

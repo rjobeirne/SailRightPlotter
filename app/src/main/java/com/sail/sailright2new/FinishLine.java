@@ -1,4 +1,4 @@
-package com.sail.sailright2;
+package com.sail.sailright2new;
 
 import android.location.Location;
 import android.util.Log;
@@ -16,7 +16,6 @@ public class FinishLine {
 
     // Initialise global object variables
     String finishTarget = null;
-    Location finishPoint = null;
     Location markA = null;
     Location markH = null;
     double latA = 0;
@@ -118,6 +117,8 @@ public class FinishLine {
      * @return
      */
     public Location getFinishPoint(Location currentLocation) {
+
+        Location finishPoint = new Location("");
         Log.e("started getFinishPoint","");
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update the current Location of the boat

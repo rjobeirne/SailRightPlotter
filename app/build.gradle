@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.sail.sailright2"
+        applicationId "com.sail.sailright2new"
         minSdkVersion 15
         targetSdkVersion 30
         versionCode 1

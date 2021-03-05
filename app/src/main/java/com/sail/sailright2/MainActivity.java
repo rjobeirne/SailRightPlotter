@@ -104,7 +104,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
 
     /**
-     * Constant used in the location settings dialog.
+     * Constant used in the location settings dialog./    private void openStartActivity() {
+//        Intent start = new Intent(this, StartActivity.class);
+//        startActivity(start);
+//
+//    }
      */
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
 
