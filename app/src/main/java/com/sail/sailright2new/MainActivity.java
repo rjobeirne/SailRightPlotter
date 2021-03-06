@@ -180,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
-    }
+        updateUI();
+    } // end onCreate method
 
     /**
      * This method is called when the + course button is pressed
