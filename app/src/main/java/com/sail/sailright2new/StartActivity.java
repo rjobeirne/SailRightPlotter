@@ -25,8 +25,16 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public StartActivity () {
-//        Log.d("course,mark", startCourse + ", " + startMark);
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            String startCourse = extras.getString("course");
+//            String startMark = extras.getString("mark");
 
+
+        String startCourse = getIntent().getStringExtra("course");
+        String startMark = getIntent().getStringExtra("mark");
+        Log.d("course,mark", startCourse + ", " + startMark);
+//    }
 //        startCourseTextView.setText(startCourse);
 //        startNextMarkTextView.setText(startMark);
 

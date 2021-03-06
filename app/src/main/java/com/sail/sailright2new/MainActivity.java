@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Create theStart object here and pass in course, nextMark
-        theStart = new StartActivity();
+//        // Create theStart object here and pass in course, nextMark
+//        theStart = new StartActivity();
 
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Finish line data
@@ -177,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
         mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
-        mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
+        mTimeToMarkTextView = (TextView) findViewById(R.      // Create theStart object here and pass in course, nextMark
+      id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
         updateUI();
@@ -264,6 +265,12 @@ public class MainActivity extends AppCompatActivity {
 
         mNextMarkTextView.setText(nextMarkFull);
 
+        if (nextMark.equals("Start")) {
+            // Create theStart object here and pass in course, nextMark
+            theStart = new StartActivity();
+            openStartActivity();
+        }
+
         // Check to see if next mark is not the finish
         if (nextMark.equals("Finish")) {
             flagFinish = TRUE;
@@ -283,8 +290,10 @@ public class MainActivity extends AppCompatActivity {
         updateLocationUI();
     }
 
-    private void openStartActivity() {
+    public void openStartActivity() {
         Intent start = new Intent(this, StartActivity.class);
+        start.putExtra("course", raceCourse);
+        start.putExtra("mark", nextMark);
         startActivity(start);
 
 
@@ -300,15 +309,15 @@ public class MainActivity extends AppCompatActivity {
             setNextMark();
         }
 
-        if(nextMark.equals("Start")) {
-
-//            // Create theStart object here and pass in course, nextMark
-//            theStart = new StartActivity(raceCourse, nextMarkFull);
-
-//          setContentView(R.layout.activity_start);
-            openStartActivity();
-
-        }
+//        if(nextMark.equals("Start")) {
+//
+////            // Create theStart object here and pass in course, nextMark
+////            theStart = new StartActivity(raceCourse, nextMarkFull);
+//
+////          setContentView(R.layout.activity_start);
+//            openStartActivity();
+//
+//        }
 
 
             // Process gps data for display on UI
