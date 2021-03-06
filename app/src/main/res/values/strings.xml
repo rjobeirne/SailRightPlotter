@@ -46,5 +46,6 @@
     <string name="countdown">-15\'59\"</string>
     <string name="time_to_start">Time to Start</string>
     <string name="time_to_line">Time to Line</string>
+    <string name="g_mark">G Mark</string>
 
 </resources>

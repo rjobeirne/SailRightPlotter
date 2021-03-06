@@ -17,6 +17,7 @@ package com.sail.sailright2new;
  */
 
 
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     Marks theMarks = null;
     Courses theCourses = null;
     FinishLine theFinish = null;
+    StartActivity theStart = null;
 
     // Define parameters of next mark
     double mSpeed;
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         theMarks = new Marks();
         theCourses = new Courses();
 
+
         // Create the ArrayList in the constructor, so only done once
         try {
             theMarks.parseXML();
@@ -145,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Create theStart object here and pass in course, nextMark
+        theStart = new StartActivity();
 
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Finish line data
@@ -176,10 +182,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Updates fields based on data stored in the bundle.
-     *
-     * @param savedInstanceState The activity state saved in the Bundle.
+//    /**
+//     * Updates fields based on data stored in the bundle.
+//     *
+//     * @param savedInstanceState The activity state saved in the Bundle.
 
     /**
      * This method is called when the + course button is pressed
@@ -286,11 +292,13 @@ public class MainActivity extends AppCompatActivity {
         updateLocationUI();
     }
 
-//    private void openStartActivity() {
+    private void openStartActivity() {
 //        Intent start = new Intent(this, StartActivity.class);
 //        startActivity(start);
-//
-//    }
+
+
+
+    }
 
     /**Math.abs(
      * Sets the value of the UI fields for the location latitude, longitude and last update time.
@@ -299,6 +307,16 @@ public class MainActivity extends AppCompatActivity {
         if (destMark == null) {
             setCourse();
             setNextMark();
+        }
+
+        if(nextMark.equals("Start")) {
+
+//            // Create theStart object here and pass in course, nextMark
+//            theStart = new StartActivity(raceCourse, nextMarkFull);
+
+          setContentView(R.layout.activity_start);
+            openStartActivity();
+
         }
 
 
