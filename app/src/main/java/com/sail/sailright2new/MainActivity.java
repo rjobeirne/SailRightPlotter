@@ -52,15 +52,9 @@ public class MainActivity extends AppCompatActivity {
     // UI Widgets.
     private TextView mNextMarkTextView;
     private TextView mCourseTextView;
-    private TextView mLastUpdateTimeTextView;
-    private TextView mLatitudeTextView;
-    private TextView mLongitudeTextView;
     private TextView mSpeedTextView;
-    private TextView mSpeedUnitView;
     private TextView mHeadingTextView;
     private TextView mAccuracyTextView;
-    private TextView mMarkLatitudeTextView;
-    private TextView mMarkLongitudeTextView;
     private TextView mDistanceTextView;
     private TextView mDistanceUnitTextView;
     private TextView mBearingTextView;
@@ -164,28 +158,17 @@ public class MainActivity extends AppCompatActivity {
         // Locate the UI widgets.
         mNextMarkTextView = (TextView) findViewById(R.id.next_mark_name);
         mCourseTextView = (TextView) findViewById(R.id.course_name);
-//        mLatitudeTextView = (TextView) findViewById(R.id.latitude);
-//        mLongitudeTextView = (TextView) findViewById(R.id.longitude);
         mSpeedTextView = (TextView) findViewById(R.id.speed_text);
-//        mSpeedUnitView = (TextView) findViewById(R.id.speed_unit);
         mHeadingTextView = (TextView) findViewById(R.id.heading_text);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
-//        mMarkLatitudeTextView = (TextView) findViewById(R.id.next_mark_lat);
-//        mMarkLongitudeTextView = (TextView) findViewById(R.id.next_mark_lon);
         mDistanceTextView = (TextView) findViewById(R.id.distance_text);
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
         mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
-//        mLastUpdateTimeTextView = (TextView) findViewById(R.id.last_update_time_text);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
     }
-
-//    /**
-//     * Updates fields based on data stored in the bundle.
-//     *
-//     * @param savedInstanceState The activity state saved in the Bundle.
 
     /**
      * This method is called when the + course button is pressed
@@ -224,8 +207,6 @@ public class MainActivity extends AppCompatActivity {
 
         mCourseTextView.setText(raceCourse);
     }
-
-
 
     /**
      * This method is called when the + button is pressed
@@ -293,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openStartActivity() {
-//        Intent start = new Intent(this, StartActivity.class);
-//        startActivity(start);
+        Intent start = new Intent(this, StartActivity.class);
+        startActivity(start);
 
 
 
@@ -314,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
 //            // Create theStart object here and pass in course, nextMark
 //            theStart = new StartActivity(raceCourse, nextMarkFull);
 
-          setContentView(R.layout.activity_start);
+//          setContentView(R.layout.activity_start);
             openStartActivity();
 
         }

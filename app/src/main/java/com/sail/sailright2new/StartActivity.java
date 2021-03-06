@@ -15,7 +15,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_start);
 
         // Locate the UI widgets.
         startCourseTextView = (TextView) findViewById(R.id.start_course_name);
