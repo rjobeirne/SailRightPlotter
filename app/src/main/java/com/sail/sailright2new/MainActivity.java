@@ -17,13 +17,16 @@ package com.sail.sailright2new;
  */
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.provider.Settings;
@@ -125,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Course> courses = new ArrayList<>();
         ArrayList courseMarks = new ArrayList();
 
+        // first check for runtime permission
+        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+        int grant = ContextCompat.checkSelfPermission(this, permission);
+
+        if (grant != PackageManager.PERMISSION_GRANTED) {
+            String[] permission_list = new String[1];
+            permission_list[0] = permission;
+            ActivityCompat.requestPermissions(this, permission_list, 1);
+        }
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
@@ -174,24 +186,22 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + course button is pressed
      */
     public void next_course(View view) {
-        {
-            // Increment to the position of the next course on the list
-            if (posCourse >= listCourseSize - 1) {
-                posCourse = 0;
-            } else
-                posCourse = posCourse + 1;
+        // Increment to the position of the next course on the list
+        if (posCourse >= listCourseSize - 1) {
+            posCourse = 0;
+        } else {
+            posCourse = posCourse + 1;
         }
         setCourse();
         setNextMark();
     }
 
     public void previous_course(View view) {
-        {
-            // Decrement to the position of the previous course on the list
-            if (posCourse <= 0) {
-                posCourse = listCourseSize - 1;
-            } else
-                posCourse = posCourse - 1;
+        // Decrement to the position of the previous course on the list
+        if (posCourse <= 0) {
+            posCourse = listCourseSize - 1;
+        } else {
+            posCourse = posCourse - 1;
         }
         setCourse();
         setNextMark();
@@ -201,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
      *  Set race course
      */
     public void setCourse() {
+
         listCourseSize = theCourses.courses.size();
         raceCourse = theCourses.courses.get(posCourse).getCourseName();
         courseMarks = theCourses.getCourse(raceCourse);
@@ -212,23 +223,21 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + button is pressed
      */
     public void next_mark(View view) {
-        {
-            // Increment to the position of the nMath.abs(ext mark on the list
-            if (posMark >= listMarkSize - 1) {
-                posMark = 0;
-            } else
-                posMark = posMark + 1;
+         // Increment to the position of the nMath.abs(ext mark on the list
+        if (posMark >= listMarkSize - 1) {
+            posMark = 0;
+        } else {
+            posMark = posMark + 1;
         }
         setNextMark();
     }
 
     public void previous_mark(View view) {
-        {
-            // Decrement to the position of the previous mark on the list
-            if (posMark <= 0) {
-                posMark = listMarkSize - 1;
-            } else
-                posMark = posMark - 1;
+         // Decrement to the position of the previous mark on the list
+        if (posMark <= 0) {
+            posMark = listMarkSize - 1;
+        } else {
+            posMark = posMark - 1;
         }
         setNextMark();
     }
