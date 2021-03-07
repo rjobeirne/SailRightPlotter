@@ -7,21 +7,7 @@
     android:background="@color/black"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/minusCourse"
-        android:layout_width="48dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="previous_course"
-        android:text="@string/lt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
+     <TextView
         android:id="@+id/start_course_name"
         android:layout_width="0dp"
         android:layout_height="52dp"
@@ -34,40 +20,24 @@
         android:text="@string/none"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintStart_toEndOf="@+id/minusCourse"
-        app:layout_constraintEnd_toStartOf="@+id/plusCourse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/stopStart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/plusCourse"
-        android:layout_width="48dp"
+        android:id="@+id/stopStart"
+        android:layout_width="96dp"
         android:layout_height="52dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:onClick="next_course"
-        android:text="@string/gt"
+        android:onClick="resumeRace"
+        android:text="Race"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/minus"
+        app:layout_constraintEnd_toStartOf="@id/start_next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/start_course_name"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/minus"
-        android:layout_width="48dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="previous_mark"
-        android:text="@string/lt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/start_next_mark_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/plusCourse"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -83,24 +53,8 @@
         android:text="@string/g_mark"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/plus"
-        app:layout_constraintStart_toEndOf="@+id/minus"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/plus"
-        android:layout_width="48dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="next_mark"
-        android:text="@string/gt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/start_next_mark_name"
+        app:layout_constraintStart_toEndOf="@+id/stopStart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -113,7 +67,7 @@
         android:textColor="@color/titles"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minusCourse" />
+        app:layout_constraintTop_toBottomOf="@+id/start_course_name" />
 
     <TextView
         android:id="@+id/heading_text"
@@ -139,7 +93,7 @@
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/minus" />
+        app:layout_constraintTop_toBottomOf="@+id/stopStart" />
 
     <TextView
         android:id="@+id/variance_text"
