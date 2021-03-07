@@ -22,9 +22,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,6 +39,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -51,6 +61,15 @@ import static java.lang.Boolean.TRUE;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int DEFAULT_UPDATE_INTERVAL = 30;
+    public static final int FAST_UPDATE_INTERVAL = 1;
+    private static final int PERMISSIONS_FINE_LOCATION = 99;
+
+    // Location request is a config file for all settings related to fusedLocationProviderClient
+    LocationRequest locationRequest;
+    LocationCallback locationCallBack;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     // UI Widgets.
     private TextView mNextMarkTextView;
@@ -110,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
     String ttmDisplay;
     long currentTime;
     String currentTimeDisplay;
+    String accuracy;
 
     int posMark = 0;
     int posCourse = 0;
@@ -180,8 +200,76 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
-        updateLocationData();
+        // set all properties of LocationRequest
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setInterval(1000 * FAST_UPDATE_INTERVAL);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationCallBack = new LocationCallback() {
+
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                // save the location
+                Location mCurrentLocation = locationResult.getLastLocation();
+                updateLocationData(mCurrentLocation);
+            }
+        };
+
+        updateGPS();
+        startLocationUpdates();
+
+//        updateLocationData();
     } // end onCreate method
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+           return;
+        }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch ( requestCode) {
+            case PERMISSIONS_FINE_LOCATION:
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateGPS();
+            } else {
+                Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            break;
+        }
+    }
+
+    private void updateGPS() {
+        // get permissions from the user to track GPS
+        // get the current location from the fused client
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+        PackageManager.PERMISSION_GRANTED) {
+            //user provided the permission
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location mCurrentLocation) {
+                    // we got permissions. Put the values of location. XXX into the UI components.
+                    updateLocationData(mCurrentLocation);
+                }
+            });
+        } else {
+            // permission yet to be granted
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
+            }
+        }
+    }
+
 
     /**
      * This method is called when the + course button is pressed
@@ -291,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
     /**Math.abs(
      * Sets the value of the UI fields for the location latitude, longitude and last update time.
      */
-    private void updateLocationData() {
+    private void updateLocationData(Location mCurrentLocation) {
         if (destMark == null) {
             setCourse();
             setNextMark();
@@ -302,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         mSpeed3 = mSpeed2;
         mSpeed2 = mSpeed1;
         mSpeed1 = mSpeed;
-//            mSpeed = mCurrentLocation.getSpeed();
+        mSpeed = mCurrentLocation.getSpeed();
         mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3) / 4;
         // Convert to knots and display
         speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
@@ -311,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
         mHeading3 = mHeading2;
         mHeading2 = mHeading1;
         mHeading1 = mHeading;
-//            mHeading = (int) mCurrentLocation.getBearing();
+        mHeading = (int) mCurrentLocation.getBearing();
         mSmoothHeading = (mHeading + mHeading1 + mHeading2 + mHeading3) / 4;
         if (mSmoothHeading > 180) {
             negHeading = mSmoothHeading - 360;
@@ -322,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         displayHeading = String.format("%03d", mSmoothHeading);
 
         // Change distance to mark to nautical miles if > 500m and correct formattring.format decimal places
-//            distToMark = mCurrentLocation.distanceTo(destMark);
+        distToMark = mCurrentLocation.distanceTo(destMark);
 
         // Use nautical miles when distToMark is >500m.
         if (distToMark > 500) {
@@ -334,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Get bearing to mark
-//            bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
+        bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
 
         // Correct negative bearings
 
@@ -395,6 +483,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ttmDisplay = "--h --' --\"";
         }
+
+        accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
+
         updateLocationUI();
     }
 
@@ -413,6 +504,7 @@ public class MainActivity extends AppCompatActivity {
                 mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
             }
             mTimeToMarkTextView.setText(ttmDisplay);
+            mAccuracyTextView.setText(accuracy);
             mTimeTextView.setText(currentTimeDisplay);
 //        }
     }
