@@ -308,17 +308,6 @@ public class MainActivity extends AppCompatActivity {
             setNextMark();
         }
 
-//        if(nextMark.equals("Start")) {
-//
-////            // Create theStart object here and pass in course, nextMark
-////            theStart = new StartActivity(raceCourse, nextMarkFull);
-//
-////          setContentView(R.layout.activity_start);
-//            openStartActivity();
-//
-//        }
-
-
             // Process gps data for display on UI
             // Get speed in m/s and smooth for 4 readings
             mSpeed3 = mSpeed2;
@@ -419,14 +408,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         // Send info to UI
-//            mLatitudeTextView.setText(mLatitudeLabel + ": " + mCurrentLocation.getLatitude());
-//            mLongitudeTextView.setText(mLongitudeLabel + ": " + mCurrentLocation.getLongitude());
             mSpeedTextView.setText(speedDisplay);
-//            mSpeedUnitView.setText("kts");
             mHeadingTextView.setText(displayHeading);
-//            mAccuracyTextView.setText(String.valueOf((int) mCurrentLocation.getAccuracy()) + " m");
-//            mMarkLatitudeTextView.setText("Mark " + mLatitudeLabel + ": " + String.format("%.4f", destMark.getLatitude()));
-//            mMarkLongitudeTextView.setText("Mark " + mLongitudeLabel + ": " + String.format("%.4f", destMark.getLongitude()));
             mDistanceTextView.setText(displayDistToMark);
             mDistanceUnitTextView.setText(distUnits);
             mBearingTextView.setText(String.format("%03d", displayBearingToMark));
@@ -437,7 +420,6 @@ public class MainActivity extends AppCompatActivity {
             if ( bearingVariance > 2) {
                 mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
             }
-//            mLastUpdateTimeTextView.setText(mLastUpdateTimeLabel + ": " + timeSinceLastUpdate);updateValuesFromBundle
             mTimeToMarkTextView.setText(ttmDisplay);
             mTimeTextView.setText(currentTimeDisplay);
 //        }
