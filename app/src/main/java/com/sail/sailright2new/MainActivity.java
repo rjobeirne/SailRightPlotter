@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
-        updateUI();
+        updateLocationData();
     } // end onCreate method
 
     /**
@@ -277,136 +277,128 @@ public class MainActivity extends AppCompatActivity {
          // Not the finish, set the next mark normally
         destMark = theMarks.getNextMark(nextMark);
         flagFinish = FALSE;
-        updateUI();
+        updateLocationUI();
         }
     }
 
-    /**
-     * Updates all UI fields.
-     *///
-    private void updateUI() {
-
-        updateLocationUI();
-    }
-
-    public void openStartActivity() {
+     public void openStartActivity() {
         Intent start = new Intent(this, StartActivity.class);
         start.putExtra("course", raceCourse);
         start.putExtra("mark", nextMark);
         startActivity(start);
-
-
-
     }
 
     /**Math.abs(
      * Sets the value of the UI fields for the location latitude, longitude and last update time.
      */
-    private void updateLocationUI() {
+    private void updateLocationData() {
         if (destMark == null) {
             setCourse();
             setNextMark();
         }
 
-            // Process gps data for display on UI
-            // Get speed in m/s and smooth for 4 readings
-            mSpeed3 = mSpeed2;
-            mSpeed2 = mSpeed1;
-            mSpeed1 = mSpeed;
+        // Process gps data for display on UI
+        // Get speed in m/s and smooth for 4 readings
+        mSpeed3 = mSpeed2;
+        mSpeed2 = mSpeed1;
+        mSpeed1 = mSpeed;
 //            mSpeed = mCurrentLocation.getSpeed();
-            mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3)/4;
-            // Convert to knots and display
-            speedDisplay = new DecimalFormat( "##0.0").format( mSmoothSpeed * 1.943844); //convert to knots
+        mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3) / 4;
+        // Convert to knots and display
+        speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
-            // Change heading to correct format and smooth
-            mHeading3 = mHeading2;
-            mHeading2 = mHeading1;
-            mHeading1 = mHeading;
+        // Change heading to correct format and smooth
+        mHeading3 = mHeading2;
+        mHeading2 = mHeading1;
+        mHeading1 = mHeading;
 //            mHeading = (int) mCurrentLocation.getBearing();
-            mSmoothHeading = (mHeading + mHeading1 + mHeading2 + mHeading3)/4;
-            if(mSmoothHeading > 180) {
-                negHeading = mSmoothHeading - 360;
-            } else {
-                negHeading = mSmoothHeading;
-            }
+        mSmoothHeading = (mHeading + mHeading1 + mHeading2 + mHeading3) / 4;
+        if (mSmoothHeading > 180) {
+            negHeading = mSmoothHeading - 360;
+        } else {
+            negHeading = mSmoothHeading;
+        }
 
-            displayHeading = String.format("%03d", mSmoothHeading);
+        displayHeading = String.format("%03d", mSmoothHeading);
 
-            // Change distance to mark to nautical miles if > 500m and correct formattring.format decimal places
+        // Change distance to mark to nautical miles if > 500m and correct formattring.format decimal places
 //            distToMark = mCurrentLocation.distanceTo(destMark);
 
-                // Use nautical miles when distToMark is >500m.
-                if ( distToMark >500) {
-                    displayDistToMark = new DecimalFormat("###0.00").format(distToMark / 1852);
-                    distUnits = "NM";
-                } else {
-                    displayDistToMark = new DecimalFormat("###0").format(distToMark);
-                    distUnits = "m";
-                }
+        // Use nautical miles when distToMark is >500m.
+        if (distToMark > 500) {
+            displayDistToMark = new DecimalFormat("###0.00").format(distToMark / 1852);
+            distUnits = "NM";
+        } else {
+            displayDistToMark = new DecimalFormat("###0").format(distToMark);
+            distUnits = "m";
+        }
 
-            // Get bearing to mark
+        // Get bearing to mark
 //            bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
 
-                // Correct negative bearings
+        // Correct negative bearings
 
-                if ( bearingToMark < 0) {
-                    displayBearingToMark = bearingToMark + 360;
-                } else {
-                    displayBearingToMark = bearingToMark;
-                }
+        if (bearingToMark < 0) {
+            displayBearingToMark = bearingToMark + 360;
+        } else {
+            displayBearingToMark = bearingToMark;
+        }
 
-            // Calculate discrepancy between heading and bearing to mark
-            rawVariance = mSmoothHeading - displayBearingToMark;
-            if (rawVariance < -180) {
-                bearingVariance = rawVariance + 360;
+        // Calculate discrepancy between heading and bearing to mark
+        rawVariance = mSmoothHeading - displayBearingToMark;
+        if (rawVariance < -180) {
+            bearingVariance = rawVariance + 360;
+        } else {
+            if (rawVariance > 180) {
+                bearingVariance = rawVariance - 360;
             } else {
-                if (rawVariance > 180) {
-                    bearingVariance = rawVariance - 360;
-                } else {
-                    bearingVariance = rawVariance;
-                }
+                bearingVariance = rawVariance;
             }
+        }
 
-            // Get time since last update
+        // Get time since last update
 //            lastUpdateTime = mCurrentLocation.getTime();
-             currentTime = Calendar.getInstance().getTimeInMillis();
-            timeSinceLastUpdate = (currentTime - lastUpdateTime)/1000;
+        currentTime = Calendar.getInstance().getTimeInMillis();
+        timeSinceLastUpdate = (currentTime - lastUpdateTime) / 1000;
 
-            SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
+        SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
 
 //            currentTimeDisplay = java.text.DateFormat.getTimeInstance().format(new Date());
-            currentTimeDisplay = time.format(currentTime);
+        currentTimeDisplay = time.format(currentTime);
 
-            // Calc time to mark
-            vmgToMark = Math.cos(Math.toRadians(bearingVariance)) * mSmoothSpeed;
+        // Calc time to mark
+        vmgToMark = Math.cos(Math.toRadians(bearingVariance)) * mSmoothSpeed;
 
-            ttm2 = ttm1;
-            ttm1 = timeToMark;
-            timeToMark = (long) (distToMark / vmgToMark);
-            mSmoothTimeToMark = timeToMark ;
+        ttm2 = ttm1;
+        ttm1 = timeToMark;
+        timeToMark = (long) (distToMark / vmgToMark);
+        mSmoothTimeToMark = timeToMark;
 
-            // Keep displayed figure below 100 hours 360000 secs.
-            if (mSmoothTimeToMark < 360000 && mSmoothTimeToMark > 0) {
+        // Keep displayed figure below 100 hours 360000 secs.
+        if (mSmoothTimeToMark < 360000 && mSmoothTimeToMark > 0) {
 
 
-                if (mSmoothTimeToMark > 3559) {
-                    ttmDisplay = String.format("%02dh %02d' %02d\"",
-                            TimeUnit.SECONDS.toHours(mSmoothTimeToMark),
-                            TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
-                                    TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
-                            TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
-                } else {
-                    ttmDisplay = String.format("%02d' %02d\"",
-                            TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
-                                    TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
-                            TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
-                }
-            }else {
-                ttmDisplay = "--h --' --\"";
+            if (mSmoothTimeToMark > 3559) {
+                ttmDisplay = String.format("%02dh %02d' %02d\"",
+                        TimeUnit.SECONDS.toHours(mSmoothTimeToMark),
+                        TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
+                                TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
+                        TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
+            } else {
+                ttmDisplay = String.format("%02d' %02d\"",
+                        TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
+                                TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
+                        TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
             }
+        } else {
+            ttmDisplay = "--h --' --\"";
+        }
+        updateLocationUI();
+    }
 
+    private void updateLocationUI() {
         // Send info to UI
             mSpeedTextView.setText(speedDisplay);
             mHeadingTextView.setText(displayHeading);
