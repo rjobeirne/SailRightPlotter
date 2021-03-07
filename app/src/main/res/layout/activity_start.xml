@@ -139,15 +139,15 @@
         android:text="@string/kts"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/speed_text"
-        app:layout_constraintEnd_toStartOf="@+id/speed_text"
+        app:layout_constraintBottom_toBottomOf="@+id/start_speed_text"
+        app:layout_constraintEnd_toStartOf="@+id/start_speed_text"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/speed_text"
+        app:layout_constraintTop_toTopOf="@+id/start_speed_text"
         app:layout_constraintVertical_bias="0.568" />
 
     <TextView
-        android:id="@+id/speed_text"
+        android:id="@+id/start_speed_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -167,8 +167,8 @@
         android:text="@string/distance"
         android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@+id/dist_title"
-        app:layout_constraintStart_toEndOf="@id/speed_text"
-        app:layout_constraintTop_toTopOf="@+id/speed_text" />
+        app:layout_constraintStart_toEndOf="@id/start_speed_text"
+        app:layout_constraintTop_toBottomOf="@id/bearing_text" />
 
     <TextView
         android:id="@+id/dist_title"
