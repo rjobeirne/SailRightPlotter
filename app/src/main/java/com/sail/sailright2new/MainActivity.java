@@ -177,8 +177,7 @@ public class MainActivity extends AppCompatActivity {
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
         mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
-        mTimeToMarkTextView = (TextView) findViewById(R.      // Create theStart object here and pass in course, nextMark
-      id.time_to_mark);
+        mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
         mTimeTextView = (TextView) findViewById(R.id.time_text);
 
         updateUI();
