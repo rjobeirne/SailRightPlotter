@@ -21,6 +21,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -32,12 +34,21 @@ public class StartActivity extends AppCompatActivity {
     LocationCallback locationCallBack;
     FusedLocationProviderClient fusedLocationProviderClient;
 
-
+    // Define the 'Calculator' class
+    Calculator theCalculator = null;
 
     TextView startCourseTextView, startNextMarkTextView;
-    TextView startSpeedTextView;
-    boolean flagKillStart;
+    TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
+    TextView mBearingTextView, mDiscrepTextView,mTimeToMarkTextView;
 
+    // Define variables
+    double mSpeed, mSmoothSpeed;
+    String speedDisplay, displayHeading;
+    int mHeading, mSmoothHeading, negHeading;
+    double distToMark;
+    String displayDistToMark, distUnits;
+    int bearingToMark, displayBearingToMark, bearingVariance;
+    String ttmDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,16 @@ public class StartActivity extends AppCompatActivity {
         // Locate the UI widgets.
         startCourseTextView = (TextView) findViewById(R.id.start_course_name);
         startNextMarkTextView = (TextView) findViewById(R.id.start_next_mark_name);
-        startSpeedTextView = (TextView) findViewById(R.id.start_speed_text);
+        mSpeedTextView = (TextView) findViewById(R.id.start_speed_text);
+        mHeadingTextView = (TextView) findViewById(R.id.heading_text);
+        mDistanceTextView = (TextView) findViewById(R.id.distance_text);
+        mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
+        mBearingTextView = (TextView) findViewById(R.id.bearing_text);
+        mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
+        mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
+
+        // Create theCalculator object for processing data readings
+        theCalculator = new Calculator();
 
         //Locate stop button
         TextView killStart = findViewById(R.id.stopStart);
@@ -75,7 +95,7 @@ public class StartActivity extends AppCompatActivity {
 
                 // save the location
                 Location location = locationResult.getLastLocation();
-                updateUIValues(location);
+                updateLocationData(location);
             }
         };
 
@@ -105,7 +125,7 @@ public class StartActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Location location) {
                     // we got permissions. Put the values of location. XXX into the UI components.
-                    updateUIValues(location);
+                    updateLocationData(location);
                 }
             });
         }
@@ -119,14 +139,60 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
-    public void updateUIValues(Location location) {
+    /**
+     * Calculates all the navigational data
+     */
+    private void updateLocationData(Location mCurrentLocation) {
+        // Process gps data for display on UI
+        mSpeed = mCurrentLocation.getSpeed();
+        mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+        // Convert to knots and display
+        speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
-        String displaySpeed = new DecimalFormat("##0.0").format(location.getSpeed());
+        // Change heading to correct format and smooth
+        mHeading = (int) mCurrentLocation.getBearing();
+        mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+        // Calc negHeading +/- from
+        negHeading = theCalculator.getNegHeading();
 
-        // Send info to UI
-        startSpeedTextView.setText(displaySpeed);
+        displayHeading = String.format("%03d", mSmoothHeading);
 
+        // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
+            // TODO define startMark
+//        distToMark = mCurrentLocation.distanceTo(startMark);
 
+        // Use nautical miles when distToMark is >500m.
+        displayDistToMark = theCalculator.getDistScale(distToMark);
+        distUnits = theCalculator.getDistUnit(distToMark);
 
+        // Get bearing to mark and correct negative bearings
+//        bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
+        displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
+
+        // Calculate discrepancy between heading and bearing to mark
+        bearingVariance = theCalculator.getVariance();
+
+        // Calc time to mark
+//        ttmDisplay = theCalculator.getTimeToMark(distToMark);
+
+        updateLocationUI();
     }
+
+    private void updateLocationUI() {
+        // Send info to UI
+        mSpeedTextView.setText(speedDisplay);
+        mHeadingTextView.setText(displayHeading);
+        mDistanceTextView.setText(displayDistToMark);
+        mDistanceUnitTextView.setText(distUnits);
+        mBearingTextView.setText(String.format("%03d", displayBearingToMark));
+        mDiscrepTextView.setText(String.format("%03d", bearingVariance));
+        if ( bearingVariance < -2) {
+            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
+        }
+        if ( bearingVariance > 2) {
+            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
+        }
+        mTimeToMarkTextView.setText(ttmDisplay);
+    }
+
 }

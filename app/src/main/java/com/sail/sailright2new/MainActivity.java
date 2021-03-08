@@ -77,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTimeToMarkTextView;
     private TextView mTimeTextView;
 
-    // Define the 'Marks' Array
+    // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
     Courses theCourses = null;
+
+    // Define the other classes
     FinishLine theFinish = null;
     StartActivity theStart = null;
     Calculator theCalculator = null;
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         // Should have A Mark, H Mark to create the Finish Line Object
         theFinish = new FinishLine(aMark, hMark);
 
-        // Create theCalculator object for smoothing data readings
+        // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
 
         // Locate the UI widgets.
@@ -372,8 +374,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(start);
     }
 
-    /**Math.abs(
-     * Sets the value of the UI fields for the location latitude, longitude and last update time.
+    /**
+     * Calculates all the navigational data
      */
     private void updateLocationData(Location mCurrentLocation) {
         if (destMark == null) {
