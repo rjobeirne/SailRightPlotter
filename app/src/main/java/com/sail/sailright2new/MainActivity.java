@@ -21,10 +21,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -32,11 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +43,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Boolean.FALSE;
@@ -89,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     Courses theCourses = null;
     FinishLine theFinish = null;
     StartActivity theStart = null;
+    Calculator theCalculator = null;
 
     // Define parameters of next mark
     double mSpeed;
@@ -186,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
         // Should have A Mark, H Mark to create the Finish Line Object
         theFinish = new FinishLine(aMark, hMark);
 
+        // Create theCalculator object for smoothing data readings
+        theCalculator = new Calculator();
 
         // Locate the UI widgets.
         mNextMarkTextView = (TextView) findViewById(R.id.next_mark_name);
@@ -386,104 +382,42 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Process gps data for display on UI
-        // Get speed in m/s and smooth for 4 readings
-        mSpeed3 = mSpeed2;
-        mSpeed2 = mSpeed1;
-        mSpeed1 = mSpeed;
         mSpeed = mCurrentLocation.getSpeed();
-        mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3) / 4;
+        mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
         // Convert to knots and display
         speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
         // Change heading to correct format and smooth
-        mHeading3 = mHeading2;
-        mHeading2 = mHeading1;
-        mHeading1 = mHeading;
         mHeading = (int) mCurrentLocation.getBearing();
-        mSmoothHeading = (mHeading + mHeading1 + mHeading2 + mHeading3) / 4;
-        if (mSmoothHeading > 180) {
-            negHeading = mSmoothHeading - 360;
-        } else {
-            negHeading = mSmoothHeading;
-        }
+        mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+        // Calc negHeading +/- from
+        negHeading = theCalculator.getNegHeading();
 
         displayHeading = String.format("%03d", mSmoothHeading);
 
-        // Change distance to mark to nautical miles if > 500m and correct formattring.format decimal places
+        // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
         distToMark = mCurrentLocation.distanceTo(destMark);
 
         // Use nautical miles when distToMark is >500m.
-        if (distToMark > 500) {
-            displayDistToMark = new DecimalFormat("###0.00").format(distToMark / 1852);
-            distUnits = "NM";
-        } else {
-            displayDistToMark = new DecimalFormat("###0").format(distToMark);
-            distUnits = "m";
-        }
+        displayDistToMark = theCalculator.getDistScale(distToMark);
+        distUnits = theCalculator.getDistUnit(distToMark);
 
-        // Get bearing to mark
+        // Get bearing to mark and correct negative bearings
         bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
-
-        // Correct negative bearings
-
-        if (bearingToMark < 0) {
-            displayBearingToMark = bearingToMark + 360;
-        } else {
-            displayBearingToMark = bearingToMark;
-        }
+        displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
 
         // Calculate discrepancy between heading and bearing to mark
-        rawVariance = mSmoothHeading - displayBearingToMark;
-        if (rawVariance < -180) {
-            bearingVariance = rawVariance + 360;
-        } else {
-            if (rawVariance > 180) {
-                bearingVariance = rawVariance - 360;
-            } else {
-                bearingVariance = rawVariance;
-            }
-        }
+        bearingVariance = theCalculator.getVariance();
 
-        // Get time since last update
-//            lastUpdateTime = mCurrentLocation.getTime();
+        // Get time
         currentTime = Calendar.getInstance().getTimeInMillis();
-        timeSinceLastUpdate = (currentTime - lastUpdateTime) / 1000;
-
         SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
-
-//            currentTimeDisplay = java.text.DateFormat.getTimeInstance().format(new Date());
         currentTimeDisplay = time.format(currentTime);
 
         // Calc time to mark
-        vmgToMark = Math.cos(Math.toRadians(bearingVariance)) * mSmoothSpeed;
+        ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
-        ttm2 = ttm1;
-        ttm1 = timeToMark;
-        timeToMark = (long) (distToMark / vmgToMark);
-        mSmoothTimeToMark = timeToMark;
-
-        // Keep displayed figure below 100 hours 360000 secs.
-        if (mSmoothTimeToMark < 360000 && mSmoothTimeToMark > 0) {
-
-
-            if (mSmoothTimeToMark > 3559) {
-                ttmDisplay = String.format("%02dh %02d' %02d\"",
-                        TimeUnit.SECONDS.toHours(mSmoothTimeToMark),
-                        TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
-                                TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
-                        TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
-            } else {
-                ttmDisplay = String.format("%02d' %02d\"",
-                        TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark) -
-                                TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(mSmoothTimeToMark)),
-                        TimeUnit.SECONDS.toSeconds(mSmoothTimeToMark) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(mSmoothTimeToMark)));
-            }
-        } else {
-            ttmDisplay = "--h --' --\"";
-        }
-
+        // Get GPS accuracy
         accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
         updateLocationUI();
@@ -491,22 +425,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateLocationUI() {
         // Send info to UI
-            mSpeedTextView.setText(speedDisplay);
-            mHeadingTextView.setText(displayHeading);
-            mDistanceTextView.setText(displayDistToMark);
-            mDistanceUnitTextView.setText(distUnits);
-            mBearingTextView.setText(String.format("%03d", displayBearingToMark));
-            mDiscrepTextView.setText(String.format("%03d", bearingVariance));
-            if ( bearingVariance < -2) {
-                mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
-            }
-            if ( bearingVariance > 2) {
-                mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
-            }
-            mTimeToMarkTextView.setText(ttmDisplay);
-            mAccuracyTextView.setText(accuracy);
-            mTimeTextView.setText(currentTimeDisplay);
-//        }
+        mSpeedTextView.setText(speedDisplay);
+        mHeadingTextView.setText(displayHeading);
+        mDistanceTextView.setText(displayDistToMark);
+        mDistanceUnitTextView.setText(distUnits);
+        mBearingTextView.setText(String.format("%03d", displayBearingToMark));
+        mDiscrepTextView.setText(String.format("%03d", bearingVariance));
+        if ( bearingVariance < -2) {
+            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
+        }
+        if ( bearingVariance > 2) {
+            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
+        }
+        mTimeToMarkTextView.setText(ttmDisplay);
+        mAccuracyTextView.setText(accuracy);
+        mTimeTextView.setText(currentTimeDisplay);
     }
 
         // Add double click to exit
