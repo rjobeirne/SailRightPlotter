@@ -7,6 +7,7 @@
     <color name="white">#EEEEEE</color>
     <color name="titles">#8F8F8F</color>
     <color name="button_background">#939191</color>
+    <color name="button_go">#00FF00</color>
     <color name="normal_text">#000000</color>
     <color name="background">#D8D7D7</color>
     <color name="app_red">#A80202</color>

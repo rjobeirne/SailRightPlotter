@@ -47,5 +47,6 @@
     <string name="time_to_start">Time to Start</string>
     <string name="time_to_line">Time to Line</string>
     <string name="g_mark">G Mark</string>
+    <string name="early_late">Early/Late</string>
 
 </resources>
