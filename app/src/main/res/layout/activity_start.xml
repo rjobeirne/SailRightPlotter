@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".MainActivity">
 
-     <TextView
+    <TextView
         android:id="@+id/start_course_name"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -18,51 +17,61 @@
         android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
         android:text="@string/none"
+        android:textColor="@color/normal_text"
         android:textAlignment="center"
         android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@+id/stop_start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/stopStart"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
-        android:id="@+id/stopStart"
+        android:id="@+id/stop_start"
         android:layout_width="96dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="resumeRace"
+        android:background="@color/button_background"
+        android:onClick="next_course"
         android:text="Race"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@id/start_next_mark_name"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/start_course_name"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@+id/start_next_mark_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/start_next_mark_name"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
-        android:text="@string/g_mark"
+        android:text="@string/a_mark"
+        android:textColor="@color/normal_text"
         android:textAlignment="center"
         android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@+id/swap"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/swap"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/button_background"
+        android:onClick="switchStartMark"
+        android:src="@mipmap/swap_foreground"
+        android:textColor="@color/black"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/stopStart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/heading_title"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="right"
         android:text="@string/heading"
         android:textColor="@color/titles"
         android:textSize="18sp"
@@ -71,198 +80,143 @@
 
     <TextView
         android:id="@+id/heading_text"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/heading"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/variance_text"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/heading_title"
         app:layout_constraintTop_toBottomOf="@+id/start_course_name" />
 
     <TextView
-        android:id="@+id/variance_title"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/variance"
-        android:textColor="@color/titles"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/variance_text"
-        app:layout_constraintEnd_toStartOf="@+id/bearing_text"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/stopStart" />
-
-    <TextView
-        android:id="@+id/variance_text"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/_105"
-        android:textSize="32sp"
-        app:layout_constraintEnd_toStartOf="@+id/bearing_text"
-        app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/variance_title" />
-
-    <TextView
         android:id="@+id/bearing_text"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/bearing"
-        android:textSize="40sp"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/distance_text"
         app:layout_constraintEnd_toStartOf="@+id/bearing_title"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/variance_text"
-        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name" />
+        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/bearing_title"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="left"
         android:text="@string/bearing"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bearing_text"
-        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name" />
+        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/speed_title"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="right"
         android:text="@string/kts"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/start_speed_text"
-        app:layout_constraintEnd_toStartOf="@+id/start_speed_text"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintBottom_toBottomOf="@+id/speed_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/start_speed_text"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintTop_toTopOf="@+id/speed_text"
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
-        android:id="@+id/start_speed_text"
-        android:layout_width="0dp"
+        android:id="@+id/speed_text"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/speed"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@id/distance_text"
-        app:layout_constraintStart_toEndOf="@id/speed_title"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/speed_title"
         app:layout_constraintTop_toBottomOf="@+id/heading_text" />
 
     <TextView
         android:id="@+id/distance_text"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
         android:gravity="center"
         android:text="@string/distance"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/dist_title"
-        app:layout_constraintStart_toEndOf="@id/start_speed_text"
-        app:layout_constraintTop_toBottomOf="@id/bearing_text" />
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/speed_text"
+        app:layout_constraintEnd_toStartOf="@+id/dist_title" />
+
 
     <TextView
         android:id="@+id/dist_title"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:text="@string/distance"
         android:textColor="@color/titles"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/dist_unit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/distance_text" />
+        app:layout_constraintTop_toTopOf="@id/distance_text" />
 
     <TextView
         android:id="@+id/dist_unit"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:text="@string/nm"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/distance_text"
+        app:layout_constraintEnd_toEndOf="@+id/dist_title"
         app:layout_constraintTop_toBottomOf="@+id/dist_title" />
 
-    <TextView
-        android:id="@+id/time_to_start_title"
-        android:layout_width="144dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/time_to_start"
-        android:textColor="@color/titles"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/start"
-        app:layout_constraintEnd_toStartOf="@id/time_to_start"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/time_to_start"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/countdown"
-        android:textSize="56sp"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintBottom_toTopOf="@id/time_to_line_title"
-        app:layout_constraintStart_toEndOf="@+id/time_to_start_title"
-        app:layout_constraintEnd_toStartOf="@id/time_plus"/>
-
     <Button
-        android:id="@+id/start"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:onClick="next_mark"
+        android:id="@+id/start_clock"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/button_go"
+        android:gravity="center|center_horizontal|center_vertical"
         android:src="@drawable/start_tick"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/sync"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/sync"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:onClick="next_mark"
-        android:text="@string/gt"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
-        android:id="@+id/start_time_discrepancy_title"
+        android:id="@+id/start_time_early_late_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/variance"
+        android:text="@string/early_late"
         android:textColor="@color/titles"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintBottom_toTopOf="@+id/start_time_discrepancy"
-        app:layout_constraintStart_toEndOf="@+id/start"
-        app:layout_constraintEnd_toStartOf="@id/time_to_line_title"/>
+        app:layout_constraintBottom_toTopOf="@+id/start_time_early_late"
+        app:layout_constraintEnd_toStartOf="@id/time_to_line_title"
+        app:layout_constraintStart_toEndOf="@+id/start_clock" />
 
     <TextView
-        android:id="@+id/start_time_discrepancy"
+        android:id="@+id/start_time_early_late"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/countdown"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/time_to_start"
         app:layout_constraintEnd_toStartOf="@id/time_to_line"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/sync" />
+        app:layout_constraintStart_toEndOf="@+id/start_clock" />
+
 
     <TextView
         android:id="@+id/time_to_line_title"
@@ -274,8 +228,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/time_to_line"
         app:layout_constraintEnd_toStartOf="@+id/time_plus"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/start_time_discrepancy_title" />
+        app:layout_constraintStart_toEndOf="@+id/start_time_early_late_title" />
 
     <TextView
         android:id="@+id/time_to_line"
@@ -283,35 +236,411 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/countdown"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/time_minus"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/time_to_start"
+        app:layout_constraintEnd_toStartOf="@+id/time_plus"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/start_time_discrepancy" />
+        app:layout_constraintStart_toEndOf="@+id/start_time_early_late" />
+
+
+    <ImageButton
+        android:id="@+id/sync"
+        android:layout_width="64dp"
+        android:layout_height="88dp"
+        android:background="#CDDC39"
+        android:onClick="sync_clock"
+        android:src="@drawable/sync_clock_foreground"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/time_to_start"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:text="@string/countdown"
+        android:textColor="@color/normal_text"
+        android:textSize="96sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/time_plus"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/sync" />
 
     <Button
         android:id="@+id/time_plus"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="72dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:gravity="center"
-        android:onClick="next_mark"
+        android:onClick="time_plus"
         android:text="@string/plus"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/time_minus"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/time_minus"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:onClick="next_mark"
+        android:layout_width="72dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="time_minus"
         android:text="@string/minus"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/accuracy_title"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/accuracy"
+        android:textColor="@color/titles"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/accuracy_text"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_text"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_text" />
+
+
+    <TextView
+        android:id="@+id/accuracy_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/_105"
+        android:textColor="@color/normal_text"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/bearing_text"
+        app:layout_constraintStart_toEndOf="@+id/heading_text"
+        app:layout_constraintTop_toBottomOf="@+id/speed_text" />
+
+
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/black"-->
+<!--    tools:context=".MainActivity">-->
+
+<!--     <TextView-->
+<!--        android:id="@+id/start_course_name"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:text="@string/none"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="36sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/stopStart"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/stopStart"-->
+<!--        android:layout_width="96dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:onClick="resumeRace"-->
+<!--        android:text="Race"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/start_next_mark_name"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/start_course_name"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/start_next_mark_name"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:text="@string/g_mark"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="36sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/stopStart"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/heading_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/heading"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/start_course_name" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/heading_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/heading"-->
+<!--        android:textSize="40sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/variance_text"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toEndOf="@id/heading_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/start_course_name" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/variance_title"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/variance"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/variance_text"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/bearing_text"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/heading_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/stopStart" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/variance_text"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/_105"-->
+<!--        android:textSize="32sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/bearing_text"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/heading_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/variance_title" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/bearing_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/bearing"-->
+<!--        android:textSize="40sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/bearing_title"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toEndOf="@id/variance_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/bearing_title"-->
+<!--        android:layout_width="72dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/bearing"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/bearing_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/speed_title"-->
+<!--        android:layout_width="72dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/kts"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/start_speed_text"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/start_speed_text"-->
+<!--        app:layout_constraintHorizontal_bias="0.4"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/start_speed_text"-->
+<!--        app:layout_constraintVertical_bias="0.568" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/start_speed_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/speed"-->
+<!--        android:textSize="40sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/distance_text"-->
+<!--        app:layout_constraintStart_toEndOf="@id/speed_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/heading_text" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/distance_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="64dp"-->
+<!--        android:layout_marginLeft="64dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/distance"-->
+<!--        android:textSize="40sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/dist_title"-->
+<!--        app:layout_constraintStart_toEndOf="@id/start_speed_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/bearing_text" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/dist_title"-->
+<!--        android:layout_width="72dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/distance"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/distance_text" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/dist_unit"-->
+<!--        android:layout_width="72dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/nm"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/distance_text"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/dist_title" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/time_to_start_title"-->
+<!--        android:layout_width="144dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/time_to_start"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/start"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/time_to_start"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/time_to_start"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/countdown"-->
+<!--        android:textSize="56sp"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/time_to_line_title"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/time_to_start_title"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/time_plus"/>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/start"-->
+<!--        android:layout_width="56dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:onClick="next_mark"-->
+<!--        android:src="@drawable/start_tick"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sync"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/sync"-->
+<!--        android:layout_width="56dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:onClick="next_mark"-->
+<!--        android:text="@string/gt"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="24sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/start_time_discrepancy_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/variance"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/start_time_discrepancy"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/start"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/time_to_line_title"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/start_time_discrepancy"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/countdown"-->
+<!--        android:textSize="48sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/time_to_line"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/sync" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/time_to_line_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/time_to_line"-->
+<!--        android:textColor="@color/titles"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/time_to_line"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/time_plus"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/start_time_discrepancy_title" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/time_to_line"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/countdown"-->
+<!--        android:textSize="48sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/time_minus"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/start_time_discrepancy" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/time_plus"-->
+<!--        android:layout_width="56dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:gravity="center"-->
+<!--        android:onClick="next_mark"-->
+<!--        android:text="@string/plus"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/time_minus"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/time_minus"-->
+<!--        android:layout_width="56dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:onClick="next_mark"-->
+<!--        android:text="@string/minus"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

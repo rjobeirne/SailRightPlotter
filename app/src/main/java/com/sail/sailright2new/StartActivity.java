@@ -39,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
 
     TextView startCourseTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
-    TextView mBearingTextView, mDiscrepTextView,mTimeToMarkTextView;
+    TextView mBearingTextView, mDiscrepTextView,mTimeToMarkTextView, mAccuracyTextView;
 
     // Define variables
     double mSpeed, mSmoothSpeed;
@@ -48,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
     double distToMark;
     String displayDistToMark, distUnits;
     int bearingToMark, displayBearingToMark, bearingVariance;
-    String ttmDisplay;
+    String ttmDisplay, accuracy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,19 +62,20 @@ public class StartActivity extends AppCompatActivity {
         // Locate the UI widgets.
         startCourseTextView = (TextView) findViewById(R.id.start_course_name);
         startNextMarkTextView = (TextView) findViewById(R.id.start_next_mark_name);
-        mSpeedTextView = (TextView) findViewById(R.id.start_speed_text);
+        mSpeedTextView = (TextView) findViewById(R.id.speed_text);
         mHeadingTextView = (TextView) findViewById(R.id.heading_text);
         mDistanceTextView = (TextView) findViewById(R.id.distance_text);
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
         mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
+        mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
 
         //Locate stop button
-        TextView killStart = findViewById(R.id.stopStart);
+        TextView killStart = findViewById(R.id.stop_start);
         killStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +176,10 @@ public class StartActivity extends AppCompatActivity {
         // Calc time to mark
 //        ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
+        // Get GPS accuracy
+        accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
+
+
         updateLocationUI();
     }
 
@@ -193,6 +198,7 @@ public class StartActivity extends AppCompatActivity {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
         }
         mTimeToMarkTextView.setText(ttmDisplay);
+        mAccuracyTextView.setText(accuracy);
     }
 
 }
