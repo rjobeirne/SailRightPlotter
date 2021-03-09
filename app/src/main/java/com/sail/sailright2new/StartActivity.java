@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +35,9 @@ public class StartActivity extends AppCompatActivity {
     LocationCallback locationCallBack;
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    // Define the 'Calculator' class
+    // Define the classes
+    Marks theMarks;
+    FinishLine theLine;
     Calculator theCalculator = null;
 
     TextView startCourseTextView, startNextMarkTextView;
@@ -42,6 +45,8 @@ public class StartActivity extends AppCompatActivity {
     TextView mBearingTextView, mDiscrepTextView,mTimeToMarkTextView, mAccuracyTextView;
 
     // Define variables
+    String startMark = "A";
+    Location destMark;
     double mSpeed, mSmoothSpeed;
     String speedDisplay, displayHeading;
     int mHeading, mSmoothHeading, negHeading;
@@ -71,6 +76,25 @@ public class StartActivity extends AppCompatActivity {
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
 
+
+        //Create the ArrayList object here, for use in all the MainActivity
+        theMarks = new Marks();
+
+        // Create the ArrayList in the constructor, so only done once
+        try {
+            theMarks.parseXML();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
+        String a = "A"; // Finish line data
+        String h = "H"; // Finish Line Data
+        Location aMark = theMarks.getNextMark(a);
+        Location hMark = theMarks.getNextMark(h);
+        // Should have A Mark, H Mark to create the Finish Line Object
+        theLine = new FinishLine(aMark, hMark);
+
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
 
@@ -83,7 +107,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-// set all properties of LocationRequest
+        // set all properties of LocationRequest
         locationRequest = new LocationRequest();
         locationRequest.setInterval(30000);
         locationRequest.setInterval(1000);
@@ -132,55 +156,68 @@ public class StartActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Set next destination mark
+     */
+    public void switchStartMark(View view) {
+        if (startMark.equals("A")) {
+            startMark =  "H";
+        } else {
+            startMark = "A";
+        }
+        destMark = theMarks.getNextMark(startMark);
+        startNextMarkTextView.setText(startMark + "  Mark");
+    }
 
     public void StartDisplay(String startCourse, String  startMark) {
 
         startCourseTextView.setText(startCourse);
         startNextMarkTextView.setText(startMark);
-
     }
 
     /**
      * Calculates all the navigational data
      */
     private void updateLocationData(Location mCurrentLocation) {
-        // Process gps data for display on UI
-        mSpeed = mCurrentLocation.getSpeed();
-        mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
-        // Convert to knots and display
-        speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
+        if (mCurrentLocation != null) {
+            // Process gps data for display on UI
+            mSpeed = mCurrentLocation.getSpeed();
+            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+            // Convert to knots and display
+            speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
-        // Change heading to correct format and smooth
-        mHeading = (int) mCurrentLocation.getBearing();
-        mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
-        // Calc negHeading +/- from
-        negHeading = theCalculator.getNegHeading();
+            // Change heading to correct format and smooth
+            mHeading = (int) mCurrentLocation.getBearing();
+            mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+            // Calc negHeading +/- from
+            negHeading = theCalculator.getNegHeading();
 
-        displayHeading = String.format("%03d", mSmoothHeading);
+            displayHeading = String.format("%03d", mSmoothHeading);
 
-        // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
+            // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
             // TODO define startMark
-//        distToMark = mCurrentLocation.distanceTo(startMark);
+            destMark = theMarks.getNextMark(startMark);
+            distToMark = mCurrentLocation.distanceTo(destMark);
 
-        // Use nautical miles when distToMark is >500m.
-        displayDistToMark = theCalculator.getDistScale(distToMark);
-        distUnits = theCalculator.getDistUnit(distToMark);
+            // Use nautical miles when distToMark is >500m.
+            displayDistToMark = theCalculator.getDistScale(distToMark);
+            distUnits = theCalculator.getDistUnit(distToMark);
 
-        // Get bearing to mark and correct negative bearings
-//        bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
-        displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
+            // Get bearing to mark and correct negative bearings
+            bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
+            displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
 
-        // Calculate discrepancy between heading and bearing to mark
-        bearingVariance = theCalculator.getVariance();
+            // Calculate discrepancy between heading and bearing to mark
+            bearingVariance = theCalculator.getVariance();
 
-        // Calc time to mark
-//        ttmDisplay = theCalculator.getTimeToMark(distToMark);
+            // Calc time to mark
+            ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
-        // Get GPS accuracy
-        accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
+            // Get GPS accuracy
+            accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-
-        updateLocationUI();
+            updateLocationUI();
+        }
     }
 
     private void updateLocationUI() {
@@ -190,13 +227,13 @@ public class StartActivity extends AppCompatActivity {
         mDistanceTextView.setText(displayDistToMark);
         mDistanceUnitTextView.setText(distUnits);
         mBearingTextView.setText(String.format("%03d", displayBearingToMark));
-        mDiscrepTextView.setText(String.format("%03d", bearingVariance));
-        if ( bearingVariance < -2) {
-            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
-        }
-        if ( bearingVariance > 2) {
-            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
-        }
+//        mDiscrepTextView.setText(String.format("%03d", bearingVariance));
+//        if ( bearingVariance < -2) {
+//            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
+//        }
+//        if ( bearingVariance > 2) {
+//            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
+//        }
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
     }
