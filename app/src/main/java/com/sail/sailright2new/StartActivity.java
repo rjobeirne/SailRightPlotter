@@ -117,7 +117,9 @@ public class StartActivity extends AppCompatActivity {
         killStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (timerStarted) {
                 stop_clock();
+                }
                 finish();
             }
         });
