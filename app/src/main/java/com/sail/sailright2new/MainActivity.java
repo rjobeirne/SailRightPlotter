@@ -310,6 +310,11 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + button is pressed
      */
     public void next_mark(View view) {
+        if (posMark == 0) {
+            // Create theStart object here and pass in course, nextMark
+            theStart = new StartActivity();
+            openStartActivity();
+        }
          // Increment to the position of the nMath.abs(ext mark on the list
         if (posMark >= listMarkSize - 1) {
             posMark = 0;
@@ -320,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void previous_mark(View view) {
-         // Decrement to the position of the previous mark on the list
+        // Decrement to the position of the previous mark on the list
         if (posMark <= 0) {
             posMark = listMarkSize - 1;
         } else {
@@ -349,12 +354,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mNextMarkTextView.setText(nextMarkFull);
-
-        if (nextMark.equals("Start")) {
-            // Create theStart object here and pass in course, nextMark
-            theStart = new StartActivity();
-            openStartActivity();
-        }
 
         // Check to see if next mark is not the finish
         if (nextMark.equals("Finish")) {

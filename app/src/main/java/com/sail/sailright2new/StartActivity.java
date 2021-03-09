@@ -117,6 +117,7 @@ public class StartActivity extends AppCompatActivity {
         killStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stop_clock();
                 finish();
             }
         });
@@ -334,6 +335,7 @@ public class StartActivity extends AppCompatActivity {
                     public void onFinish () {
 //                        playSounds("shotgun");
                         mClockTextView.setText("* GO ! *");
+                        finish();
 
                     };
             }.start();
