@@ -298,17 +298,14 @@ public class StartActivity extends AppCompatActivity {
     public void start_clock(View view) {
         Button mButton = (Button)findViewById(R.id.start_clock);
         if (timerStarted) {
-            Toast.makeText(this, "Clock stopped", Toast.LENGTH_SHORT).show();
-            clockControl = "Go";
+            Toast.makeText(this, "Clock synchronised", Toast.LENGTH_SHORT).show();
             mButton.setBackgroundColor(Color.GREEN);
-            stop_clock();
+            sync_clock(view);
             showClock(timeToStart);
-            resetClock = true;
-            timerStarted = false;
         } else {
             Toast.makeText(this, "Clock started", Toast.LENGTH_SHORT).show();
-            mButton.setBackgroundColor(Color.RED);
-            clockControl = "Stop";
+            mButton.setBackgroundColor(Color.YELLOW);
+            clockControl = "Sync";
             countdown();
         }
         mButton.setText(clockControl);

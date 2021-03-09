@@ -11,18 +11,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
         android:text="@string/none"
-        android:textColor="@color/normal_text"
         android:textAlignment="center"
+        android:textColor="@color/normal_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/stop_start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 
 
     <Button
@@ -33,22 +31,24 @@
         android:background="@color/button_background"
         android:onClick="next_course"
         android:text="Race"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/start_next_mark_name"
+        android:textColor="@color/normal_text"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@id/bearing_text"
+        app:layout_constraintStart_toEndOf="@id/heading_text"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/start_next_mark_name"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:text="@string/a_mark"
-        android:textColor="@color/normal_text"
         android:textAlignment="center"
+        android:textColor="@color/normal_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/swap"
+        app:layout_constraintStart_toEndOf="@id/stop_start"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -56,6 +56,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/button_background"
         android:onClick="switchStartMark"
         android:src="@mipmap/swap_foreground"
@@ -189,7 +191,7 @@
         android:src="@drawable/start_tick"
         android:textColor="@color/black"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/sync"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -245,17 +247,6 @@
         app:layout_constraintStart_toEndOf="@+id/start_time_early_late" />
 
 
-    <ImageButton
-        android:id="@+id/sync"
-        android:layout_width="64dp"
-        android:layout_height="88dp"
-        android:background="#CDDC39"
-        android:onClick="sync_clock"
-        android:src="@drawable/sync_clock_foreground"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -270,7 +261,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/time_plus"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/sync" />
+        app:layout_constraintStart_toEndOf="@+id/start_clock" />
 
     <Button
         android:id="@+id/time_plus"
