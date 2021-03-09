@@ -6,12 +6,15 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -22,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -39,6 +43,7 @@ public class StartActivity extends AppCompatActivity {
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
     TextView mBearingTextView, mTimeVarianceTextView, mEarlyLateTextView;
     TextView mTimeToMarkTextView, mAccuracyTextView;
+    TextView mClockTextView;
 
     // Define variables
     String startMark = "A";
@@ -51,6 +56,7 @@ public class StartActivity extends AppCompatActivity {
     int bearingToMark, displayBearingToMark;
     String ttmDisplay, displayTimeVariance, timeliness, accuracy;
     long timeRemain =75;
+    long clock = 75;
     long timeToStart = 15 * 60;
     public Boolean timerStarted = false;
     Boolean resetClock =false;
@@ -82,6 +88,7 @@ public class StartActivity extends AppCompatActivity {
         mEarlyLateTextView = (TextView) findViewById(R.id.start_time_early_late_title);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
+        mClockTextView = (TextView) findViewById(R.id.time_to_start);
 
 
         //Create the ArrayList object here, for use in all the MainActivity
@@ -114,6 +121,16 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        // Locate start timer button
+            Button mButton = (Button) findViewById(R.id.start_clock);
+            mButton.setText(clockControl);
+            mButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    start_clock(v);
+                }
+            });
+
+
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
         locationRequest.setInterval(30000);
@@ -133,6 +150,7 @@ public class StartActivity extends AppCompatActivity {
 
         StartDisplay(startCourse, startMark + " Mark");
         updateGPS();
+        showClock(timeToStart);
         startLocationUpdates();
     }
 
@@ -250,5 +268,111 @@ public class StartActivity extends AppCompatActivity {
                 mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_green));
             }
     }
+
+    public void time_plus(View view) {
+            if (timerStarted) {
+                resetClock = true;
+                timeToStart = timeRemain + 60;
+                countdown();
+            } else {
+                timeToStart = timeToStart + 60;
+                showClock(timeToStart);
+            }
+
+    }
+
+    public void time_minus(View view) {
+            if (timeToStart >0) {
+                if (timerStarted) {
+                    resetClock = true;
+                    timeToStart = timeRemain - 60;
+                    countdown();
+                } else {
+                    timeToStart = timeToStart - 60;
+                    showClock(timeToStart);
+                }
+            }
+    }
+
+
+    public void start_clock(View view) {
+        Button mButton = (Button)findViewById(R.id.start_clock);
+        if (timerStarted) {
+            Toast.makeText(this, "Clock stopped", Toast.LENGTH_SHORT).show();
+            clockControl = "Go";
+            mButton.setBackgroundColor(Color.GREEN);
+            stop_clock();
+            showClock(timeToStart);
+            resetClock = true;
+            timerStarted = false;
+        } else {
+            Toast.makeText(this, "Clock started", Toast.LENGTH_SHORT).show();
+            mButton.setBackgroundColor(Color.RED);
+            clockControl = "Stop";
+            countdown();
+        }
+        mButton.setText(clockControl);
+    }
+
+    public void countdown() {
+            if(resetClock) {
+                startClock.cancel();
+            }
+            timerStarted = true;
+            startClock = new CountDownTimer(timeToStart * 1000, 1000) {
+                public void onTick(long millisUntilStart) {
+                    timeRemain = (millisUntilStart)/ 1000;
+                    showClock(timeRemain);
+                    secsLeft = (double) timeRemain;
+
+                        if (timeRemain == 0) {
+                            playSounds("shotgun");
+                        } else {
+                            if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
+                                playSounds("air_horn");
+                            }
+                        }
+                    }
+
+                    public void onFinish () {
+//                        playSounds("shotgun");
+                        mClockTextView.setText("* GO ! *");
+
+                    };
+            }.start();
+    }
+
+    public void stop_clock() {
+        startClock.cancel();
+
+    }
+
+    public void sync_clock(View view) {
+           timeToStart = (long) Math.round((secsLeft)/60)*60;
+           resetClock=true;
+           countdown();
+    }
+
+    public void showClock(long timeRemain) {
+            clockDisplay = String.format("%02d' %02d\"",
+            TimeUnit.SECONDS.toMinutes(timeRemain) -
+            TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeRemain)),
+            TimeUnit.SECONDS.toSeconds(timeRemain) -
+            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeRemain)));
+
+            mClockTextView.setText(clockDisplay);
+    }
+
+    public void playSounds(String sound) {
+            if (sound == "air_horn") {
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.air_horn);
+                mediaPlayer.start();
+            }
+            if (sound == "shotgun"){
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
+                mediaPlayer.start();
+            }
+    }
+
 
 }
