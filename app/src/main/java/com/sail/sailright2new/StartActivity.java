@@ -323,17 +323,17 @@ public class StartActivity extends AppCompatActivity {
                     showClock(timeRemain);
                     secsLeft = (double) timeRemain;
 
-                        if (timeRemain == 0) {
-                            playSounds("shotgun");
-                        } else {
+//                        if (timeRemain == .5) {
+//                            playSounds("shotgun");
+//                        } else {
                             if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
                                 playSounds("air_horn");
                             }
-                        }
+//                        }
                     }
 
                     public void onFinish () {
-//                        playSounds("shotgun");
+                        playSounds("shotgun");
                         mClockTextView.setText("* GO ! *");
                         finish();
 
