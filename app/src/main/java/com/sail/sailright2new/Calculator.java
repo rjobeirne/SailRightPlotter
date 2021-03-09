@@ -3,6 +3,8 @@ package com.sail.sailright2new;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Math.abs;
+
 public class Calculator {
 
     double mSpeed1, mSpeed2, mSpeed3, mSmoothSpeed;
@@ -12,8 +14,8 @@ public class Calculator {
     int displayBearingToMark;
     int rawVariance, bearingVariance;
     double vmgToMark;
-    long timeToMark;
-    String ttmDisplay;
+    long timeToMark, timeVariance;
+    String ttmDisplay, timeVarDisplay;
 
     public double getSmoothSpeed(double mSpeed) {
        // Process gps data for display on UI
@@ -114,5 +116,21 @@ public class Calculator {
             ttmDisplay = "--h --' --\"";
         }
         return ttmDisplay;
+    }
+
+    public String getTimeVariance(long timeRemain) {
+        // Calc early/late to line
+        timeVariance = timeRemain - timeToMark;
+        if (timeVariance < 360000 && timeVariance > -360000) {
+            timeVarDisplay = String.format("%02dh %02d' %02d\"",
+                    TimeUnit.SECONDS.toHours(timeVariance),
+                    abs(TimeUnit.SECONDS.toMinutes(timeVariance) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeVariance))),
+                    abs(TimeUnit.SECONDS.toSeconds(timeVariance) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeVariance))));
+        } else {
+            timeVarDisplay = "--h --' --\"";
+        }
+        return timeVarDisplay;
     }
 }

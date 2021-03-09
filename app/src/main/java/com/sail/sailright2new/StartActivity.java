@@ -7,8 +7,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -42,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
 
     TextView startCourseTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
-    TextView mBearingTextView, mDiscrepTextView,mTimeToMarkTextView, mAccuracyTextView;
+    TextView mBearingTextView, mTimeVarianceTextView,mTimeToMarkTextView, mAccuracyTextView;
 
     // Define variables
     String startMark = "A";
@@ -52,8 +54,18 @@ public class StartActivity extends AppCompatActivity {
     int mHeading, mSmoothHeading, negHeading;
     double distToMark;
     String displayDistToMark, distUnits;
-    int bearingToMark, displayBearingToMark, bearingVariance;
+    int bearingToMark, displayBearingToMark, timeVariance;
     String ttmDisplay, accuracy;
+    long timeRemain =75;
+    long timeToStart = 15 * 60;
+    public Boolean timerStarted = false;
+    Boolean resetClock =false;
+    CountDownTimer startClock;
+    private String clockDisplay;
+    double secsLeft;
+    public MediaPlayer mediaPlayer;
+    String sound;
+    String clockControl = "Go";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +84,7 @@ public class StartActivity extends AppCompatActivity {
         mDistanceTextView = (TextView) findViewById(R.id.distance_text);
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
-        mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
+        mTimeVarianceTextView = (TextView) findViewById(R.id.variance_text);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
 
@@ -207,11 +219,11 @@ public class StartActivity extends AppCompatActivity {
             bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
             displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
 
-            // Calculate discrepancy between heading and bearing to mark
-            bearingVariance = theCalculator.getVariance();
-
             // Calc time to mark
             ttmDisplay = theCalculator.getTimeToMark(distToMark);
+
+            // Calc discrepancy between time remaining and time to mark
+            timeVariance = theCalculator.getTimeVariance(timeRemain);
 
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
@@ -227,13 +239,13 @@ public class StartActivity extends AppCompatActivity {
         mDistanceTextView.setText(displayDistToMark);
         mDistanceUnitTextView.setText(distUnits);
         mBearingTextView.setText(String.format("%03d", displayBearingToMark));
-//        mDiscrepTextView.setText(String.format("%03d", bearingVariance));
-//        if ( bearingVariance < -2) {
-//            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
-//        }
-//        if ( bearingVariance > 2) {
-//            mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
-//        }
+        mTimeVarianceTextView.setText(String.format("%03d", timeVariance));
+        if ( bearingVariance < -2) {
+            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));
+        }
+        if ( bearingVariance > 2) {
+            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_green));
+        }
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
     }
