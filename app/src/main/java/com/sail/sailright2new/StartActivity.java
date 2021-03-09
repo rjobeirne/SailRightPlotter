@@ -8,10 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,11 +22,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -44,7 +37,8 @@ public class StartActivity extends AppCompatActivity {
 
     TextView startCourseTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
-    TextView mBearingTextView, mTimeVarianceTextView,mTimeToMarkTextView, mAccuracyTextView;
+    TextView mBearingTextView, mTimeVarianceTextView, mEarlyLateTextView;
+    TextView mTimeToMarkTextView, mAccuracyTextView;
 
     // Define variables
     String startMark = "A";
@@ -54,8 +48,8 @@ public class StartActivity extends AppCompatActivity {
     int mHeading, mSmoothHeading, negHeading;
     double distToMark;
     String displayDistToMark, distUnits;
-    int bearingToMark, displayBearingToMark, timeVariance;
-    String ttmDisplay, accuracy;
+    int bearingToMark, displayBearingToMark;
+    String ttmDisplay, displayTimeVariance, timeliness, accuracy;
     long timeRemain =75;
     long timeToStart = 15 * 60;
     public Boolean timerStarted = false;
@@ -74,7 +68,7 @@ public class StartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String startCourse = intent.getStringExtra("course");
-        String startMark = intent.getStringExtra("mark");
+//        String startMark = intent.getStringExtra("mark");
 
         // Locate the UI widgets.
         startCourseTextView = (TextView) findViewById(R.id.start_course_name);
@@ -84,7 +78,8 @@ public class StartActivity extends AppCompatActivity {
         mDistanceTextView = (TextView) findViewById(R.id.distance_text);
         mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
         mBearingTextView = (TextView) findViewById(R.id.bearing_text);
-        mTimeVarianceTextView = (TextView) findViewById(R.id.variance_text);
+        mTimeVarianceTextView = (TextView) findViewById(R.id.start_time_early_late);
+        mEarlyLateTextView = (TextView) findViewById(R.id.start_time_early_late_title);
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
 
@@ -136,7 +131,7 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
-        StartDisplay(startCourse, startMark);
+        StartDisplay(startCourse, startMark + " Mark");
         updateGPS();
         startLocationUpdates();
     }
@@ -223,7 +218,8 @@ public class StartActivity extends AppCompatActivity {
             ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
             // Calc discrepancy between time remaining and time to mark
-            timeVariance = theCalculator.getTimeVariance(timeRemain);
+            displayTimeVariance = theCalculator.getTimeVariance(timeRemain);
+            timeliness = theCalculator.getStartTimeliness();
 
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
@@ -239,15 +235,20 @@ public class StartActivity extends AppCompatActivity {
         mDistanceTextView.setText(displayDistToMark);
         mDistanceUnitTextView.setText(distUnits);
         mBearingTextView.setText(String.format("%03d", displayBearingToMark));
-        mTimeVarianceTextView.setText(String.format("%03d", timeVariance));
-        if ( bearingVariance < -2) {
-            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));
-        }
-        if ( bearingVariance > 2) {
-            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_green));
-        }
+        mTimeVarianceTextView.setText(displayTimeVariance);
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
+
+            if ( timeliness.equals("Late")) {
+                mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));
+                mEarlyLateTextView.setText("Late");
+                mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_red));
+            }
+            if ( timeliness.equals("Early")) {
+                mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_green));
+                mEarlyLateTextView.setText("Early");
+                mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_green));
+            }
     }
 
 }

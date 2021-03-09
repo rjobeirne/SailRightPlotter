@@ -15,7 +15,7 @@ public class Calculator {
     int rawVariance, bearingVariance;
     double vmgToMark;
     long timeToMark, timeVariance;
-    String ttmDisplay, timeVarDisplay;
+    String ttmDisplay, timeVarDisplay, timeVarianceSense;
 
     public double getSmoothSpeed(double mSpeed) {
        // Process gps data for display on UI
@@ -132,5 +132,16 @@ public class Calculator {
             timeVarDisplay = "--h --' --\"";
         }
         return timeVarDisplay;
+    }
+
+    public String getStartTimeliness() {
+        // flag the time variance display as early or late
+        if (timeVariance < 0) {
+            timeVarianceSense = "Late";
+        }
+        if (timeVariance > 0) {
+            timeVarianceSense = "Early";
+        }
+        return timeVarianceSense;
     }
 }
