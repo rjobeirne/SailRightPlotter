@@ -382,46 +382,49 @@ public class MainActivity extends AppCompatActivity {
             setNextMark();
         }
 
-        // Process gps data for display on UI
-        mSpeed = mCurrentLocation.getSpeed();
-        mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
-        // Convert to knots and display
-        speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
+        if (mCurrentLocation != null) {
 
-        // Change heading to correct format and smooth
-        mHeading = (int) mCurrentLocation.getBearing();
-        mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
-        // Calc negHeading +/- from
-        negHeading = theCalculator.getNegHeading();
+            // Process gps data for display on UI
+            mSpeed = mCurrentLocation.getSpeed();
+            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+            // Convert to knots and display
+            speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
-        displayHeading = String.format("%03d", mSmoothHeading);
+            // Change heading to correct format and smooth
+            mHeading = (int) mCurrentLocation.getBearing();
+            mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+            // Calc negHeading +/- from
+            negHeading = theCalculator.getNegHeading();
 
-        // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
-        distToMark = mCurrentLocation.distanceTo(destMark);
+            displayHeading = String.format("%03d", mSmoothHeading);
 
-        // Use nautical miles when distToMark is >500m.
-        displayDistToMark = theCalculator.getDistScale(distToMark);
-        distUnits = theCalculator.getDistUnit(distToMark);
+            // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
+            distToMark = mCurrentLocation.distanceTo(destMark);
 
-        // Get bearing to mark and correct negative bearings
-        bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
-        displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
+            // Use nautical miles when distToMark is >500m.
+            displayDistToMark = theCalculator.getDistScale(distToMark);
+            distUnits = theCalculator.getDistUnit(distToMark);
 
-        // Calculate discrepancy between heading and bearing to mark
-        bearingVariance = theCalculator.getVariance();
+            // Get bearing to mark and correct negative bearings
+            bearingToMark = (int) mCurrentLocation.bearingTo(destMark);
+            displayBearingToMark = theCalculator.getCorrectedBearingToMark(bearingToMark);
 
-        // Get time
-        currentTime = Calendar.getInstance().getTimeInMillis();
-        SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
-        currentTimeDisplay = time.format(currentTime);
+            // Calculate discrepancy between heading and bearing to mark
+            bearingVariance = theCalculator.getVariance();
 
-        // Calc time to mark
-        ttmDisplay = theCalculator.getTimeToMark(distToMark);
+            // Get time
+            currentTime = Calendar.getInstance().getTimeInMillis();
+            SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
+            currentTimeDisplay = time.format(currentTime);
 
-        // Get GPS accuracy
-        accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
+            // Calc time to mark
+            ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
-        updateLocationUI();
+            // Get GPS accuracy
+            accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
+
+            updateLocationUI();
+        }
     }
 
     private void updateLocationUI() {
