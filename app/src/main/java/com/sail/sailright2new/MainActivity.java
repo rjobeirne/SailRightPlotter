@@ -215,6 +215,20 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Locate Start button
+        mNextMarkTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void  onClick(View v) {
+                if (posMark == 0) {
+                    // Create theStart object here and pass in course, nextMark
+                    theStart = new StartActivity();
+                    openStartActivity();
+                    posMark = 1;
+                }
+            }
+         });
+
+
         updateGPS();
         startLocationUpdates();
 
@@ -310,11 +324,6 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + button is pressed
      */
     public void next_mark(View view) {
-        if (posMark == 0) {
-            // Create theStart object here and pass in course, nextMark
-            theStart = new StartActivity();
-            openStartActivity();
-        }
          // Increment to the position of the nMath.abs(ext mark on the list
         if (posMark >= listMarkSize - 1) {
             posMark = 0;
@@ -353,6 +362,13 @@ public class MainActivity extends AppCompatActivity {
             nextMarkFull = nextMark;
         }
 
+        if (posMark == 0) {
+            mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
+            mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
+        } else {
+            mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
+            mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
+        }
         mNextMarkTextView.setText(nextMarkFull);
 
         // Check to see if next mark is not the finish

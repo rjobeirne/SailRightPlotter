@@ -12,5 +12,6 @@
     <color name="background">#D8D7D7</color>
     <color name="app_red">#A80202</color>
     <color name="app_green">#007810</color>
+    <color name="red">#EE0000</color>
 
 </resources>
