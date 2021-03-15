@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     int rawVariance;
     int bearingVariance;
     boolean flagFinish = FALSE;
+    boolean flagStart = FALSE;
 
     float distDisplay;
     String displayDistToMark;
@@ -224,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
                     openStartActivity();
-                    posMark = 1;
+                    flagStart = TRUE;
                 }
             }
          });
@@ -368,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
             mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
             mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
         } else {
+            mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.ITALIC);
             mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
             mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
         }
@@ -399,6 +402,14 @@ public class MainActivity extends AppCompatActivity {
             setCourse();
             setNextMark();
         }
+
+        if (flagStart) {
+            posMark = 1;
+            flagStart = FALSE;
+            setNextMark();
+        }
+
+        Log.e("Flag Start :", String.valueOf(flagStart));
 
         if (mCurrentLocation != null) {
 
