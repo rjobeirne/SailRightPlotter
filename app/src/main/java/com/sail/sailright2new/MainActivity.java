@@ -118,13 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
     float distDisplay;
     String displayDistToMark;
-    float distanceToMark;
-    long lastUpdateTime;
-    long timeSinceLastUpdate;
-    long timeToMark;
-    long ttm1;
-    long ttm2;
-    long mSmoothTimeToMark;
     String ttmDisplay;
     long currentTime;
     String currentTimeDisplay;
@@ -450,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if( distanceToMark < 50) {
+            if( distToMark < 50) {
                 posMark =+ 1;
                 setNextMark();
             }
