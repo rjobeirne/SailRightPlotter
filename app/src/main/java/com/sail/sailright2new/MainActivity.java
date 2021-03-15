@@ -189,17 +189,17 @@ public class MainActivity extends AppCompatActivity {
         theCalculator = new Calculator();
 
         // Locate the UI widgets.
-        mNextMarkTextView = (TextView) findViewById(R.id.next_mark_name);
-        mCourseTextView = (TextView) findViewById(R.id.course_name);
-        mSpeedTextView = (TextView) findViewById(R.id.speed_text);
-        mHeadingTextView = (TextView) findViewById(R.id.heading_text);
-        mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
-        mDistanceTextView = (TextView) findViewById(R.id.distance_text);
-        mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
-        mBearingTextView = (TextView) findViewById(R.id.bearing_text);
-        mDiscrepTextView = (TextView) findViewById(R.id.variance_text);
-        mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_mark);
-        mTimeTextView = (TextView) findViewById(R.id.time_text);
+        mNextMarkTextView = findViewById(R.id.next_mark_name);
+        mCourseTextView = findViewById(R.id.course_name);
+        mSpeedTextView = findViewById(R.id.speed_text);
+        mHeadingTextView = findViewById(R.id.heading_text);
+        mAccuracyTextView = findViewById(R.id.accuracy_text);
+        mDistanceTextView = findViewById(R.id.distance_text);
+        mDistanceUnitTextView = findViewById(R.id.dist_unit);
+        mBearingTextView = findViewById(R.id.bearing_text);
+        mDiscrepTextView = findViewById(R.id.variance_text);
+        mTimeToMarkTextView = findViewById(R.id.time_to_mark);
+        mTimeTextView = findViewById(R.id.time_text);
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         // Locate Start button
         mNextMarkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void  onClick(View v) {
+            public void onClick(View v) {
                 if (nextMark.equals("Start")) {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     flagStart = TRUE;
                 }
             }
-         });
+        });
 
 
         updateGPS();
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-           return;
+            return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
     }
@@ -249,15 +249,15 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch ( requestCode) {
+        switch (requestCode) {
             case PERMISSIONS_FINE_LOCATION:
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                updateGPS();
-            } else {
-                Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            break;
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    updateGPS();
+                } else {
+                    Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
         }
     }
 
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-        PackageManager.PERMISSION_GRANTED) {
+                PackageManager.PERMISSION_GRANTED) {
             //user provided the permission
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
@@ -279,8 +279,8 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             // permission yet to be granted
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
             }
         }
     }
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *  Set race course
+     * Set race course
      */
     public void setCourse() {
 
@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + button is pressed
      */
     public void next_mark(View view) {
-         // Increment to the position of the nMath.abs(ext mark on the list
+        // Increment to the position of the nMath.abs(ext mark on the list
         if (posMark >= listMarkSize - 1) {
             posMark = 0;
         } else {
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *  Set next destination mark
+     * Set next destination mark
      */
     public void setNextMark() {
         if (raceCourse.equals("None")) {
@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
             nextMark = (String) courseMarks.get(posMark);
         }
 
-        if (nextMark.length() == 1){
+        if (nextMark.length() == 1) {
             nextMarkFull = nextMark + " Mark";
         } else {
             nextMarkFull = nextMark;
@@ -380,14 +380,14 @@ public class MainActivity extends AppCompatActivity {
         if (nextMark.equals("Finish")) {
             flagFinish = TRUE;
         } else {
-         // Not the finish, set the next mark normally
-        destMark = theMarks.getNextMark(nextMark);
-        flagFinish = FALSE;
-        updateLocationUI();
+            // Not the finish, set the next mark normally
+            destMark = theMarks.getNextMark(nextMark);
+            flagFinish = FALSE;
+            updateLocationUI();
         }
     }
 
-     public void openStartActivity() {
+    public void openStartActivity() {
         Intent start = new Intent(this, StartActivity.class);
         start.putExtra("course", raceCourse);
         start.putExtra("mark", nextMark);
@@ -408,8 +408,6 @@ public class MainActivity extends AppCompatActivity {
             flagStart = FALSE;
             setNextMark();
         }
-
-        Log.e("Flag Start :", String.valueOf(flagStart));
 
         if (mCurrentLocation != null) {
 
@@ -452,6 +450,11 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
+            if( distanceToMark < 50) {
+                posMark =+ 1;
+                setNextMark();
+            }
+
             updateLocationUI();
         }
     }
@@ -464,10 +467,10 @@ public class MainActivity extends AppCompatActivity {
         mDistanceUnitTextView.setText(distUnits);
         mBearingTextView.setText(String.format("%03d", displayBearingToMark));
         mDiscrepTextView.setText(String.format("%03d", bearingVariance));
-        if ( bearingVariance < -2) {
+        if (bearingVariance < -2) {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
         }
-        if ( bearingVariance > 2) {
+        if (bearingVariance > 2) {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
         }
         mTimeToMarkTextView.setText(ttmDisplay);
@@ -475,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
         mTimeTextView.setText(currentTimeDisplay);
     }
 
-        // Add double click to exit
+    // Add double click to exit
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -492,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
@@ -512,14 +515,14 @@ public class MainActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_IMMERSIVE
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                // Hide the nav bar and status bar
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     // Shows the system bars by removing all the flags
@@ -528,8 +531,8 @@ public class MainActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 }
 
