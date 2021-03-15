@@ -84,7 +84,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
-        android:text="@string/a_mark"
         android:textColor="@color/normal_text"
         android:textAlignment="center"
         android:textSize="36sp"

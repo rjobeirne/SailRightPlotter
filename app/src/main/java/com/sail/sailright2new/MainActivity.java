@@ -20,6 +20,7 @@ package com.sail.sailright2new;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     int mSmoothHeading;
     int negHeading;
     String displayHeading;
-    String nextMark = "A Mark";
+    String nextMark;
     String nextMarkFull;
     Location destMark;
     Double destMarkLat, destMarkLon;
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         mNextMarkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void  onClick(View v) {
-                if (posMark == 0) {
+                if (nextMark.equals("Start")) {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
                     openStartActivity();
@@ -362,9 +363,10 @@ public class MainActivity extends AppCompatActivity {
             nextMarkFull = nextMark;
         }
 
-        if (posMark == 0) {
+        if (nextMark.equals("Start")) {
             mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
             mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
+            mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
         } else {
             mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
             mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
