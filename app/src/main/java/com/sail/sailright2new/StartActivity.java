@@ -38,6 +38,7 @@ public class StartActivity extends AppCompatActivity {
     Marks theMarks;
     FinishLine theLine;
     Calculator theCalculator = null;
+    Sounds theSounds;
 
     TextView startCourseTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
@@ -55,11 +56,11 @@ public class StartActivity extends AppCompatActivity {
     String displayDistToMark, distUnits;
     int bearingToMark, displayBearingToMark;
     String ttmDisplay, displayTimeVariance, timeliness, accuracy;
-    long timeRemain =75;
+    long timeRemain = 75;
     long clock = 75;
     long timeToStart = 15 * 60;
     public Boolean timerStarted = false;
-    Boolean resetClock =false;
+    Boolean resetClock = false;
     CountDownTimer startClock;
     private String clockDisplay;
     double secsLeft;
@@ -112,26 +113,28 @@ public class StartActivity extends AppCompatActivity {
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
 
+        theSounds = new Sounds();
+
         //Locate stop button
         TextView killStart = findViewById(R.id.stop_start);
         killStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (timerStarted) {
-                stop_clock();
+                    stop_clock();
                 }
                 finish();
             }
         });
 
         // Locate start timer button
-            Button mButton = (Button) findViewById(R.id.start_clock);
-            mButton.setText(clockControl);
-            mButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    start_clock(v);
-                }
-            });
+        Button mButton = (Button) findViewById(R.id.start_clock);
+        mButton.setText(clockControl);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                start_clock(v);
+            }
+        });
 
 
         // set all properties of LocationRequest
@@ -160,7 +163,7 @@ public class StartActivity extends AppCompatActivity {
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-           return;
+            return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
     }
@@ -172,7 +175,7 @@ public class StartActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(StartActivity.this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-        PackageManager.PERMISSION_GRANTED) {
+                PackageManager.PERMISSION_GRANTED) {
             //user provided the permission
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
@@ -185,11 +188,11 @@ public class StartActivity extends AppCompatActivity {
     }
 
     /**
-     *  Set next destination mark
+     * Set next destination mark
      */
     public void switchStartMark(View view) {
         if (startMark.equals("A")) {
-            startMark =  "H";
+            startMark = "H";
         } else {
             startMark = "A";
         }
@@ -197,7 +200,7 @@ public class StartActivity extends AppCompatActivity {
         startNextMarkTextView.setText(startMark + "  Mark");
     }
 
-    public void StartDisplay(String startCourse, String  startMark) {
+    public void StartDisplay(String startCourse, String startMark) {
 
         startCourseTextView.setText(startCourse);
         startNextMarkTextView.setText(startMark);
@@ -260,46 +263,46 @@ public class StartActivity extends AppCompatActivity {
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
 
-            if ( timeliness.equals("Late")) {
-                mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));
-                mEarlyLateTextView.setText("Late");
-                mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_red));
-            }
-            if ( timeliness.equals("Early")) {
-                mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_green));
-                mEarlyLateTextView.setText("Early");
-                mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_green));
-            }
+        if (timeliness.equals("Late")) {
+            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));
+            mEarlyLateTextView.setText("Late");
+            mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_red));
+        }
+        if (timeliness.equals("Early")) {
+            mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_green));
+            mEarlyLateTextView.setText("Early");
+            mEarlyLateTextView.setTextColor(getResources().getColor(R.color.app_green));
+        }
     }
 
     public void time_plus(View view) {
-            if (timerStarted) {
-                resetClock = true;
-                timeToStart = timeRemain + 60;
-                countdown();
-            } else {
-                timeToStart = timeToStart + 60;
-                showClock(timeToStart);
-            }
+        if (timerStarted) {
+            resetClock = true;
+            timeToStart = timeRemain + 60;
+            countdown();
+        } else {
+            timeToStart = timeToStart + 60;
+            showClock(timeToStart);
+        }
 
     }
 
     public void time_minus(View view) {
-            if (timeToStart >0) {
-                if (timerStarted) {
-                    resetClock = true;
-                    timeToStart = timeRemain - 60;
-                    countdown();
-                } else {
-                    timeToStart = timeToStart - 60;
-                    showClock(timeToStart);
-                }
+        if (timeToStart > 0) {
+            if (timerStarted) {
+                resetClock = true;
+                timeToStart = timeRemain - 60;
+                countdown();
+            } else {
+                timeToStart = timeToStart - 60;
+                showClock(timeToStart);
             }
+        }
     }
 
 
     public void start_clock(View view) {
-        Button mButton = (Button)findViewById(R.id.start_clock);
+        Button mButton = (Button) findViewById(R.id.start_clock);
         if (timerStarted) {
             Toast.makeText(this, "Clock synchronised", Toast.LENGTH_SHORT).show();
             mButton.setBackgroundColor(Color.GREEN);
@@ -315,32 +318,34 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void countdown() {
-            if(resetClock) {
-                startClock.cancel();
-            }
-            timerStarted = true;
-            startClock = new CountDownTimer(timeToStart * 1000, 1000) {
-                public void onTick(long millisUntilStart) {
-                    timeRemain = (millisUntilStart)/ 1000;
-                    showClock(timeRemain);
-                    secsLeft = (double) timeRemain;
+        if (resetClock) {
+            startClock.cancel();
+        }
+        timerStarted = true;
+        startClock = new CountDownTimer(timeToStart * 1000, 1000) {
+            public void onTick(long millisUntilStart) {
+                timeRemain = (millisUntilStart) / 1000;
+                showClock(timeRemain);
+                secsLeft = (double) timeRemain;
 
 //                        if (timeRemain == .5) {
 //                            playSounds("shotgun");
 //                        } else {
-                            if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
-                                playSounds("air_horn");
-                            }
+                if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
+                    playSounds("air_horn");
+                }
 //                        }
-                    }
+            }
 
-                    public void onFinish () {
-                        playSounds("shotgun");
-                        mClockTextView.setText("* GO ! *");
-                        finish();
+            public void onFinish() {
+                playSounds("shotgun");
+                mClockTextView.setText("* GO ! *");
+                finish();
 
-                    };
-            }.start();
+            }
+
+            ;
+        }.start();
     }
 
     public void stop_clock() {
@@ -349,33 +354,33 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void sync_clock(View view) {
-           timeToStart = (long) Math.round((secsLeft)/60)*60;
-           resetClock=true;
-           countdown();
+        timeToStart = (long) Math.round((secsLeft) / 60) * 60;
+        resetClock = true;
+        countdown();
     }
 
     public void showClock(long timeRemain) {
-            clockDisplay = String.format("%02d' %02d\"",
-            TimeUnit.SECONDS.toMinutes(timeRemain) -
-            TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeRemain)),
-            TimeUnit.SECONDS.toSeconds(timeRemain) -
-            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeRemain)));
+        clockDisplay = String.format("%02d' %02d\"",
+                TimeUnit.SECONDS.toMinutes(timeRemain) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeRemain)),
+                TimeUnit.SECONDS.toSeconds(timeRemain) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeRemain)));
 
-            mClockTextView.setText(clockDisplay);
+        mClockTextView.setText(clockDisplay);
     }
 
     public void playSounds(String sound) {
-            if (sound == "air_horn") {
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.air_horn);
-                mediaPlayer.start();
-            }
-            if (sound == "shotgun"){
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
-                mediaPlayer.start();
-            }
+        if (sound == "air_horn") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.air_horn);
+            mediaPlayer.start();
+        }
+        if (sound == "shotgun") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
+            mediaPlayer.start();
+        }
     }
 
-        // Hide navigation and status bar
+    // Hide navigation and status bar
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -391,14 +396,14 @@ public class StartActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_IMMERSIVE
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                // Hide the nav bar and status bar
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     // Shows the system bars by removing all the flags
@@ -407,8 +412,8 @@ public class StartActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
 }

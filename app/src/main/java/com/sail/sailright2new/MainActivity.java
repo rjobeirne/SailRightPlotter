@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -443,9 +444,10 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if( distToMark < 50) {
-                posMark =+ 1;
+            if (distToMark < 50) {
+                posMark = +1;
                 setNextMark();
+                playSounds("klaxon");
             }
 
             updateLocationUI();
@@ -470,6 +472,14 @@ public class MainActivity extends AppCompatActivity {
         mAccuracyTextView.setText(accuracy);
         mTimeTextView.setText(currentTimeDisplay);
     }
+
+    public void playSounds(String sound) {
+        if (sound == "klaxon") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.klaxon);
+            mediaPlayer.start();
+        }
+    }
+
 
     // Add double click to exit
     boolean doubleBackToExitPressedOnce = false;
