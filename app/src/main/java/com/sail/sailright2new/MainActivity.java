@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     int bearingToMark;
     int displayBearingToMark;
     String distUnits;
+    String finMark = null;
     int rawVariance;
     int bearingVariance;
     boolean flagFinish = FALSE;
@@ -327,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             posMark = posMark + 1;
         }
+        flagFinish = FALSE;
         setNextMark();
     }
 
@@ -337,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             posMark = posMark - 1;
         }
+        flagFinish = FALSE;
         setNextMark();
     }
 
@@ -344,39 +347,42 @@ public class MainActivity extends AppCompatActivity {
      * Set next destination mark
      */
     public void setNextMark() {
-        if (raceCourse.equals("None")) {
-            listMarkSize = theMarks.marks.size();
-            nextMark = theMarks.marks.get(posMark).getmarkName();
+        if (!flagFinish) {
 
-        } else {
-            listMarkSize = courseMarks.size();
-            nextMark = (String) courseMarks.get(posMark);
-        }
+            if (raceCourse.equals("None")) {
+                listMarkSize = theMarks.marks.size();
+                nextMark = theMarks.marks.get(posMark).getmarkName();
 
-        if (nextMark.length() == 1) {
-            nextMarkFull = nextMark + " Mark";
-        } else {
-            nextMarkFull = nextMark;
-        }
+            } else {
+                listMarkSize = courseMarks.size();
+                nextMark = (String) courseMarks.get(posMark);
+            }
 
-        if (nextMark.equals("Start")) {
-            mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
-            mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
-            mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
-        } else {
-            mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.ITALIC);
-            mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
-            mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
-        }
-        mNextMarkTextView.setText(nextMarkFull);
+            if (nextMark.length() == 1) {
+                nextMarkFull = nextMark + " Mark";
+            } else {
+                nextMarkFull = nextMark;
+            }
 
-        // Check to see if next mark is not the finish
-        if (nextMark.equals("Finish")) {
-            flagFinish = TRUE;
-        } else {
-            // Not the finish, set the next mark normally
-            destMark = theMarks.getNextMark(nextMark);
-            flagFinish = FALSE;
+            if (nextMark.equals("Start")) {
+                mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
+                mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
+                mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
+            } else {
+                mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.ITALIC);
+                mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
+                mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
+            }
+            mNextMarkTextView.setText(nextMarkFull);
+
+            // Check to see if next mark is not the finish
+            if (nextMark.equals("Finish")) {
+                flagFinish = TRUE;
+            } else {
+                // Not the finish, set the next mark normally
+                destMark = theMarks.getNextMark(nextMark);
+                flagFinish = FALSE;
+            }
             updateLocationUI();
         }
     }
@@ -403,11 +409,28 @@ public class MainActivity extends AppCompatActivity {
             setNextMark();
         }
 
+        if (flagFinish) {
+            // Find the the target point on the finish line (A Mark, H Mark or Line)
+            // Pass in the currentLocation
+            finMark = theFinish.getFinishTarget(mCurrentLocation);
+
+            if (finMark.equals("Line")) {
+                // Insert the finish line crossing point
+                mNextMarkTextView.setText(finMark);
+                destMark = theFinish.getFinishPoint(mCurrentLocation);
+            } else {
+                // Set the next mark to either A or H
+                mNextMarkTextView.setText("Fin - " + finMark + " Mark");
+                destMark = theMarks.getNextMark(finMark);
+            }
+        }
+
         if (mCurrentLocation != null) {
 
             // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+
             // Convert to knots and display
             speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
@@ -444,10 +467,17 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if (distToMark < 50) {
+            if (distToMark < 50 && finMark.equals(null)) {
                 posMark = posMark + 1;
                 setNextMark();
                 playSounds("klaxon");
+            }
+
+            if (distToMark < 10 && flagFinish) {
+                playSounds("whoop");
+                mNextMarkTextView.setText("** FINISHED **");
+                flagFinish = FALSE;
+                posMark = 0;
             }
 
             updateLocationUI();
@@ -478,8 +508,15 @@ public class MainActivity extends AppCompatActivity {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.klaxon);
             mediaPlayer.start();
         }
+        if (sound == "shotgun") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
+            mediaPlayer.start();
+        }
+        if (sound == "whoop") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.whoop);
+            mediaPlayer.start();
+        }
     }
-
 
     // Add double click to exit
     boolean doubleBackToExitPressedOnce = false;

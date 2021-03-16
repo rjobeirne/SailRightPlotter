@@ -82,10 +82,8 @@ public class FinishLine {
             } else if (boatHeading < displayBearingToH) {
                 finishTarget = "H";
             } else {
-                Log.e("Heading for line", finishTarget);
                 finishTarget = "Line";
             }
-            Log.e("***finishTarget1", finishTarget);
 
         } else {
             // Approaching from the south
