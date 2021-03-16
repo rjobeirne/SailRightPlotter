@@ -445,7 +445,7 @@ public class MainActivity extends AppCompatActivity {
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
             if (distToMark < 50) {
-                posMark = +1;
+                posMark = posMark + 1;
                 setNextMark();
                 playSounds("klaxon");
             }
