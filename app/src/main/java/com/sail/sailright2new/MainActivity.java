@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     int bearingToMark;
     int displayBearingToMark;
     String distUnits;
-    String finMark = null;
+    String finMark = "race";
     int rawVariance;
     int bearingVariance;
     boolean flagFinish = FALSE;
@@ -467,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if (distToMark < 50 && finMark.equals(null)) {
+            if (distToMark < 50 && finMark.equals("race")) {
                 posMark = posMark + 1;
                 setNextMark();
                 playSounds("klaxon");
