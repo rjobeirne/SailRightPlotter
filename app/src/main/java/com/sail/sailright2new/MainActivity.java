@@ -91,16 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Define parameters of next mark
     double mSpeed;
-    double mSpeed1;
-    double mSpeed2;
-    double mSpeed3;
     double mSmoothSpeed;
-    double vmgToMark;
     String speedDisplay;
     int mHeading;
-    int mHeading1;
-    int mHeading2;
-    int mHeading3;
     int mSmoothHeading;
     int negHeading;
     String displayHeading;
@@ -113,16 +106,12 @@ public class MainActivity extends AppCompatActivity {
     int displayBearingToMark;
     String distUnits;
     String finMark = "race";
-    int rawVariance;
     int bearingVariance;
     boolean flagFinish = FALSE;
     boolean flagStart = FALSE;
 
-    float distDisplay;
     String displayDistToMark;
     String ttmDisplay;
-    long currentTime;
-    String currentTimeDisplay;
     String accuracy;
 
     int posMark = 0;
@@ -154,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
-
 
         // Create the ArrayList in the constructor, so only done once
         try {
@@ -225,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         updateGPS();
         startLocationUpdates();
@@ -456,11 +443,6 @@ public class MainActivity extends AppCompatActivity {
             // Calculate discrepancy between heading and bearing to mark
             bearingVariance = theCalculator.getVariance();
 
-            // Get time
-            currentTime = Calendar.getInstance().getTimeInMillis();
-            SimpleDateFormat time = new SimpleDateFormat("kkmm:ss");
-            currentTimeDisplay = time.format(currentTime);
-
             // Calc time to mark
             ttmDisplay = theCalculator.getTimeToMark(distToMark);
 
@@ -500,7 +482,6 @@ public class MainActivity extends AppCompatActivity {
         }
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
-        mTimeTextView.setText(currentTimeDisplay);
     }
 
     public void playSounds(String sound) {
