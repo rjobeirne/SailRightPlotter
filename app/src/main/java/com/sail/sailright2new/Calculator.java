@@ -7,8 +7,12 @@ import static java.lang.Math.abs;
 
 public class Calculator {
 
-    double mSpeed1, mSpeed2, mSpeed3, mSmoothSpeed;
-    int mHeading1, mHeading2, mHeading3, mSmoothHeading;
+    double mSmoothSpeed, sumSpeed;
+    int nSpeed = 4;
+    public double storeSpeed[] = new double[nSpeed];
+    int mSmoothHeading, sumHeading;
+    int nHeading = 4;
+    public int storeHeading[] = new int[nHeading];
     int negHeading;
     String displayDistToMark, distUnits;
     int displayBearingToMark;
@@ -19,21 +23,29 @@ public class Calculator {
 
     public double getSmoothSpeed(double mSpeed) {
        // Process gps data for display on UI
-        // Get speed in m/s and smooth for 4 readings
-        mSpeed3 = mSpeed2;
-        mSpeed2 = mSpeed1;
-        mSpeed1 = mSpeed;
-        mSmoothSpeed = (mSpeed + mSpeed1 + mSpeed2 + mSpeed3) / 4;
+        // Get speed in m/s and smooth for n=nSpeed readings
+        sumSpeed = 0;
+        for ( int i = nSpeed - 1; i > 0; i--) {
+            storeSpeed[i] = storeSpeed[i - 1];
+            sumSpeed = sumSpeed + storeSpeed[i];
+        }
+        storeSpeed[0] = mSpeed;
+        sumSpeed = sumSpeed + storeSpeed[0];
+        mSmoothSpeed = sumSpeed / nSpeed;
         return mSmoothSpeed;
     }
     
       public int getSmoothHeading(int mHeading) {
        // Process gps data for display on UI
-        // Get heading and smooth for 4 readings
-        mHeading3 = mHeading2;
-        mHeading2 = mHeading1;
-        mHeading1 = mHeading;
-        mSmoothHeading = (mHeading + mHeading1 + mHeading2 + mHeading3) / 4;
+        // Get heading and smooth for n=nHeading readings
+        sumHeading = 0;
+        for ( int i = nHeading - 1; i > 0; i--) {
+            storeHeading[i] = storeHeading[i - 1];
+            sumHeading = sumHeading + storeHeading[i];
+        }
+        storeHeading[0] = mHeading;
+        sumHeading = sumHeading + storeHeading[0];
+        mSmoothHeading = sumHeading / nHeading;
         return mSmoothHeading;
     }
 
