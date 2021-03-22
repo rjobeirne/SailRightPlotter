@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTimeToMarkTextView;
     private TextView mTimeTextView;
 
-    // Define the 'Marks' and 'Courses' Arrays
+    // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
     Courses theCourses = null;
 
@@ -117,9 +117,13 @@ public class MainActivity extends AppCompatActivity {
     int posMark = 0;
     int posCourse = 0;
     int listMarkSize, listCourseSize;
+    String lastMarkName = null;
     String raceCourse;
     ArrayList courseMarks;
     Bundle savedInstanceState;
+
+    String a = "A"; // Finish line data
+    String h = "H"; // Finish Line Data
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,12 +165,13 @@ public class MainActivity extends AppCompatActivity {
 //        theStart = new StartActivity();
 
         // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
-        String a = "A"; // Finish line data
-        String h = "H"; // Finish Line Data
-        Location aMark = theMarks.getNextMark(a);
-        Location hMark = theMarks.getNextMark(h);
+//        String a = "A"; // Finish line data
+//        String h = "H"; // Finish Line Data
+//        Location aMark = theMarks.getNextMark(a);
+//        Location hMark = theMarks.getNextMark(h);
+//        Location lastMark = theMarks.getNextMark(lastMarkName);
         // Should have A Mark, H Mark to create the Finish Line Object
-        theFinish = new FinishLine(aMark, hMark);
+//        theFinish = new FinishLine(aMark, hMark, lastMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 if (nextMark.equals("Start")) {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
+        Location lastMark = theMarks.getNextMark(lastMarkName);
                     openStartActivity();
                     flagStart = TRUE;
                 }
@@ -364,7 +370,15 @@ public class MainActivity extends AppCompatActivity {
 
             // Check to see if next mark is not the finish
             if (nextMark.equals("Finish")) {
+                // Identify the last mark to determine the direction of approach
                 flagFinish = TRUE;
+                lastMarkName = (String) courseMarks.get(listMarkSize - 2);
+                Log.e("lastMarkName", lastMarkName);
+                // Should have A Mark, H Mark to create the Finish Line Object
+                Location aMark = theMarks.getNextMark(a);
+                Location hMark = theMarks.getNextMark(h);
+                Location lastMark = theMarks.getNextMark(lastMarkName);
+                theFinish = new FinishLine(aMark, hMark, lastMark);
             } else {
                 // Not the finish, set the next mark normally
                 destMark = theMarks.getNextMark(nextMark);
@@ -478,6 +492,7 @@ public class MainActivity extends AppCompatActivity {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
         }
         if (bearingVariance > 2) {
+    String lastMarkName = null;
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
         }
         mTimeToMarkTextView.setText(ttmDisplay);

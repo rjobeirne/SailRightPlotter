@@ -48,6 +48,7 @@ public class StartActivity extends AppCompatActivity {
 
     // Define variables
     String startMark = "A";
+    String firstMarkName;
     Location destMark;
     double mSpeed, mSmoothSpeed;
     String speedDisplay, displayHeading;
@@ -107,8 +108,9 @@ public class StartActivity extends AppCompatActivity {
         String h = "H"; // Finish Line Data
         Location aMark = theMarks.getNextMark(a);
         Location hMark = theMarks.getNextMark(h);
+        Location firstMark = theMarks.getNextMark(firstMarkName);
         // Should have A Mark, H Mark to create the Finish Line Object
-        theLine = new FinishLine(aMark, hMark);
+        theLine = new FinishLine(aMark, hMark, firstMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();

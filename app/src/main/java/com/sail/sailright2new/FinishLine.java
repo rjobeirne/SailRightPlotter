@@ -5,12 +5,14 @@ import android.util.Log;
 
 public class FinishLine {
 
-    public FinishLine (Location a, Location h) {
+    public FinishLine (Location a, Location h, Location last) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
+        lastMark = last;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
+        latLastMark = lastMark.getLatitude();
     }
 
 
@@ -18,8 +20,10 @@ public class FinishLine {
     String finishTarget = null;
     Location markA = null;
     Location markH = null;
+    Location lastMark;
     double latA = 0;
     double lonA = 0;
+    double latLastMark;
     float lineBearing = 0;
     double slopeLine = 0;
     double constLine = 0;
@@ -70,13 +74,14 @@ public class FinishLine {
      * @return
      */
     public String getFinishTarget(Location currentLocation) {
-        Log.e("**start getFinishTarget","");
+        Log.e("**start getFinishTarget", String.valueOf(latLastMark));
         // Update current Location of the boat, passed in from Main
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
-        if (latBoat > latA) {
+        if (latLastMark > latA) {
             // Approaching from the north
+            Log.e("Approach from the north", String.valueOf(latLastMark));
             if (boatHeading > displayBearingToA) {
                 finishTarget = "A";
             } else if (boatHeading < displayBearingToH) {
