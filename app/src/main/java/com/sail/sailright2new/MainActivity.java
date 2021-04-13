@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList courseMarks;
     Bundle savedInstanceState;
 
+    int directionFactor;
+    Location aMark, hMark, lastMark, finishPoint;
+    Double distToFinish;
+
     String a = "A"; // Finish line data
     String h = "H"; // Finish Line Data
 
@@ -374,11 +378,15 @@ public class MainActivity extends AppCompatActivity {
                 flagFinish = TRUE;
                 lastMarkName = (String) courseMarks.get(listMarkSize - 2);
                 Log.e("lastMarkName", lastMarkName);
+
                 // Should have A Mark, H Mark to create the Finish Line Object
-                Location aMark = theMarks.getNextMark(a);
-                Location hMark = theMarks.getNextMark(h);
-                Location lastMark = theMarks.getNextMark(lastMarkName);
+                aMark = theMarks.getNextMark(a);
+                hMark = theMarks.getNextMark(h);
+                lastMark = theMarks.getNextMark(lastMarkName);
                 theFinish = new FinishLine(aMark, hMark, lastMark);
+
+                // Find the direction of approach to the finish line
+                directionFactor = theFinish.getFinishDirection();
             } else {
                 // Not the finish, set the next mark normally
                 destMark = theMarks.getNextMark(nextMark);
@@ -419,6 +427,7 @@ public class MainActivity extends AppCompatActivity {
                 // Insert the finish line crossing point
                 mNextMarkTextView.setText(finMark);
                 destMark = theFinish.getFinishPoint(mCurrentLocation);
+                finishPoint = destMark;
             } else {
                 // Set the next mark to either A or H
                 mNextMarkTextView.setText("Fin - " + finMark + " Mark");
@@ -469,11 +478,18 @@ public class MainActivity extends AppCompatActivity {
                 playSounds("klaxon");
             }
 
-            if (distToMark < 10 && flagFinish) {
-                playSounds("whoop");
-                mNextMarkTextView.setText("** FINISHED **");
-                flagFinish = FALSE;
-                posMark = 0;
+            if (flagFinish && finishPoint != null) {
+            // Calculate distance in metres to finish point from latitude
+            distToFinish = (mCurrentLocation.getLatitude() - finishPoint.getLatitude()) * directionFactor * 60 * 1852;
+            displayDistToMark = new DecimalFormat("###0").format(distToFinish);
+            Log.e("boat, fin", mCurrentLocation.getLatitude() + ", " + finishPoint.getLatitude());
+            Log.e("dist to fin", String.valueOf(distToFinish));
+                if (distToFinish < 10) {
+                    playSounds("whoop");
+                    mNextMarkTextView.setText("** FINISHED **");
+                    flagFinish = FALSE;
+                    posMark = 0;
+                }
             }
 
             updateLocationUI();
