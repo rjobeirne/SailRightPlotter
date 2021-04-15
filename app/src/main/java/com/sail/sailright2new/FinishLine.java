@@ -97,10 +97,10 @@ public class FinishLine {
     public int getFinishDirection() {
         if (latLastMark > latA) {
             // Approaching finish from the north
-            directionFactor = -1;
+            directionFactor = 1;
         } else {
             // Approach from the south
-            directionFactor = 1;
+            directionFactor = -1;
         }
         return  directionFactor;
     }
@@ -115,12 +115,12 @@ public class FinishLine {
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
-        if (directionFactor == -1) {
+        if (directionFactor == 1) {
             // Approaching from the north
 //            Log.e("Approach from the north", String.valueOf(latLastMark));
-            if (boatHeading > displayBearingToA) {
+            if (displayBoatHeading > displayBearingToA) {
                 finishTarget = "A";
-            } else if (boatHeading < displayBearingToH) {
+            } else if (displayBoatHeading < displayBearingToH) {
                 finishTarget = "H";
             } else {
                 finishTarget = "Line";
@@ -139,9 +139,9 @@ public class FinishLine {
                 bearingToH = bearingToH - 360;
             }
 
-            if (displayBoatHeading > displayBearingToA) {
+            if (boatHeading < bearingToA) {
                 finishTarget = "A";
-            } else if (displayBoatHeading < displayBearingToH) {
+            } else if (boatHeading > bearingToH) {
                 finishTarget = "H";
             } else {
                 finishTarget = "Line";
