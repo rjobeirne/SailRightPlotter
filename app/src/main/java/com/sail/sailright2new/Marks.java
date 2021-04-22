@@ -42,7 +42,6 @@ public class Marks {
             Document doc = dBuilder.parse(yourFile);
             doc.getDocumentElement().normalize();
 
-//            Log.e("Root_element" , doc.getDocumentElement().getNodeName());
             NodeList nodeList = doc.getElementsByTagName("mark");
 
             marks = new ArrayList<Mark>();
@@ -87,10 +86,7 @@ public class Marks {
                 nextMarkLoc.setTime(Calendar.getInstance().getTimeInMillis());
             break;
             }
-//                Log.e("***** try this mark", marks.get(i).getmarkName());
         }
-//        Log.e("*** nextMark =", nextMark);
-//        Log.e("****nextMarkLoc =", nextMark + " " + String.valueOf(nextMarkLoc));
 
         return nextMarkLoc;
     }

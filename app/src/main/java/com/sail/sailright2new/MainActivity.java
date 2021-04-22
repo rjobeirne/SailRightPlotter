@@ -481,9 +481,7 @@ public class MainActivity extends AppCompatActivity {
             if (flagFinish && finishPoint != null) {
             // Calculate distance in metres to finish point from latitude
             distToFinish = (mCurrentLocation.getLatitude() - finishPoint.getLatitude()) * directionFactor * 60 * 1852;
-            displayDistToMark = new DecimalFormat("###0").format(distToFinish);
-            Log.e("boat, fin", mCurrentLocation.getLatitude() + ", " + finishPoint.getLatitude());
-            Log.e("dist to fin", String.valueOf(distToFinish));
+            displayDistToMark = theCalculator.getDistScale(distToFinish);
                 if (distToFinish < 10) {
                     playSounds("whoop");
                     mNextMarkTextView.setText("** FINISHED **");

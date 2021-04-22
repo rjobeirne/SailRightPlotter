@@ -110,14 +110,12 @@ public class FinishLine {
      * The name of the finish point
      */
     public String getFinishTarget(Location currentLocation) {
-//        Log.e("**start getFinishTarget", String.valueOf(latLastMark));
         // Update current Location of the boat, passed in from Main
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
         if (directionFactor == 1) {
             // Approaching from the north
-//            Log.e("Approach from the north", String.valueOf(latLastMark));
             if (displayBoatHeading > displayBearingToA) {
                 finishTarget = "A";
             } else if (displayBoatHeading < displayBearingToH) {
@@ -159,7 +157,6 @@ public class FinishLine {
     public Location getFinishPoint(Location currentLocation) {
 
         Location finishPoint = new Location("");
-        Log.e("started getFinishPoint","");
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update the current Location of the boat
 
@@ -167,7 +164,6 @@ public class FinishLine {
         double finLat = slopeLine * finLon +constLine;
         finishPoint.setLongitude(finLon);
         finishPoint.setLatitude(finLat);
-         Log.e("**finishPoint", String.valueOf(finishPoint));
 
         return finishPoint;
     }
