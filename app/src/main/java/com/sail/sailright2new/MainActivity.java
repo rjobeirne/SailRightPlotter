@@ -326,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
             posMark = posMark + 1;
         }
         flagFinish = FALSE;
+        finMark = "race";
         setNextMark();
     }
 
@@ -337,6 +338,7 @@ public class MainActivity extends AppCompatActivity {
             posMark = posMark - 1;
         }
         flagFinish = FALSE;
+        finMark = "race";
         setNextMark();
     }
 
