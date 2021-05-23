@@ -399,10 +399,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openStartActivity() {
+        // Find first mark
+        String firstMarkName = (String) courseMarks.get(1);
+
         Intent start = new Intent(this, StartActivity.class);
         start.putExtra("course", raceCourse);
         start.putExtra("mark", nextMark);
+        start.putExtra("first", firstMarkName);
         startActivity(start);
+        posMark = 1;
+        setNextMark();
     }
 
     /**
@@ -437,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (mCurrentLocation != null) {
+        if (mCurrentLocation != null && !flagStart) {
 
             // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();

@@ -1,29 +1,30 @@
 package com.sail.sailright2new;
 
+import android.graphics.Point;
 import android.location.Location;
 import android.util.Log;
 
-public class FinishLine {
+public class StartLine {
 
-    public FinishLine (Location a, Location h, Location last) {
+    public StartLine (Location a, Location h, Location first) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
-        lastMark = last;
+        firstMark = first;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
-        latLastMark = lastMark.getLatitude();
+        latFirstMark = firstMark.getLatitude();
     }
 
 
     // Initialise global object variables
-    String finishTarget = null;
+    String startTarget = null;
     Location markA = null;
     Location markH = null;
-    Location lastMark;
+    Location firstMark;
     double latA = 0;
     double lonA = 0;
-    double latLastMark;
+    double latFirstMark;
     float lineBearing = 0;
     double slopeLine = 0;
     double constLine = 0;
@@ -59,7 +60,6 @@ public class FinishLine {
         slopeBoat = Math.tan(Math.toRadians(slopeBoatAngle));
         constBoat = latBoat - (slopeBoat * lonBoat);
 
-
         // Convert bearings to compass bearings
                 if (boatHeading < 0) {
                     displayBoatHeading = boatHeading + 360;
@@ -94,8 +94,8 @@ public class FinishLine {
         constLine = latA - (slopeLine * lonA);
     }
 
-    public int getFinishDirection() {
-        if (latLastMark > latA) {
+    public int getStartDirection() {
+        if (latFirstMark < latA) {
             // Approaching finish from the north
             directionFactor = 1;
         } else {
@@ -109,7 +109,7 @@ public class FinishLine {
      * @return
      * The name of the finish point
      */
-    public String getFinishTarget(Location currentLocation) {
+    public String getStartTarget(Location currentLocation) {
         // Update current Location of the boat, passed in from Main
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
@@ -117,11 +117,11 @@ public class FinishLine {
         if (directionFactor == 1) {
             // Approaching from the north
             if (displayBoatHeading > displayBearingToA) {
-                finishTarget = "A";
+                startTarget = "A";
             } else if (displayBoatHeading < displayBearingToH) {
-                finishTarget = "H";
+                startTarget = "H";
             } else {
-                finishTarget = "Line";
+                startTarget = "Line";
             }
 
         } else {
@@ -138,15 +138,15 @@ public class FinishLine {
             }
 
             if (boatHeading < bearingToA) {
-                finishTarget = "A";
+                startTarget = "A";
             } else if (boatHeading > bearingToH) {
-                finishTarget = "H";
+                startTarget = "H";
             } else {
-                finishTarget = "Line";
+                startTarget = "Line";
             }
 
         }
-        return  finishTarget;
+        return  startTarget;
     }
 
     /**
@@ -154,18 +154,20 @@ public class FinishLine {
      * @return
      * The finish point on the line
      */
-    public Location getFinishPoint(Location currentLocation) {
+    public Location getStartPoint(Location currentLocation) {
 
-        Location finishPoint = new Location("");
+        Location startPoint = new Location("");
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update the current Location of the boat
 
         double finLon = (constLine - constBoat) / (slopeBoat - slopeLine);
         double finLat = slopeLine * finLon +constLine;
-        finishPoint.setLongitude(finLon);
-        finishPoint.setLatitude(finLat);
+        startPoint.setLongitude(finLon);
+        startPoint.setLatitude(finLat);
 
-        return finishPoint;
+        return startPoint;
     }
+
+
 
 }

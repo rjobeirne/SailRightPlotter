@@ -46,23 +46,8 @@
         android:textAlignment="center"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
-        app:layout_constraintEnd_toStartOf="@+id/swap"
-        app:layout_constraintStart_toEndOf="@id/stop_start"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/swap"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/button_background"
-        android:onClick="switchStartMark"
-        android:src="@mipmap/swap_foreground"
-        android:textColor="@color/black"
-        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stop_start"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

@@ -36,7 +36,7 @@ public class StartActivity extends AppCompatActivity {
 
     // Define the classes
     Marks theMarks;
-    FinishLine theLine;
+    StartLine theLine;
     Calculator theCalculator = null;
     Sounds theSounds;
 
@@ -49,7 +49,7 @@ public class StartActivity extends AppCompatActivity {
     // Define variables
     String startMark = "A";
     String firstMarkName;
-    Location destMark;
+    Location destMark, startPoint;
     double mSpeed, mSmoothSpeed;
     String speedDisplay, displayHeading;
     int mHeading, mSmoothHeading, negHeading;
@@ -76,6 +76,7 @@ public class StartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String startCourse = intent.getStringExtra("course");
+        String firstMarkName = intent.getStringExtra("first");
 //        String startMark = intent.getStringExtra("mark");
 
         // Locate the UI widgets.
@@ -103,14 +104,14 @@ public class StartActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
-        String a = "A"; // Finish line data
-        String h = "H"; // Finish Line Data
+        // Create the Start object here, and pass in 'A' Mark, and 'H' Mark
+        String a = "A"; // Start line data
+        String h = "H"; // Start Line Data
         Location aMark = theMarks.getNextMark(a);
         Location hMark = theMarks.getNextMark(h);
         Location firstMark = theMarks.getNextMark(firstMarkName);
-        // Should have A Mark, H Mark to create the Finish Line Object
-        theLine = new FinishLine(aMark, hMark, firstMark);
+        // Should have A Mark, H Mark to create the Start Line Object
+        theLine = new StartLine(aMark, hMark, firstMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -156,6 +157,8 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
+        theLine = new StartLine(aMark, hMark, firstMark);
+
         StartDisplay(startCourse, startMark + " Mark");
         updateGPS();
         showClock(timeToStart);
@@ -192,15 +195,17 @@ public class StartActivity extends AppCompatActivity {
     /**
      * Set next destination mark
      */
-    public void switchStartMark(View view) {
-        if (startMark.equals("A")) {
-            startMark = "H";
-        } else {
-            startMark = "A";
-        }
-        destMark = theMarks.getNextMark(startMark);
-        startNextMarkTextView.setText(startMark + "  Mark");
-    }
+//    public void switchStartMark(View view) {
+//        if (startMark.equals("A")) {
+//            startMark = "H";
+//        } else {
+//            startMark = "A";
+//        }
+//        destMark = theMarks.getNextMark(startMark);
+//        startNextMarkTextView.setText(startMark + "  Mark");
+//    }
+
+
 
     public void StartDisplay(String startCourse, String startMark) {
 
@@ -213,7 +218,22 @@ public class StartActivity extends AppCompatActivity {
      */
     private void updateLocationData(Location mCurrentLocation) {
         if (mCurrentLocation != null) {
-            // Process gps data for display on UI
+
+            startMark = theLine.getStartTarget(mCurrentLocation);
+
+            if (startMark.equals("Line")) {
+                // Insert the finish line crossing point
+                startNextMarkTextView.setText(startMark);
+                destMark = theLine.getStartPoint(mCurrentLocation);
+                startPoint = destMark;
+            } else {
+                // Set the next mark to either A or H
+                startNextMarkTextView.setText("Start - " + startMark + " Mark");
+                destMark = theMarks.getNextMark(startMark);
+            }
+
+
+        // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
             // Convert to knots and display
@@ -227,10 +247,8 @@ public class StartActivity extends AppCompatActivity {
 
             displayHeading = String.format("%03d", mSmoothHeading);
 
-            // Change distance to mark to nautical miles if > 500m and correct formatting.format decimal places
-            // TODO define startMark
-            destMark = theMarks.getNextMark(startMark);
-            distToMark = mCurrentLocation.distanceTo(destMark);
+            // Find distance to the start point
+             distToMark = mCurrentLocation.distanceTo(destMark);
 
             // Use nautical miles when distToMark is >500m.
             displayDistToMark = theCalculator.getDistScale(distToMark);
