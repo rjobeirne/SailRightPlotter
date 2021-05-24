@@ -5,28 +5,17 @@ import android.util.Log;
 
 public class FinishLine {
 
-    public FinishLine (Location a, Location h, Location last) {
-        // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
-        markA = a;
-        markH = h;
-        lastMark = last;
-        latA = markA.getLatitude();
-        lonA = markA.getLongitude();
-        latLastMark = lastMark.getLatitude();
-    }
-
-
     // Initialise global object variables
     String finishTarget = null;
     Location markA = null;
     Location markH = null;
-    Location lastMark;
     double latA = 0;
     double lonA = 0;
     double latLastMark;
-    float lineBearing = 0;
     double slopeLine = 0;
     double constLine = 0;
+    float slopeLineAngle;
+    Location finishPoint = new Location("");
 
     // StartLine Location details
     Location mCurrentLocation = null;
@@ -35,18 +24,48 @@ public class FinishLine {
     float boatHeading, bearingToA, bearingToH;
     float displayBoatHeading, displayBearingToA, displayBearingToH;
     double slopeBoat = 0;
-    float slopeBoatAngle, slopeLineAngle;
+    float slopeBoatAngle;
     double constBoat = 0;
     int directionFactor;
 
+    /**
+     * Define the finish line from the mark locations
+     * @param a
+     * @param h
+     * @param last
+     */
+    public FinishLine (Location a, Location h, Location last) {
+        // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
+        markA = a;
+        markH = h;
+        Location lastMark = last;
+        latA = markA.getLatitude();
+        lonA = markA.getLongitude();
+        latLastMark = lastMark.getLatitude();
 
-    // This will set the current boat Location details
+        // Define finish line as linear equation lat = slope * lon + constant
+        float lineBearing = markA.bearingTo(markH);
+
+        // Convert line bearing to angle from latitude (not north)
+        if ( lineBearing > 0) {
+            slopeLineAngle = 90 - lineBearing;
+        } else {
+            slopeLineAngle = 90 + lineBearing;
+        }
+
+        slopeLine = Math.tan(Math.toRadians(slopeLineAngle));
+        constLine = latA - (slopeLine * lonA);
+    }
+
+    /**
+     * Calculate the boat location details
+     * @param currentLocation
+     */
     private void setBoatDetails(Location currentLocation) {
         // Define boat heading as linear equation lat = slope * lon + constant
         mCurrentLocation = currentLocation;
         latBoat = mCurrentLocation.getLatitude();
         lonBoat = mCurrentLocation.getLongitude();
-
         boatHeading = mCurrentLocation.getBearing();
 
         // Convert boat heading to angle from latitude (not north)
@@ -58,7 +77,6 @@ public class FinishLine {
 
         slopeBoat = Math.tan(Math.toRadians(slopeBoatAngle));
         constBoat = latBoat - (slopeBoat * lonBoat);
-
 
         // Convert bearings to compass bearings
                 if (boatHeading < 0) {
@@ -78,22 +96,12 @@ public class FinishLine {
                 } else {
                     displayBearingToH = bearingToH;
                 }
-
-
-        // Define finish line as linear equation lat = slope * lon + constant
-        lineBearing = markA.bearingTo(markH);
-
-        // Convert line bearing to angle from latitude (not north)
-        if ( lineBearing > 0) {
-            slopeLineAngle = 90 - lineBearing;
-        } else {
-            slopeLineAngle = 90 + lineBearing;
-        }
-
-        slopeLine = Math.tan(Math.toRadians(slopeLineAngle));
-        constLine = latA - (slopeLine * lonA);
     }
 
+    /**
+     *  Determine approach direction to line
+     * @return direction factor, 1= North, -1= South
+     */
     public int getFinishDirection() {
         if (latLastMark > latA) {
             // Approaching finish from the north
@@ -104,10 +112,11 @@ public class FinishLine {
         }
         return  directionFactor;
     }
+    
     /**
      *
-     * @return
-     * The name of the finish point
+     * @return The name of the finish point
+     * Mark name or Line
      */
     public String getFinishTarget(Location currentLocation) {
         // Update current Location of the boat, passed in from Main
@@ -144,7 +153,6 @@ public class FinishLine {
             } else {
                 finishTarget = "Line";
             }
-
         }
         return  finishTarget;
     }
@@ -152,26 +160,29 @@ public class FinishLine {
     /**
      *
      * @return
-     * The finish point on the line
+     * The location of the finish point on the line
      */
     public Location getFinishPoint(Location currentLocation) {
-
-        Location finishPoint = new Location("");
+        // Update the current Location of the boat
         mCurrentLocation = currentLocation;
-        setBoatDetails(mCurrentLocation);  // Update the current Location of the boat
+        setBoatDetails(mCurrentLocation);
 
+        // Calculate lon & lat of start point
         double finLon = (constLine - constBoat) / (slopeBoat - slopeLine);
         double finLat = slopeLine * finLon +constLine;
+
+        // Define startPoint by lon & lat
         finishPoint.setLongitude(finLon);
         finishPoint.setLatitude(finLat);
-
         return finishPoint;
     }
 
+    /**
+     * Calculate the closest dist from current location to the line
+     * @return
+     */
     public double getApproachAngle() {
-
         double approachAngle = slopeLineAngle - slopeBoatAngle;
         return approachAngle;
     }
-
 }
