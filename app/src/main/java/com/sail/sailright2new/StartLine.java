@@ -168,6 +168,10 @@ public class StartLine {
         return startPoint;
     }
 
+    public double getApproachAngle() {
 
+        double approachAngle = slopeLineAngle - slopeBoatAngle;
+        return approachAngle;
+    }
 
 }

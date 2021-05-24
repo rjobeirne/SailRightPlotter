@@ -168,4 +168,10 @@ public class FinishLine {
         return finishPoint;
     }
 
+    public double getApproachAngle() {
+
+        double approachAngle = slopeLineAngle - slopeBoatAngle;
+        return approachAngle;
+    }
+
 }

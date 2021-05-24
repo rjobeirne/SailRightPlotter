@@ -54,6 +54,8 @@ public class StartActivity extends AppCompatActivity {
     String speedDisplay, displayHeading;
     int mHeading, mSmoothHeading, negHeading;
     double distToMark;
+    double approachAngle, distToStart, distToDevice;
+    int directionFactor;
     String displayDistToMark, distUnits;
     int bearingToMark, displayBearingToMark;
     String ttmDisplay, displayTimeVariance, timeliness, accuracy;
@@ -220,12 +222,17 @@ public class StartActivity extends AppCompatActivity {
         if (mCurrentLocation != null) {
 
             startMark = theLine.getStartTarget(mCurrentLocation);
+                // Find the direction of approach to the finish line
+                directionFactor = theLine.getStartDirection();
 
             if (startMark.equals("Line")) {
                 // Insert the finish line crossing point
                 startNextMarkTextView.setText(startMark);
                 destMark = theLine.getStartPoint(mCurrentLocation);
                 startPoint = destMark;
+                approachAngle = Math.abs(theLine.getApproachAngle());
+                distToDevice = 10 * Math.sin(Math.toRadians(approachAngle));
+                distToStart = (mCurrentLocation.getLatitude() - startPoint.getLatitude()) * directionFactor * 60 * 1852;
             } else {
                 // Set the next mark to either A or H
                 startNextMarkTextView.setText("Start - " + startMark + " Mark");
