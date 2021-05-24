@@ -366,6 +366,12 @@ public class StartActivity extends AppCompatActivity {
 
             public void onFinish() {
                 playSounds("shotgun");
+                double timeToLine = distToMark / mSmoothSpeed;
+                long acceptableStart = 10;
+                if (timeToLine > acceptableStart) {
+                    playSounds("fail");
+
+                }
                 mClockTextView.setText("* GO ! *");
                 finish();
 
@@ -403,6 +409,10 @@ public class StartActivity extends AppCompatActivity {
         }
         if (sound == "shotgun") {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
+            mediaPlayer.start();
+        }
+        if (sound == "fail") {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.fail);
             mediaPlayer.start();
         }
     }
