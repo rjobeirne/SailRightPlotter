@@ -11,6 +11,7 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -366,11 +367,10 @@ public class StartActivity extends AppCompatActivity {
 
             public void onFinish() {
                 playSounds("shotgun");
-                double timeToLine = distToMark / mSmoothSpeed;
+                double timeToLine = theLine.getShortestDist() / mSmoothSpeed;
                 long acceptableStart = 10;
                 if (timeToLine > acceptableStart) {
                     playSounds("fail");
-
                 }
                 mClockTextView.setText("* GO ! *");
                 finish();

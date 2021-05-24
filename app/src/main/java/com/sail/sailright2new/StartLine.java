@@ -161,7 +161,7 @@ public class StartLine {
         setBoatDetails(mCurrentLocation);  // Update the current Location of the boat
 
         double finLon = (constLine - constBoat) / (slopeBoat - slopeLine);
-        double finLat = slopeLine * finLon +constLine;
+        double finLat = slopeLine * finLon + constLine;
         startPoint.setLongitude(finLon);
         startPoint.setLatitude(finLat);
 
@@ -169,9 +169,16 @@ public class StartLine {
     }
 
     public double getApproachAngle() {
-
+        // Calculate the approach angle to the line
         double approachAngle = slopeLineAngle - slopeBoatAngle;
         return approachAngle;
+    }
+
+    public double getShortestDist() {
+        // Calculate the closest dist from current location to the line
+        double shortestDist = Math.abs(slopeLine * lonBoat - latBoat + constLine)
+                / Math.sqrt(Math.pow(slopeLine, 2) + 1) * 60 * 1852;
+        return shortestDist;
     }
 
 }
