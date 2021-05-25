@@ -16,7 +16,6 @@ package com.sail.sailright2new;
   limitations under the License.
  */
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -47,10 +46,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -100,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     String nextMark;
     String nextMarkFull;
     Location destMark;
-    Double destMarkLat, destMarkLon;
     float distToMark;
     int bearingToMark;
     int displayBearingToMark;
@@ -120,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     String lastMarkName = null;
     String raceCourse;
     ArrayList courseMarks;
-    Bundle savedInstanceState;
 
     int directionFactor;
     Location aMark, hMark, lastMark, finishPoint;
@@ -164,18 +158,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        // Create theStart object here and pass in course, nextMark
-//        theStart = new StartActivity();
-
-        // Create theFinish object here, and pass in 'A' Mark, and 'H' Mark
-//        String a = "A"; // Finish line data
-//        String h = "H"; // Finish Line Data
-//        Location aMark = theMarks.getNextMark(a);
-//        Location hMark = theMarks.getNextMark(h);
-//        Location lastMark = theMarks.getNextMark(lastMarkName);
-        // Should have A Mark, H Mark to create the Finish Line Object
-//        theFinish = new FinishLine(aMark, hMark, lastMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -226,8 +208,6 @@ public class MainActivity extends AppCompatActivity {
 
         updateGPS();
         startLocationUpdates();
-
-//        updateLocationData();
     } // end onCreate method
 
     private void startLocationUpdates() {
@@ -276,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     /**
      * This method is called when the + course button is pressed
@@ -499,7 +478,6 @@ public class MainActivity extends AppCompatActivity {
                     posMark = 0;
                 }
             }
-
             updateLocationUI();
         }
     }
