@@ -112,7 +112,7 @@ public class FinishLine {
         }
         return  directionFactor;
     }
-    
+
     /**
      *
      * @return The name of the finish point

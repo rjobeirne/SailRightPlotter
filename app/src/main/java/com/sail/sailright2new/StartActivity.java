@@ -48,28 +48,26 @@ public class StartActivity extends AppCompatActivity {
     TextView mClockTextView;
 
     // Define variables
-    String startMark = "A";
-    String firstMarkName;
     Location destMark, startPoint;
-    double mSpeed, mSmoothSpeed;
+    String startMark = "A";
     String speedDisplay, displayHeading;
+    String displayDistToMark, distUnits;
+    String ttmDisplay, displayTimeVariance, timeliness, accuracy;
     int mHeading, mSmoothHeading, negHeading;
+    int directionFactor;
+    int bearingToMark, displayBearingToMark;
+    double mSpeed, mSmoothSpeed;
     double distToMark;
     double approachAngle, distToStart, distToDevice;
-    int directionFactor;
-    String displayDistToMark, distUnits;
-    int bearingToMark, displayBearingToMark;
-    String ttmDisplay, displayTimeVariance, timeliness, accuracy;
+
+    // Define clock variables
     long timeRemain = 75;
-    long clock = 75;
     long timeToStart = 15 * 60;
     public Boolean timerStarted = false;
     Boolean resetClock = false;
     CountDownTimer startClock;
     private String clockDisplay;
     double secsLeft;
-    public MediaPlayer mediaPlayer;
-    String sound;
     String clockControl = "Go";
 
     @Override
@@ -80,7 +78,6 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String startCourse = intent.getStringExtra("course");
         String firstMarkName = intent.getStringExtra("first");
-//        String startMark = intent.getStringExtra("mark");
 
         // Locate the UI widgets.
         startCourseTextView = (TextView) findViewById(R.id.start_course_name);
@@ -95,7 +92,6 @@ public class StartActivity extends AppCompatActivity {
         mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
         mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
         mClockTextView = (TextView) findViewById(R.id.time_to_start);
-
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
@@ -160,6 +156,7 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
+        // Create the start line
         theLine = new StartLine(aMark, hMark, firstMark);
 
         StartDisplay(startCourse, startMark + " Mark");
@@ -196,22 +193,11 @@ public class StartActivity extends AppCompatActivity {
     }
 
     /**
-     * Set next destination mark
+     * Display course and start mark
+     * @param startCourse
+     * @param startMark
      */
-//    public void switchStartMark(View view) {
-//        if (startMark.equals("A")) {
-//            startMark = "H";
-//        } else {
-//            startMark = "A";
-//        }
-//        destMark = theMarks.getNextMark(startMark);
-//        startNextMarkTextView.setText(startMark + "  Mark");
-//    }
-
-
-
     public void StartDisplay(String startCourse, String startMark) {
-
         startCourseTextView.setText(startCourse);
         startNextMarkTextView.setText(startMark);
     }
@@ -240,7 +226,6 @@ public class StartActivity extends AppCompatActivity {
                 destMark = theMarks.getNextMark(startMark);
             }
 
-
         // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
@@ -250,10 +235,10 @@ public class StartActivity extends AppCompatActivity {
             // Change heading to correct format and smooth
             mHeading = (int) mCurrentLocation.getBearing();
             mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
-            // Calc negHeading +/- from
-            negHeading = theCalculator.getNegHeading();
-
             displayHeading = String.format("%03d", mSmoothHeading);
+
+            // Calc negHeading +/- from North
+            negHeading = theCalculator.getNegHeading();
 
             // Find distance to the start point
              distToMark = mCurrentLocation.distanceTo(destMark);
@@ -312,7 +297,6 @@ public class StartActivity extends AppCompatActivity {
             timeToStart = timeToStart + 60;
             showClock(timeToStart);
         }
-
     }
 
     public void time_minus(View view) {
@@ -327,7 +311,6 @@ public class StartActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public void start_clock(View view) {
         Button mButton = (Button) findViewById(R.id.start_clock);
@@ -356,13 +339,9 @@ public class StartActivity extends AppCompatActivity {
                 showClock(timeRemain);
                 secsLeft = (double) timeRemain;
 
-//                        if (timeRemain == .5) {
-//                            playSounds("shotgun");
-//                        } else {
                 if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
                     playSounds("air_horn");
                 }
-//                        }
             }
 
             public void onFinish() {
@@ -374,16 +353,12 @@ public class StartActivity extends AppCompatActivity {
                 }
                 mClockTextView.setText("* GO ! *");
                 finish();
-
             }
-
-            ;
         }.start();
     }
 
     public void stop_clock() {
         startClock.cancel();
-
     }
 
     public void sync_clock(View view) {
@@ -452,5 +427,4 @@ public class StartActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
-
 }
