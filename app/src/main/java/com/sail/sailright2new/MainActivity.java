@@ -494,7 +494,6 @@ public class MainActivity extends AppCompatActivity {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_red));
         }
         if (bearingVariance > 2) {
-    String lastMarkName = null;
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
         }
         mTimeToMarkTextView.setText(ttmDisplay);

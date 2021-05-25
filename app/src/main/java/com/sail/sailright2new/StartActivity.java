@@ -141,8 +141,8 @@ public class StartActivity extends AppCompatActivity {
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(30000);
         locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationCallBack = new LocationCallback() {
 
