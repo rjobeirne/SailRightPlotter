@@ -135,17 +135,7 @@ public class StartLine {
 
         } else {
             // Approaching from the south
-            // First correct heading >180 to be negative to avoid problem at due north
-            if (boatHeading > 180) {
-                boatHeading = boatHeading - 360;
-            }
-            if (bearingToA > 180) {
-                bearingToA = bearingToA - 360;
-            }
-            if (bearingToH > 180) {
-                bearingToH = bearingToH - 360;
-            }
-
+            // Use bearing +/- from north
             if (boatHeading < bearingToA) {
                 startTarget = "A";
             } else if (boatHeading > bearingToH) {
