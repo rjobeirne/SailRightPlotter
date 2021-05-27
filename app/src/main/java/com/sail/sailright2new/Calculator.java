@@ -8,10 +8,10 @@ import static java.lang.Math.abs;
 public class Calculator {
 
     double mSmoothSpeed, sumSpeed;
-    int nSpeed = 4;
+    final int nSpeed = 4;
     public double storeSpeed[] = new double[nSpeed];
     int mSmoothHeading, sumHeading;
-    int nHeading = 4;
+    final int nHeading = 4;
     public int storeHeading[] = new int[nHeading];
     int negHeading;
     String displayDistToMark, distUnits;
@@ -47,15 +47,6 @@ public class Calculator {
         sumHeading = sumHeading + storeHeading[0];
         mSmoothHeading = sumHeading / nHeading;
         return mSmoothHeading;
-    }
-
-    public int getNegHeading() {
-         if (mSmoothHeading > 180) {
-            negHeading = mSmoothHeading - 360;
-        } else {
-            negHeading = mSmoothHeading;
-        }
-         return negHeading;
     }
 
     public String getDistScale(double distToMark) {

@@ -39,7 +39,6 @@ public class StartActivity extends AppCompatActivity {
     Marks theMarks;
     StartLine theLine;
     Calculator theCalculator = null;
-    Sounds theSounds;
 
     TextView startCourseTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
@@ -53,12 +52,11 @@ public class StartActivity extends AppCompatActivity {
     String speedDisplay, displayHeading;
     String displayDistToMark, distUnits;
     String ttmDisplay, displayTimeVariance, timeliness, accuracy;
-    int mHeading, mSmoothHeading, negHeading;
-    int directionFactor;
+    int mHeading, mSmoothHeading;
     int bearingToMark, displayBearingToMark;
     double mSpeed, mSmoothSpeed;
     double distToMark;
-    double approachAngle, distToStart, distToDevice;
+    double approachAngle, distToDevice;
 
     // Define clock variables
     long timeRemain = 75;
@@ -66,7 +64,6 @@ public class StartActivity extends AppCompatActivity {
     public Boolean timerStarted = false;
     Boolean resetClock = false;
     CountDownTimer startClock;
-    private String clockDisplay;
     double secsLeft;
     String clockControl = "Go";
 
@@ -115,8 +112,6 @@ public class StartActivity extends AppCompatActivity {
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
 
-        theSounds = new Sounds();
-
         //Locate stop button
         TextView killStart = findViewById(R.id.stop_start);
         killStart.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +151,8 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
+        distToDevice = 10 * Math.sin(Math.toRadians(approachAngle));
+
         // Create the start line
         theLine = new StartLine(aMark, hMark, firstMark);
 
@@ -163,7 +160,7 @@ public class StartActivity extends AppCompatActivity {
         updateGPS();
         showClock(timeToStart);
         startLocationUpdates();
-    }
+    } // end of onCreate
 
 
     private void startLocationUpdates() {
@@ -194,8 +191,8 @@ public class StartActivity extends AppCompatActivity {
 
     /**
      * Display course and start mark
-     * @param startCourse
-     * @param startMark
+     * @param startCourse Course selected
+     * @param startMark Nearest mark or the line
      */
     public void StartDisplay(String startCourse, String startMark) {
         startCourseTextView.setText(startCourse);
@@ -209,8 +206,6 @@ public class StartActivity extends AppCompatActivity {
         if (mCurrentLocation != null) {
 
             startMark = theLine.getStartTarget(mCurrentLocation);
-                // Find the direction of approach to the finish line
-                directionFactor = theLine.getStartDirection();
 
             if (startMark.equals("Line")) {
                 // Insert the finish line crossing point
@@ -218,8 +213,6 @@ public class StartActivity extends AppCompatActivity {
                 destMark = theLine.getStartPoint(mCurrentLocation);
                 startPoint = destMark;
                 approachAngle = Math.abs(theLine.getApproachAngle());
-                distToDevice = 10 * Math.sin(Math.toRadians(approachAngle));
-                distToStart = (mCurrentLocation.getLatitude() - startPoint.getLatitude()) * directionFactor * 60 * 1852;
             } else {
                 // Set the next mark to either A or H
                 startNextMarkTextView.setText("Start - " + startMark + " Mark");
@@ -236,9 +229,6 @@ public class StartActivity extends AppCompatActivity {
             mHeading = (int) mCurrentLocation.getBearing();
             mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
             displayHeading = String.format("%03d", mSmoothHeading);
-
-            // Calc negHeading +/- from North
-            negHeading = theCalculator.getNegHeading();
 
             // Find distance to the start point
              distToMark = mCurrentLocation.distanceTo(destMark);
@@ -369,7 +359,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void showClock(long timeRemain) {
-        clockDisplay = String.format("%02d' %02d\"",
+        String clockDisplay = String.format("%02d' %02d\"",
                 TimeUnit.SECONDS.toMinutes(timeRemain) -
                         TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeRemain)),
                 TimeUnit.SECONDS.toSeconds(timeRemain) -
@@ -379,15 +369,15 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void playSounds(String sound) {
-        if (sound == "air_horn") {
+        if (sound.equals("air_horn")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.air_horn);
             mediaPlayer.start();
         }
-        if (sound == "shotgun") {
+        if (sound.equals("shotgun")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
             mediaPlayer.start();
         }
-        if (sound == "fail") {
+        if (sound.equals("fail")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.fail);
             mediaPlayer.start();
         }

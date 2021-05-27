@@ -54,7 +54,7 @@ import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int DEFAULT_UPDATE_INTERVAL = 30;
+    public static final int DEFAULT_UPDATE_INTERVAL = 3;
     public static final int FAST_UPDATE_INTERVAL = 1;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
 
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView mBearingTextView;
     private TextView mDiscrepTextView;
     private TextView mTimeToMarkTextView;
-    private TextView mTimeTextView;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -120,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
     Location aMark, hMark, lastMark, finishPoint;
     Double distToFinish;
 
-    String a = "A"; // Finish line data
-    String h = "H"; // Finish Line Data
+    final String a = "A"; // Finish line data
+    final String h = "H"; // Finish Line Data
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        ArrayList<Mark> marks = new ArrayList<>();
-        ArrayList<Course> courses = new ArrayList<>();
-        ArrayList courseMarks = new ArrayList();
+//        ArrayList<Mark> marks = new ArrayList<>();
+//        ArrayList<Course> courses = new ArrayList<>();
+//        ArrayList courseMarks = new ArrayList();
 
         // first check for runtime permission
         String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         mBearingTextView = findViewById(R.id.bearing_text);
         mDiscrepTextView = findViewById(R.id.variance_text);
         mTimeToMarkTextView = findViewById(R.id.time_to_mark);
-        mTimeTextView = findViewById(R.id.time_text);
+//        TextView mTimeTextView = findViewById(R.id.time_text);
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
@@ -199,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 if (nextMark.equals("Start")) {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
-        Location lastMark = theMarks.getNextMark(lastMarkName);
+//        Location lastMark = theMarks.getNextMark(lastMarkName);
                     openStartActivity();
                     flagStart = TRUE;
                 }
@@ -221,15 +220,13 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-            case PERMISSIONS_FINE_LOCATION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    updateGPS();
-                } else {
-                    Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
+        if (requestCode == PERMISSIONS_FINE_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateGPS();
+            } else {
+                Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 
@@ -434,8 +431,6 @@ public class MainActivity extends AppCompatActivity {
             // Change heading to correct format and smooth
             mHeading = (int) mCurrentLocation.getBearing();
             mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
-            // Calc negHeading +/- from
-            negHeading = theCalculator.getNegHeading();
 
             displayHeading = String.format("%03d", mSmoothHeading);
 
@@ -501,15 +496,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playSounds(String sound) {
-        if (sound == "klaxon") {
+        if (sound.equals("klaxon")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.klaxon);
             mediaPlayer.start();
         }
-        if (sound == "shotgun") {
+        if (sound.equals("shotgun")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.shotgun);
             mediaPlayer.start();
         }
-        if (sound == "whoop") {
+        if (sound.equals("whoop")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.whoop);
             mediaPlayer.start();
         }

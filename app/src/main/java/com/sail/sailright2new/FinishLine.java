@@ -7,14 +7,14 @@ public class FinishLine {
 
     // Initialise global object variables
     String finishTarget = null;
-    Location markA = null;
-    Location markH = null;
-    double latA = 0;
-    double lonA = 0;
-    double latLastMark;
-    double slopeLine = 0;
-    double constLine = 0;
-    float slopeLineAngle;
+    final Location markA;
+    final Location markH;
+    final double latA;
+    final double lonA;
+    final double latLastMark;
+    final double slopeLine;
+    final double constLine;
+    final float slopeLineAngle;
     Location finishPoint = new Location("");
 
     // StartLine Location details
@@ -30,18 +30,17 @@ public class FinishLine {
 
     /**
      * Define the finish line from the mark locations
-     * @param a
-     * @param h
-     * @param last
+     * @param a Location of the A Mark
+     * @param h Location of the H Mark
+     * @param last Location of the last mark on the course
      */
     public FinishLine (Location a, Location h, Location last) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
-        Location lastMark = last;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
-        latLastMark = lastMark.getLatitude();
+        latLastMark = last.getLatitude();
 
         // Define finish line as linear equation lat = slope * lon + constant
         float lineBearing = markA.bearingTo(markH);
@@ -59,7 +58,7 @@ public class FinishLine {
 
     /**
      * Calculate the boat location details
-     * @param currentLocation
+     * @param currentLocation location from GPS
      */
     private void setBoatDetails(Location currentLocation) {
         // Define boat heading as linear equation lat = slope * lon + constant
@@ -169,7 +168,7 @@ public class FinishLine {
 
     /**
      * Calculate the closest dist from current location to the line
-     * @return
+     * @return approach angle
      */
     public double getApproachAngle() {
         double approachAngle = slopeLineAngle - slopeBoatAngle;

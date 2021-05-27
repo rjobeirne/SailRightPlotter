@@ -7,14 +7,14 @@ public class StartLine {
 
     // Initialise global object variables
     String startTarget = null;
-    Location markA = null;
-    Location markH = null;
-    double latA = 0;
-    double lonA = 0;
-    double latFirstMark;
-    double slopeLine = 0;
-    double constLine = 0;
-    float slopeLineAngle;
+    final Location markA;
+    final Location markH;
+    final double latA;
+    final double lonA;
+    final double latFirstMark;
+    final double slopeLine;
+    final double constLine;
+    final float slopeLineAngle;
     Location startPoint = new Location("");
 
     // Initialise boat details
@@ -30,18 +30,18 @@ public class StartLine {
 
     /**
      * Define the start line from the mark locations
-     * @param a
-     * @param h
-     * @param first
+     * @param a name of one end of the line
+     * @param h name of the other end of the line
+     * @param first name of the first mark after the start
      */
     public StartLine (Location a, Location h, Location first) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
-        Location firstMark = first;
+//        Location firstMark = first;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
-        latFirstMark = firstMark.getLatitude();
+        latFirstMark = first.getLatitude();
 
         // Define finish line as linear equation lat = slope * lon + constant
         float lineBearing = markA.bearingTo(markH);
@@ -55,11 +55,13 @@ public class StartLine {
 
         slopeLine = Math.tan(Math.toRadians(slopeLineAngle));
         constLine = latA - (slopeLine * lonA);
+
+        getStartDirection();
     }
 
     /**
      * Calculate the boat location details
-     * @param currentLocation
+     * @param currentLocation current gps location
      */
     private void setBoatDetails(Location currentLocation) {
         // Define boat heading as linear equation lat = slope * lon + constant
@@ -110,6 +112,7 @@ public class StartLine {
             // Approach from the south
             directionFactor = -1;
         }
+        Log.e("dir factor", String.valueOf(directionFactor));
         return  directionFactor;
     }
 
@@ -125,6 +128,7 @@ public class StartLine {
 
         if (directionFactor == 1) {
             // Approaching from the north
+            // Use compass bearing
             if (displayBoatHeading > displayBearingToA) {
                 startTarget = "A";
             } else if (displayBoatHeading < displayBearingToH) {
@@ -178,7 +182,7 @@ public class StartLine {
 
     /**
      * Calculate the closest dist from current location to the line
-     * @return
+     * @return shortest distance to the line
      */
     public double getShortestDist() {
         double shortestDist = Math.abs(slopeLine * lonBoat - latBoat + constLine)
