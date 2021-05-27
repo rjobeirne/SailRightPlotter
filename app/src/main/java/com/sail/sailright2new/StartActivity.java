@@ -339,15 +339,16 @@ public class StartActivity extends AppCompatActivity {
                 showClock(timeRemain);
                 secsLeft = (double) timeRemain;
 
-                if (Math.round((secsLeft) / 60) * 60 == secsLeft) {
+                if (Math.round((secsLeft) / 60) * 60 == secsLeft && secsLeft > 0) {
                     playSounds("air_horn");
                 }
             }
 
             public void onFinish() {
                 playSounds("shotgun");
-                double timeToLine = theLine.getShortestDist() / mSmoothSpeed;
-                long acceptableStart = 10;
+                double timeToLine = (theLine.getShortestDist() - distToDevice) / mSmoothSpeed;
+                long acceptableStart = 15; //seconds
+                Log.e("ttl, acceptable", timeToLine + ", " + acceptableStart);
                 if (timeToLine > acceptableStart) {
                     playSounds("fail");
                 }
