@@ -21,7 +21,9 @@ public class Calculator {
     long timeToMark, timeVariance;
     String ttmDisplay, timeVarDisplay, timeVarianceSense;
 
-    public double getSmoothSpeed(double mSpeed) {
+
+
+    public double getSmoothSpeed(double mSpeed, int nSpeed) {
        // Process gps data for display on UI
         // Get speed in m/s and smooth for n=nSpeed readings
         sumSpeed = 0;
@@ -35,7 +37,7 @@ public class Calculator {
         return mSmoothSpeed;
     }
     
-      public int getSmoothHeading(int mHeading) {
+      public int getSmoothHeading(int mHeading, int nHeading) {
        // Process gps data for display on UI
         // Get heading and smooth for n=nHeading readings
         sumHeading = 0;

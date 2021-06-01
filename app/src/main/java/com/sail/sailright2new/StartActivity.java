@@ -2,9 +2,11 @@ package com.sail.sailright2new;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -57,10 +59,11 @@ public class StartActivity extends AppCompatActivity {
     double mSpeed, mSmoothSpeed;
     double distToMark;
     double approachAngle, distToDevice;
+    int deviceOffset, startMargin,smoothSpeedFactor, smoothHeadFactor;
 
     // Define clock variables
     long timeRemain = 75;
-    long timeToStart = 15 * 60;
+    long timeToStart;
     public Boolean timerStarted = false;
     Boolean resetClock = false;
     CountDownTimer startClock;
@@ -151,7 +154,17 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
-        distToDevice = 10 * Math.sin(Math.toRadians(approachAngle));
+        // Get settings from preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
+        timeToStart = 60 * Integer.parseInt(sharedPreferences.getString
+               ("prefs_default_start_time", "15"));
+        startMargin = Integer.parseInt(sharedPreferences.getString("prefs_start_margin", "15"));
+        smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
+        smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
+
+
+        distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
 
         // Create the start line
         theLine = new StartLine(aMark, hMark, firstMark);
@@ -221,13 +234,13 @@ public class StartActivity extends AppCompatActivity {
 
         // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
-            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed, smoothSpeedFactor);
             // Convert to knots and display
             speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
             // Change heading to correct format and smooth
             mHeading = (int) mCurrentLocation.getBearing();
-            mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+            mSmoothHeading = theCalculator.getSmoothHeading(mHeading, smoothHeadFactor);
             displayHeading = String.format("%03d", mSmoothHeading);
 
             // Find distance to the start point
@@ -338,8 +351,7 @@ public class StartActivity extends AppCompatActivity {
                 playSounds("shotgun");
                 double timeToLine = (theLine.getShortestDist() - distToDevice) / mSmoothSpeed;
                 long acceptableStart = 15; //seconds
-                Log.e("ttl, acceptable", timeToLine + ", " + acceptableStart);
-                if (timeToLine > acceptableStart) {
+                if (timeToLine > startMargin) {
                     playSounds("fail");
                 }
                 mClockTextView.setText("* GO ! *");

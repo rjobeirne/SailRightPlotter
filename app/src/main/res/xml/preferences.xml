@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <PreferenceCategory android:title="Boat">
+
+                <EditTextPreference
+                    android:key="@string/prefs_bow_to_gps"
+                    android:summary="@string/bow_to_gps_desc"
+                    android:title="@string/bow_to_gps" />
+
+                <EditTextPreference
+                    android:key="@string/prefs_speed_smooth"
+                    android:summary="@string/speed_smooth_desc"
+                    android:title="@string/speed_smooth" />
+
+                <EditTextPreference
+                    android:key="@string/prefs_heading_smooth"
+                    android:summary="@string/heading_smooth_desc"
+                    android:title="@string/heading_smooth" />
+
+                <EditTextPreference
+                    android:key="@string/prefs_proximity_dist"
+                    android:summary="@string/proximity_dist_desc"
+                    android:title="@string/proximity_dist" />
+
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:key="@string/prefs_auto_advance"
+                    android:summary="@string/auto_advance_mark_desc"
+                    android:title="@string/auto_advance_mark" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="Start">
+
+        <EditTextPreference
+            android:key="@string/prefs_default_start_time"
+            android:summary="@string/default_start_time_desc"
+            android:title="@string/default_start_time" />
+
+        <EditTextPreference
+            android:key="@string/prefs_start_margin"
+            android:summary="@string/acceptable_start_margin_desc"
+            android:title="@string/acceptable_start_margin" />
+
+
+
+        </PreferenceCategory>
+
+
+</PreferenceScreen>

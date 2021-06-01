@@ -16,4 +16,10 @@
 <!--    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
 <!--    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
+    <style name="SettingsTheme.NoActionBar" parent="Theme.AppCompat">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">#EEEEEE</item>
+        <item name="android:background">#000000</item>
+    </style>
 </resources>

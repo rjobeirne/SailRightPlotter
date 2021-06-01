@@ -49,4 +49,28 @@
     <string name="g_mark">G Mark</string>
     <string name="early_late">Early/Late</string>
 
+    <!-- Strings for settings -->
+    <string name="acceptable_start_time">Late for Start Time</string>
+    <string name="prefs_default_start_time">prefs_default_start_time</string>
+    <string name="default_start_time">Default Start Time</string>
+    <string name="default_start_time_desc">Start time for countdown clock</string>
+    <string name="prefs_bow_to_gps">prefs_bow_to_gps</string>
+    <string name="bow_to_gps">Device Offset</string>
+    <string name="bow_to_gps_desc">Distance from bow to the device in metres</string>
+    <string name="prefs_speed_smooth">prefs_speed_smooth</string>
+    <string name="speed_smooth">Speed Smoothing Factor</string>
+    <string name="speed_smooth_desc">Number of readings used for average speed (Default = 4)</string>
+    <string name="prefs_heading_smooth">prefs_heading_smooth</string>
+    <string name="heading_smooth">Heading Smoothing Factor</string>
+    <string name="heading_smooth_desc">Number of readings used for average heading (Default = 4)</string>
+    <string name="prefs_proximity_dist">prefs_proximity_dist</string>
+    <string name="proximity_dist">Proximity Alerts Distance</string>
+    <string name="proximity_dist_desc">Distance from mark for arrival notification in metres (Default = 50)</string>
+    <string name="prefs_auto_advance">prefs_auto_advance</string>
+    <string name="auto_advance_mark">Auto Advance to Next Mark</string>
+    <string name="auto_advance_mark_desc">Switch destination to next mark on proximity alert</string>
+    <string name="prefs_start_margin">prefs_start_margin</string>
+    <string name="acceptable_start_margin">Acceptable Start Margin</string>
+    <string name="acceptable_start_margin_desc">Notification given if starting this many seconds after start time</string>
+
 </resources>

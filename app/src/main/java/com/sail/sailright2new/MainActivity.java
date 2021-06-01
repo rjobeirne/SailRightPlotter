@@ -18,6 +18,7 @@ package com.sail.sailright2new;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -31,9 +32,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mBearingTextView;
     private TextView mDiscrepTextView;
     private TextView mTimeToMarkTextView;
+    private ImageButton settingsBtn;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -114,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
     String lastMarkName = null;
     String raceCourse;
     ArrayList courseMarks;
+
+    int deviceOffset,smoothSpeedFactor, smoothHeadFactor, alarmMarkProximity;
 
     int directionFactor;
     Location aMark, hMark, lastMark, finishPoint;
@@ -172,7 +178,35 @@ public class MainActivity extends AppCompatActivity {
         mBearingTextView = findViewById(R.id.bearing_text);
         mDiscrepTextView = findViewById(R.id.variance_text);
         mTimeToMarkTextView = findViewById(R.id.time_to_mark);
-//        TextView mTimeTextView = findViewById(R.id.time_text);
+        settingsBtn = findViewById(R.id.button_settings);
+
+        // Settings and preferences
+        // Send Toast message on short click
+        settingsBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                shortClick();
+            }
+        });
+
+        // Go to settings page on long click
+        settingsBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // opening a new intent to open settings activity.
+                Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(i);
+                return false;
+            }
+        });
+
+        // Get settings from preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
+        smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
+        smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
+        alarmMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
+
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
@@ -215,6 +249,13 @@ public class MainActivity extends AppCompatActivity {
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -423,14 +464,14 @@ public class MainActivity extends AppCompatActivity {
 
             // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
-            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed);
+            mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed, smoothSpeedFactor);
 
             // Convert to knots and display
             speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
             // Change heading to correct format and smooth
             mHeading = (int) mCurrentLocation.getBearing();
-            mSmoothHeading = theCalculator.getSmoothHeading(mHeading);
+            mSmoothHeading = theCalculator.getSmoothHeading(mHeading, smoothHeadFactor);
 
             displayHeading = String.format("%03d", mSmoothHeading);
 
@@ -454,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if (distToMark < 50 && finMark.equals("race")) {
+            if (distToMark < alarmMarkProximity && finMark.equals("race")) {
                 posMark = posMark + 1;
                 setNextMark();
                 playSounds("klaxon");
@@ -463,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
             if (flagFinish && finishPoint != null) {
             // Calculate distance in metres to finish point from latitude
                 double approachAngle = Math.abs(theFinish.getApproachAngle());
-                double distToDevice = 10 * Math.sin(Math.toRadians(approachAngle));
+                double distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
                 distToFinish = (mCurrentLocation.getLatitude() - finishPoint.getLatitude()) * directionFactor * 60 * 1852;
                 displayDistToMark = theCalculator.getDistScale(distToFinish);
                 if (distToFinish < distToDevice) {
@@ -531,6 +572,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    public void shortClick() {
+        Toast.makeText(this, "Long click to get to Settings", Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
