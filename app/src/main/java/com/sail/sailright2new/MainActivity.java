@@ -330,6 +330,12 @@ public class MainActivity extends AppCompatActivity {
         courseMarks = theCourses.getCourse(raceCourse);
 
         mCourseTextView.setText(raceCourse);
+        if (posCourse == 0) {
+            settingsBtn.setVisibility(View.VISIBLE);
+        } else {
+            settingsBtn.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     /**
