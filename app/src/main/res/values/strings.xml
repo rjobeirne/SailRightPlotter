@@ -68,7 +68,8 @@
     <string name="proximity_dist_desc">Distance from mark for arrival notification in metres (Default = 50)</string>
     <string name="prefs_auto_advance">prefs_auto_advance</string>
     <string name="auto_advance_mark">Auto Advance to Next Mark</string>
-    <string name="auto_advance_mark_desc">Switch destination to next mark on proximity alert</string>
+    <string name="auto_advance_mark_desc">Switch destination to next mark on proximity alert.
+        Deactivation also deactivates proximity alarm</string>
     <string name="prefs_start_margin">prefs_start_margin</string>
     <string name="acceptable_start_margin">Acceptable Start Margin</string>
     <string name="acceptable_start_margin_desc">Notification given if starting this many seconds after start time</string>

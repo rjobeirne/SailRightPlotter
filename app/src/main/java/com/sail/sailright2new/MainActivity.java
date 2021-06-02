@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList courseMarks;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, alarmMarkProximity;
+    Boolean autoAdvance;
 
     int directionFactor;
     Location aMark, hMark, lastMark, finishPoint;
@@ -200,13 +201,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Get settings from preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
-        smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
-        smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
-        alarmMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
-
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
@@ -253,7 +247,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Get settings from preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
+        smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
+        smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
+        alarmMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
+        autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
     }
 
 
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if (distToMark < alarmMarkProximity && finMark.equals("race")) {
+            if (distToMark < alarmMarkProximity && finMark.equals("race") && autoAdvance) {
                 posMark = posMark + 1;
                 setNextMark();
                 playSounds("klaxon");
