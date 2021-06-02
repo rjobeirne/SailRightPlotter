@@ -22,7 +22,7 @@ public class StartLine {
     double latBoat = 0;
     double lonBoat = 0;
     float boatHeading, bearingToA, bearingToH;
-    float displayBoatHeading, displayBearingToA, displayBearingToH;
+    float negBoatHeading, displayBearingToA, displayBearingToH;
     double slopeBoat = 0;
     float slopeBoatAngle;
     double constBoat = 0;
@@ -80,12 +80,14 @@ public class StartLine {
         slopeBoat = Math.tan(Math.toRadians(slopeBoatAngle));
         constBoat = latBoat - (slopeBoat * lonBoat);
 
-        // Convert bearings to compass bearings
-                if (boatHeading < 0) {
-                    displayBoatHeading = boatHeading + 360;
-                } else {
-                    displayBoatHeading = boatHeading;
-                }
+        //Convert boat heading from compass bearing to +/- from north
+        if (boatHeading >180) {
+            negBoatHeading = boatHeading - 360;
+        } else {
+            negBoatHeading = boatHeading;
+        }
+
+        // Convert bearings compass bearings
         bearingToA = mCurrentLocation.bearingTo(markA);
                 if ( bearingToA < 0) {
                     displayBearingToA = bearingToA + 360;
@@ -106,13 +108,12 @@ public class StartLine {
      */
     public int getStartDirection() {
         if (latFirstMark < latA) {
-            // Approaching finish from the north
+            // Approaching start from the north
             directionFactor = 1;
         } else {
             // Approach from the south
             directionFactor = -1;
         }
-        Log.e("dir factor", String.valueOf(directionFactor));
         return  directionFactor;
     }
 
@@ -129,9 +130,9 @@ public class StartLine {
         if (directionFactor == 1) {
             // Approaching from the north
             // Use compass bearing
-            if (displayBoatHeading > displayBearingToA) {
+            if (boatHeading > displayBearingToA) {
                 startTarget = "A";
-            } else if (displayBoatHeading < displayBearingToH) {
+            } else if (boatHeading < displayBearingToH) {
                 startTarget = "H";
             } else {
                 startTarget = "Line";
@@ -140,9 +141,9 @@ public class StartLine {
         } else {
             // Approaching from the south
             // Use bearing +/- from north
-            if (boatHeading < bearingToA) {
+            if (negBoatHeading < bearingToA) {
                 startTarget = "A";
-            } else if (boatHeading > bearingToH) {
+            } else if (negBoatHeading > bearingToH) {
                 startTarget = "H";
             } else {
                 startTarget = "Line";

@@ -22,7 +22,7 @@ public class FinishLine {
     double latBoat = 0;
     double lonBoat = 0;
     float boatHeading, bearingToA, bearingToH;
-    float displayBoatHeading, displayBearingToA, displayBearingToH;
+    float negBoatHeading, displayBearingToA, displayBearingToH;
     double slopeBoat = 0;
     float slopeBoatAngle;
     double constBoat = 0;
@@ -77,12 +77,14 @@ public class FinishLine {
         slopeBoat = Math.tan(Math.toRadians(slopeBoatAngle));
         constBoat = latBoat - (slopeBoat * lonBoat);
 
+        //Convert boat heading from compass bearing to +/- from north
+        if (boatHeading >180) {
+            negBoatHeading = boatHeading - 360;
+        } else {
+            negBoatHeading = boatHeading;
+        }
+
         // Convert bearings to compass bearings
-                if (boatHeading < 0) {
-                    displayBoatHeading = boatHeading + 360;
-                } else {
-                    displayBoatHeading = boatHeading;
-                }
         bearingToA = mCurrentLocation.bearingTo(markA);
                 if ( bearingToA < 0) {
                     displayBearingToA = bearingToA + 360;
@@ -123,10 +125,10 @@ public class FinishLine {
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
         if (directionFactor == 1) {
-            // Approaching from the north
-            if (displayBoatHeading > displayBearingToA) {
+            // Approaching from the north use compass bearing
+            if (boatHeading > displayBearingToA) {
                 finishTarget = "A";
-            } else if (displayBoatHeading < displayBearingToH) {
+            } else if (boatHeading < displayBearingToH) {
                 finishTarget = "H";
             } else {
                 finishTarget = "Line";
@@ -135,9 +137,9 @@ public class FinishLine {
         } else {
             // Approaching from the south
             // Use bearing +/- from north
-            if (boatHeading < bearingToA) {
+            if (negBoatHeading < bearingToA) {
                 finishTarget = "A";
-            } else if (boatHeading > bearingToH) {
+            } else if (negBoatHeading > bearingToH) {
                 finishTarget = "H";
             } else {
                 finishTarget = "Line";
