@@ -71,7 +71,17 @@
     <string name="auto_advance_mark_desc">Switch destination to next mark on proximity alert.
         Deactivation also deactivates proximity alarm</string>
     <string name="prefs_start_margin">prefs_start_margin</string>
-    <string name="acceptable_start_margin">Acceptable Start Margin</string>
-    <string name="acceptable_start_margin_desc">Notification given if starting this many seconds after start time</string>
+    <string name="acceptable_start_margin">Late Start Margin</string>
+    <string name="acceptable_start_margin_desc">Notification given if starting more than this many seconds after start time</string>
+    <string name="prefs_mins_airhorn">prefs_mins_airhorn</string>
+    <string name="minutes_airhorn">Start Sequence Minutes Alert</string>
+    <string name="prefs_start_gun">prefs_start_gun</string>
+    <string name="start_gun">Start Gun</string>
+    <string name="prefs_mark_prox">prefs_mark_prox</string>
+    <string name="mark_proximity">Mark Proximity Alert</string>
+    <string name="prefs_finish">prefs_finish</string>
+    <string name="finish_whoop">Cross Finish Line Alert</string>
+    <string name="prefs_bad_start">prefs_bad_start</string>
+    <string name="bad_start">Late Start Notification</string>
 
 </resources>

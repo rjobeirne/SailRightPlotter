@@ -60,6 +60,7 @@ public class StartActivity extends AppCompatActivity {
     double distToMark;
     double approachAngle, distToDevice;
     int deviceOffset, startMargin,smoothSpeedFactor, smoothHeadFactor;
+    Boolean alarmMinute, alarmStart, alarmBadStart;
 
     // Define clock variables
     long timeRemain = 75;
@@ -162,7 +163,9 @@ public class StartActivity extends AppCompatActivity {
         startMargin = Integer.parseInt(sharedPreferences.getString("prefs_start_margin", "15"));
         smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
         smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
-
+        alarmMinute = sharedPreferences.getBoolean("prefs_mins_airhorn", Boolean.parseBoolean("TRUE"));
+        alarmStart = sharedPreferences.getBoolean("prefs_start_gun", Boolean.parseBoolean("TRUE"));
+        alarmBadStart = sharedPreferences.getBoolean("prefs_bad_start", Boolean.parseBoolean("TRUE"));
 
         distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
 
@@ -343,16 +346,22 @@ public class StartActivity extends AppCompatActivity {
                 secsLeft = (double) timeRemain;
 
                 if (Math.round((secsLeft) / 60) * 60 == secsLeft && secsLeft > 0) {
-                    playSounds("air_horn");
+                    if (alarmMinute) {
+                        playSounds("air_horn");
+                    }
                 }
             }
 
             public void onFinish() {
-                playSounds("shotgun");
+                if (alarmStart) {
+                    playSounds("shotgun");
+                }
                 double timeToLine = (theLine.getShortestDist() - distToDevice) / mSmoothSpeed;
                 long acceptableStart = 15; //seconds
                 if (timeToLine > startMargin) {
-                    playSounds("fail");
+                    if (alarmBadStart) {
+                        playSounds("fail");
+                    }
                 }
                 mClockTextView.setText("* GO ! *");
                 finish();

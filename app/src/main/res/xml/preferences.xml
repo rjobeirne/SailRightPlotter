@@ -47,5 +47,33 @@
 
         </PreferenceCategory>
 
+        <PreferenceCategory android:title="Notifications">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_mins_airhorn"
+            android:title="@string/minutes_airhorn" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_start_gun"
+            android:title="@string/start_gun" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_mark_prox"
+            android:title="@string/mark_proximity" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_finish"
+            android:title="@string/finish_whoop" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_bad_start"
+            android:title="@string/bad_start" />
+
+        </PreferenceCategory>
 
 </PreferenceScreen>

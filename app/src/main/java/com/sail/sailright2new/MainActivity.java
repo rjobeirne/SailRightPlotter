@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
     String raceCourse;
     ArrayList courseMarks;
 
-    int deviceOffset,smoothSpeedFactor, smoothHeadFactor, alarmMarkProximity;
-    Boolean autoAdvance;
+    int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
+    Boolean autoAdvance, alarmProx, alarmFinish;
 
     int directionFactor;
     Location aMark, hMark, lastMark, finishPoint;
@@ -252,8 +252,10 @@ public class MainActivity extends AppCompatActivity {
         deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
         smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
         smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
-        alarmMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
+        distMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
+        alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
+        alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
     }
 
 
@@ -402,7 +404,6 @@ public class MainActivity extends AppCompatActivity {
                 // Identify the last mark to determine the direction of approach
                 flagFinish = TRUE;
                 lastMarkName = (String) courseMarks.get(listMarkSize - 2);
-                Log.e("lastMarkName", lastMarkName);
 
                 // Should have A Mark, H Mark to create the Finish Line Object
                 aMark = theMarks.getNextMark(a);
@@ -501,10 +502,14 @@ public class MainActivity extends AppCompatActivity {
             // Get GPS accuracy
             accuracy = new DecimalFormat("###0").format(mCurrentLocation.getAccuracy()) + " m";
 
-            if (distToMark < alarmMarkProximity && finMark.equals("race") && autoAdvance) {
+            if (distToMark < distMarkProximity
+                    && finMark.equals("race")
+                    && autoAdvance) {
                 posMark = posMark + 1;
                 setNextMark();
-                playSounds("klaxon");
+                if (alarmProx) {
+                    playSounds("klaxon");
+                }
             }
 
             if (flagFinish && finishPoint != null) {
@@ -514,7 +519,9 @@ public class MainActivity extends AppCompatActivity {
                 distToFinish = (mCurrentLocation.getLatitude() - finishPoint.getLatitude()) * directionFactor * 60 * 1852;
                 displayDistToMark = theCalculator.getDistScale(distToFinish);
                 if (distToFinish < distToDevice) {
-                    playSounds("whoop");
+                    if (alarmFinish) {
+                        playSounds("whoop");
+                    }
                     mNextMarkTextView.setText("** FINISHED **");
                     flagFinish = FALSE;
                     posMark = 0;
