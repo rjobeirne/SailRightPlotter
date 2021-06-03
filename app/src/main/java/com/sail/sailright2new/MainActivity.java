@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mBearingTextView;
     private TextView mDiscrepTextView;
     private TextView mTimeToMarkTextView;
+    private TextView mCourseDistTextView;
     private ImageButton settingsBtn;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
     String raceCourse;
     String nextRounding = "A";
     ArrayList courseMarks, markRounding;
+    String courseDist;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish;
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mDiscrepTextView = findViewById(R.id.variance_text);
         mTimeToMarkTextView = findViewById(R.id.time_to_mark);
         settingsBtn = findViewById(R.id.button_settings);
+        mCourseDistTextView = findViewById(R.id.course_dist);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -332,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
         raceCourse = theCourses.courses.get(posCourse).getCourseName();
         courseMarks = theCourses.getCourse(raceCourse);
         markRounding = theCourses.getRounding(raceCourse);
+        courseDist = theCourses.getCourseDist(raceCourse);
 
         mCourseTextView.setBackgroundColor(getResources().getColor(R.color.white));
 
@@ -342,8 +346,10 @@ public class MainActivity extends AppCompatActivity {
             mCourseTextView.setBackgroundColor(getResources().getColor(R.color.port));
         }
 
-
         mCourseTextView.setText(raceCourse);
+        mCourseDistTextView.setText(courseDist);
+
+
         if (posCourse == 0) {
             settingsBtn.setVisibility(View.VISIBLE);
         } else {
@@ -410,7 +416,6 @@ public class MainActivity extends AppCompatActivity {
                 mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
                 if (nextRounding.equals("S")) {
-                    Log.e("nextRound", nextMark + ", " + nextRounding);
                     mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
                 }
                 if (nextRounding.equals("P")) {

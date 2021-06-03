@@ -1,6 +1,7 @@
 package com.sail.sailright2new;
 
 import android.os.Environment;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -50,6 +51,7 @@ public class Courses {
                 model.setCourseName(element.getAttribute("name"));
                 model.setCourseRoute(element.getAttribute("route"));
                 model.setCourseRounding(element.getAttribute("rounding"));
+                model.setCourseDist(element.getAttribute("dist"));
                 courses.add(model);
             }
 
@@ -80,7 +82,7 @@ public class Courses {
 
     // Find the roundings for the selected course
     public ArrayList getRounding(String selectedCourse) {
-        ArrayList course = new ArrayList();
+        ArrayList round = new ArrayList();
 
         String tryRound;
         String roundingString;
@@ -92,10 +94,26 @@ public class Courses {
                 roundingString = courses.get(j).getCourseRounding();
 
                 // Convert string to ArrayList
-                course =  (ArrayList) new ArrayList<String>(Arrays.asList(roundingString.split(",")));
+                round =  (ArrayList) new ArrayList<String>(Arrays.asList(roundingString.split(",")));
             }
         }
-        return course;
+        return round;
+    }
+
+    // Find the distance for the selected course
+    public String getCourseDist(String selectedCourse) {
+
+        String courseDist = "-";
+        String tryDist;
+
+        for (int j = 0; j < courses.size(); j++) {
+            tryDist = courses.get(j).getCourseName();
+
+            if (tryDist.equals(selectedCourse)) {
+                courseDist = courses.get(j).getCourseDist();
+            }
+        }
+        return courseDist;
     }
 }
 
