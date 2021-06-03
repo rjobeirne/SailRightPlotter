@@ -49,6 +49,7 @@ public class Courses {
                 Course model = new Course();
                 model.setCourseName(element.getAttribute("name"));
                 model.setCourseRoute(element.getAttribute("route"));
+                model.setCourseRounding(element.getAttribute("rounding"));
                 courses.add(model);
             }
 
@@ -72,6 +73,26 @@ public class Courses {
 
                 // Convert string to ArrayList
                 course =  (ArrayList) new ArrayList<String>(Arrays.asList(courseString.split(",")));
+            }
+        }
+        return course;
+    }
+
+    // Find the roundings for the selected course
+    public ArrayList getRounding(String selectedCourse) {
+        ArrayList course = new ArrayList();
+
+        String tryRound;
+        String roundingString;
+
+        for (int j = 0; j < courses.size(); j++) {
+            tryRound = courses.get(j).getCourseName();
+
+            if (tryRound.equals(selectedCourse)) {
+                roundingString = courses.get(j).getCourseRounding();
+
+                // Convert string to ArrayList
+                course =  (ArrayList) new ArrayList<String>(Arrays.asList(roundingString.split(",")));
             }
         }
         return course;

@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
     int listMarkSize, listCourseSize;
     String lastMarkName = null;
     String raceCourse;
-    ArrayList courseMarks;
+    String nextRounding = "A";
+    ArrayList courseMarks, markRounding;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish;
@@ -330,6 +331,17 @@ public class MainActivity extends AppCompatActivity {
         listCourseSize = theCourses.courses.size();
         raceCourse = theCourses.courses.get(posCourse).getCourseName();
         courseMarks = theCourses.getCourse(raceCourse);
+        markRounding = theCourses.getRounding(raceCourse);
+
+        mCourseTextView.setBackgroundColor(getResources().getColor(R.color.white));
+
+        if (markRounding.get(0).equals("S")) {
+            mCourseTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
+        }
+        if (markRounding.get(0).equals("P")) {
+            mCourseTextView.setBackgroundColor(getResources().getColor(R.color.port));
+        }
+
 
         mCourseTextView.setText(raceCourse);
         if (posCourse == 0) {
@@ -380,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 listMarkSize = courseMarks.size();
                 nextMark = (String) courseMarks.get(posMark);
+                nextRounding = (String) markRounding.get(posMark);
             }
 
             if (nextMark.length() == 1) {
@@ -396,11 +409,19 @@ public class MainActivity extends AppCompatActivity {
                 mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.ITALIC);
                 mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
+                if (nextRounding.equals("S")) {
+                    Log.e("nextRound", nextMark + ", " + nextRounding);
+                    mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
+                }
+                if (nextRounding.equals("P")) {
+                    mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.port));
+                }
             }
             mNextMarkTextView.setText(nextMarkFull);
 
             // Check to see if next mark is not the finish
             if (nextMark.equals("Finish")) {
+                mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
                 // Identify the last mark to determine the direction of approach
                 flagFinish = TRUE;
                 lastMarkName = (String) courseMarks.get(listMarkSize - 2);
