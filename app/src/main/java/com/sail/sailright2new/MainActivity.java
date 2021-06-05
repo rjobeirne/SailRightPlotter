@@ -17,6 +17,7 @@ package com.sail.sailright2new;
  */
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -56,6 +57,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -145,28 +147,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-//        ArrayList<Mark> marks = new ArrayList<>();
-//        ArrayList<Course> courses = new ArrayList<>();
-//        ArrayList courseMarks = new ArrayList();
-
-        // first check for runtime permission
-        String permissionRead = Manifest.permission.READ_EXTERNAL_STORAGE;
-        int grant = ContextCompat.checkSelfPermission(this, permissionRead);
-
-        if (grant != PackageManager.PERMISSION_GRANTED) {
-            String[] permission_list = new String[1];
-            permission_list[0] = permissionRead;
-            ActivityCompat.requestPermissions(this, permission_list, 1);
-        }
-        String permissionWrite = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        int grantWrite = ContextCompat.checkSelfPermission(this, permissionWrite);
-
-        if (grantWrite != PackageManager.PERMISSION_GRANTED) {
-            String[] permission_list = new String[1];
-            permission_list[0] = permissionWrite;
-            ActivityCompat.requestPermissions(this, permission_list, 1);
-        }
-
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
         File fileCourse = new File(dir + "courses.gpx");
@@ -254,16 +234,40 @@ public class MainActivity extends AppCompatActivity {
                 if (nextMark.equals("Start")) {
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
-//        Location lastMark = theMarks.getNextMark(lastMarkName);
                     openStartActivity();
                     flagStart = TRUE;
                 }
             }
         });
 
+        // The request code used in ActivityCompat.requestPermissions()
+        // and returned in the Activity's onRequestPermissionsResult()
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+          Manifest.permission.ACCESS_FINE_LOCATION,
+          Manifest.permission.READ_EXTERNAL_STORAGE,
+          android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
+
         updateGPS();
         startLocationUpdates();
     } // end onCreate method
+
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -284,22 +288,6 @@ public class MainActivity extends AppCompatActivity {
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == PERMISSIONS_FINE_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                updateGPS();
-            } else {
-                Toast.makeText(this, "This app requires permission to be granted", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-        Log.e("grantResults  ", String.valueOf(grantResults));
     }
 
     private void updateGPS() {
@@ -691,7 +679,6 @@ public class MainActivity extends AppCompatActivity {
             OutputStream out = null;
             try {
                 in = assetManager.open(filename);
-                Log.e("in", String.valueOf(in));
                 File outFile = new File(dir, filename);
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
