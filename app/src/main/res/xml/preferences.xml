@@ -6,22 +6,26 @@
                 <EditTextPreference
                     android:key="@string/prefs_bow_to_gps"
                     android:summary="@string/bow_to_gps_desc"
-                    android:title="@string/bow_to_gps" />
+                    android:title="@string/bow_to_gps"
+                    android:defaultValue="9" />
 
                 <EditTextPreference
                     android:key="@string/prefs_speed_smooth"
                     android:summary="@string/speed_smooth_desc"
-                    android:title="@string/speed_smooth" />
+                    android:title="@string/speed_smooth"
+                    android:defaultValue="4" />
 
                 <EditTextPreference
                     android:key="@string/prefs_heading_smooth"
                     android:summary="@string/heading_smooth_desc"
-                    android:title="@string/heading_smooth" />
+                    android:title="@string/heading_smooth"
+                    android:defaultValue="4" />
 
                 <EditTextPreference
                     android:key="@string/prefs_proximity_dist"
                     android:summary="@string/proximity_dist_desc"
-                    android:title="@string/proximity_dist" />
+                    android:title="@string/proximity_dist"
+                    android:defaultValue="50" />
 
                 <SwitchPreference
                     android:defaultValue="true"
@@ -36,14 +40,14 @@
         <EditTextPreference
             android:key="@string/prefs_default_start_time"
             android:summary="@string/default_start_time_desc"
-            android:title="@string/default_start_time" />
+            android:title="@string/default_start_time"
+            android:defaultValue="15" />
 
         <EditTextPreference
             android:key="@string/prefs_start_margin"
             android:summary="@string/acceptable_start_margin_desc"
-            android:title="@string/acceptable_start_margin" />
-
-
+            android:title="@string/acceptable_start_margin"
+            android:defaultValue="15"  />
 
         </PreferenceCategory>
 
@@ -74,6 +78,12 @@
             android:key="@string/prefs_bad_start"
             android:title="@string/bad_start" />
 
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="Reset">
+        <Preference android:title="Restore default values"
+            android:summary=""
+            android:key="@string/restore_defaults"/>
         </PreferenceCategory>
 
 </PreferenceScreen>

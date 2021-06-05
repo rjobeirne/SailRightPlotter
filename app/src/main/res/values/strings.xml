@@ -83,5 +83,6 @@
     <string name="finish_whoop">Cross Finish Line Alert</string>
     <string name="prefs_bad_start">prefs_bad_start</string>
     <string name="bad_start">Late Start Notification</string>
+    <string name="restore_defaults">"Restore default values</string>
 
 </resources>
