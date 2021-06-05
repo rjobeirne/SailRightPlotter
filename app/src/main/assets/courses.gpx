@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+RMYS courses from 'Course-list-27-Oct-2020.pdf'
+-->
 <list>
     <course name="None" route="None,Finish" rounding="A,A" dist="-"/>
     <course name="00" route="Start,Arundel6,Finish" rounding="P,P,P" dist="0.2"/>
