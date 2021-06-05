@@ -20,11 +20,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -47,7 +49,11 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
     FusedLocationProviderClient fusedLocationProviderClient;
+    File dir;
 
     // UI Widgets.
     private TextView mNextMarkTextView;
@@ -143,14 +150,31 @@ public class MainActivity extends AppCompatActivity {
 //        ArrayList courseMarks = new ArrayList();
 
         // first check for runtime permission
-        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-        int grant = ContextCompat.checkSelfPermission(this, permission);
+        String permissionRead = Manifest.permission.READ_EXTERNAL_STORAGE;
+        int grant = ContextCompat.checkSelfPermission(this, permissionRead);
 
         if (grant != PackageManager.PERMISSION_GRANTED) {
             String[] permission_list = new String[1];
-            permission_list[0] = permission;
+            permission_list[0] = permissionRead;
             ActivityCompat.requestPermissions(this, permission_list, 1);
         }
+        String permissionWrite = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        int grantWrite = ContextCompat.checkSelfPermission(this, permissionWrite);
+
+        if (grantWrite != PackageManager.PERMISSION_GRANTED) {
+            String[] permission_list = new String[1];
+            permission_list[0] = permissionWrite;
+            ActivityCompat.requestPermissions(this, permission_list, 1);
+        }
+
+        // Check device has course files. If not copy course and mark files from assets
+        dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
+        File fileCourse = new File(dir + "courses.gpx");
+        if (!fileCourse.exists()) {
+            copyAsset("courses.gpx");
+            copyAsset("marks.gpx");
+        }
+
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
@@ -275,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
+        Log.e("grantResults  ", String.valueOf(grantResults));
     }
 
     private void updateGPS() {
@@ -651,6 +676,56 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
+
+    private void copyAsset(String filename) {
+        File fileCourse = new File(dir + "/" + filename);
+
+        // Check if SailRight directory exists, if not create it
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        // If courses or marks file do not exist copy them from assets
+        if (!fileCourse.exists()) {
+            AssetManager assetManager = getAssets();
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                in = assetManager.open(filename);
+                Log.e("in", String.valueOf(in));
+                File outFile = new File(dir, filename);
+                out = new FileOutputStream(outFile);
+                copyFile(in, out);
+                Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+    }
+
 }
 
 
