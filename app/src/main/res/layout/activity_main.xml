@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/course_name"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -58,12 +58,12 @@
     <TextView
         android:id="@+id/course_dist"
         android:layout_width="48dp"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
         android:text="5.2"
         android:textAlignment="center"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,12 +71,11 @@
     <TextView
         android:id="@+id/course_dist_unit"
         android:layout_width="48dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="0dp"
-        android:textSize="20sp"
+        android:layout_height="wrap_content"
         android:text="@string/course_dist_unit"
         android:textAlignment="center"
         android:textColor="@color/titles"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintTop_toBottomOf="@id/course_dist" />
@@ -100,15 +99,13 @@
     <TextView
         android:id="@+id/next_mark_name"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
-        android:textColor="@color/normal_text"
         android:textAlignment="center"
+        android:textColor="@color/normal_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/plus"
         app:layout_constraintStart_toEndOf="@+id/minus"
@@ -146,6 +143,7 @@
         android:id="@+id/heading_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/heading"
         android:textColor="@color/normal_text"
@@ -169,7 +167,7 @@
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/minus" />
+        app:layout_constraintTop_toBottomOf="@+id/course_dist_unit" />
 
     <TextView
         android:id="@+id/variance_text"
