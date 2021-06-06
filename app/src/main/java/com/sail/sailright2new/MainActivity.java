@@ -30,10 +30,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -104,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
     String speedDisplay;
     int mHeading;
     int mSmoothHeading;
-    int negHeading;
     String displayHeading;
     String nextMark;
     String nextMarkFull;

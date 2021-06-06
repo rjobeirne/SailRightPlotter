@@ -29,8 +29,8 @@
     <string name="heading">Head</string>
     <string name="lt"><![CDATA[<]]></string>
     <string name="gt"><![CDATA[>]]></string>
-    <string name="start"></string>
-    <string name="sync"></string>
+    <string name="start">Start</string>
+    <string name="sync">Sync</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="a_mark">A Mark</string>
@@ -48,8 +48,19 @@
     <string name="time_to_line">Time to Line</string>
     <string name="g_mark">G Mark</string>
     <string name="early_late">Early/Late</string>
+    <string name="course_dist_unit">nm</string>
+    <string name="clock_time">Time</string>
+    <string name="race">Race</string>
+    <string name="fin">Fin - </string>
+    <string name="mark"> Mark</string>
+    <string name="finished">** FINISHED **</string>
+    <string name="start_mark">Start - </string>
+    <string name="early">Early</string>
+    <string name="late">Late</string>
+    <string name="go">* GO ! *</string>
 
     <!-- Strings for settings -->
+    <string name="hammer_spanner">Hammer and spanner</string>
     <string name="acceptable_start_time">Late for Start Time</string>
     <string name="prefs_default_start_time">prefs_default_start_time</string>
     <string name="default_start_time">Default Start Time</string>

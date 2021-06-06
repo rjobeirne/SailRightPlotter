@@ -13,7 +13,6 @@ public class Calculator {
     int mSmoothHeading, sumHeading;
     final int nHeading = 4;
     public int storeHeading[] = new int[nHeading];
-    int negHeading;
     String displayDistToMark, distUnits;
     int displayBearingToMark;
     int rawVariance, bearingVariance;

@@ -18,7 +18,6 @@ public class SettingsActivity extends AppCompatActivity {
 //    Resources resources = this.getResources();
 
    public static final String MyPREFERENCES = "preferences" ;
-   String value = "pref_seek_val";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    restoreDefaultSettings();;
+                    restoreDefaultSettings();
                     return false;
                 }
             });

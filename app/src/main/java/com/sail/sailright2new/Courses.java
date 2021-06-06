@@ -74,7 +74,7 @@ public class Courses {
                 courseString = courses.get(j).getCourseRoute();
 
                 // Convert string to ArrayList
-                course =  (ArrayList) new ArrayList<String>(Arrays.asList(courseString.split(",")));
+                course = new ArrayList<String>(Arrays.asList(courseString.split(",")));
             }
         }
         return course;
@@ -94,7 +94,7 @@ public class Courses {
                 roundingString = courses.get(j).getCourseRounding();
 
                 // Convert string to ArrayList
-                round =  (ArrayList) new ArrayList<String>(Arrays.asList(roundingString.split(",")));
+                round = new ArrayList<String>(Arrays.asList(roundingString.split(",")));
             }
         }
         return round;

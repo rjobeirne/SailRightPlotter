@@ -13,7 +13,6 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
     TextView mClockTextView;
 
     // Define variables
-    Location destMark, startPoint;
+    Location destMark;
     String startMark = "A";
     String speedDisplay, displayHeading;
     String displayDistToMark, distUnits;
@@ -59,7 +58,7 @@ public class StartActivity extends AppCompatActivity {
     double mSpeed, mSmoothSpeed;
     double distToMark;
     double approachAngle, distToDevice;
-    int deviceOffset, startMargin,smoothSpeedFactor, smoothHeadFactor;
+    int deviceOffset, startMargin, smoothSpeedFactor, smoothHeadFactor;
     Boolean alarmMinute, alarmStart, alarmBadStart;
 
     // Define clock variables
@@ -81,18 +80,18 @@ public class StartActivity extends AppCompatActivity {
         String firstMarkName = intent.getStringExtra("first");
 
         // Locate the UI widgets.
-        startCourseTextView = (TextView) findViewById(R.id.start_course_name);
-        startNextMarkTextView = (TextView) findViewById(R.id.start_next_mark_name);
-        mSpeedTextView = (TextView) findViewById(R.id.speed_text);
-        mHeadingTextView = (TextView) findViewById(R.id.heading_text);
-        mDistanceTextView = (TextView) findViewById(R.id.distance_text);
-        mDistanceUnitTextView = (TextView) findViewById(R.id.dist_unit);
-        mBearingTextView = (TextView) findViewById(R.id.bearing_text);
-        mTimeVarianceTextView = (TextView) findViewById(R.id.start_time_early_late);
-        mEarlyLateTextView = (TextView) findViewById(R.id.start_time_early_late_title);
-        mTimeToMarkTextView = (TextView) findViewById(R.id.time_to_line);
-        mAccuracyTextView = (TextView) findViewById(R.id.accuracy_text);
-        mClockTextView = (TextView) findViewById(R.id.time_to_start);
+        startCourseTextView = findViewById(R.id.start_course_name);
+        startNextMarkTextView = findViewById(R.id.start_next_mark_name);
+        mSpeedTextView = findViewById(R.id.speed_text);
+        mHeadingTextView = findViewById(R.id.heading_text);
+        mDistanceTextView = findViewById(R.id.distance_text);
+        mDistanceUnitTextView = findViewById(R.id.dist_unit);
+        mBearingTextView = findViewById(R.id.bearing_text);
+        mTimeVarianceTextView = findViewById(R.id.start_time_early_late);
+        mEarlyLateTextView = findViewById(R.id.start_time_early_late_title);
+        mTimeToMarkTextView = findViewById(R.id.time_to_line);
+        mAccuracyTextView = findViewById(R.id.accuracy_text);
+        mClockTextView = findViewById(R.id.time_to_start);
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
@@ -129,7 +128,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
         // Locate start timer button
-        Button mButton = (Button) findViewById(R.id.start_clock);
+        Button mButton = findViewById(R.id.start_clock);
         mButton.setText(clockControl);
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -227,7 +226,6 @@ public class StartActivity extends AppCompatActivity {
                 // Insert the finish line crossing point
                 startNextMarkTextView.setText(startMark);
                 destMark = theLine.getStartPoint(mCurrentLocation);
-                startPoint = destMark;
                 approachAngle = Math.abs(theLine.getApproachAngle());
             } else {
                 // Set the next mark to either A or H
@@ -319,7 +317,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void start_clock(View view) {
-        Button mButton = (Button) findViewById(R.id.start_clock);
+        Button mButton = findViewById(R.id.start_clock);
         if (timerStarted) {
             Toast.makeText(this, "Clock synchronised", Toast.LENGTH_SHORT).show();
             mButton.setBackgroundColor(Color.GREEN);
@@ -357,7 +355,6 @@ public class StartActivity extends AppCompatActivity {
                     playSounds("shotgun");
                 }
                 double timeToLine = (theLine.getShortestDist() - distToDevice) / mSmoothSpeed;
-                long acceptableStart = 15; //seconds
                 if (timeToLine > startMargin) {
                     if (alarmBadStart) {
                         playSounds("fail");
@@ -374,7 +371,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void sync_clock(View view) {
-        timeToStart = (long) Math.round((secsLeft) / 60) * 60;
+        timeToStart = Math.round((secsLeft) / 60) * 60;
         resetClock = true;
         countdown();
     }
