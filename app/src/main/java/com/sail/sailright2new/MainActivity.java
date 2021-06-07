@@ -418,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (nextMark.equals("Start")) {
+                destMark = theMarks.getNextMark("A");
                 mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
                 mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
@@ -451,7 +452,10 @@ public class MainActivity extends AppCompatActivity {
                 directionFactor = theFinish.getFinishDirection();
             } else {
                 // Not the finish, set the next mark normally
-                destMark = theMarks.getNextMark(nextMark);
+                // unless it is the start in which case leave it as A Mark
+                if (!nextMark.equals("Start")) {
+                    destMark = theMarks.getNextMark(nextMark);
+                }
                 flagFinish = FALSE;
             }
             updateLocationUI();
