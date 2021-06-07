@@ -105,6 +105,7 @@
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
         android:textAlignment="center"
+        android:text="@string/none"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/plus"
