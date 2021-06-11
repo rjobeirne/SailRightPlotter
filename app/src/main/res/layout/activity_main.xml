@@ -235,6 +235,7 @@
         android:textColor="@color/normal_text"
         android:textSize="64sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/time_text"
         app:layout_constraintEnd_toStartOf="@id/distance_text"
         app:layout_constraintStart_toEndOf="@id/speed_title"
         app:layout_constraintTop_toBottomOf="@+id/heading_text" />

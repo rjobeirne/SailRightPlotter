@@ -13,7 +13,8 @@
     <color name="app_red">#A80202</color>
     <color name="app_green">#007810</color>
     <color name="red">#EE0000</color>
-    <color name="starboard">#7DFF69</color>
-    <color name="port">#FF7B79</color>
+    <color name="starboard">#90007810</color>
+    <color name="port">#90BA0028</color>
+    <color name="test"></color>
 
 </resources>
