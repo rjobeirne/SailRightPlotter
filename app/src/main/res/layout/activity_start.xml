@@ -292,8 +292,8 @@
         android:text="@string/_105"
         android:textColor="@color/normal_text"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/speed_text"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
-        app:layout_constraintStart_toEndOf="@+id/heading_text"
-        app:layout_constraintTop_toBottomOf="@+id/speed_text" />
+        app:layout_constraintStart_toEndOf="@+id/heading_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
