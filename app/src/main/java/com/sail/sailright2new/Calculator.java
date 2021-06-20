@@ -8,10 +8,10 @@ import static java.lang.Math.abs;
 public class Calculator {
 
     double mSmoothSpeed, sumSpeed;
-    final int nSpeed = 4;
+    int nSpeed = 20;
     public double storeSpeed[] = new double[nSpeed];
     int mSmoothHeading, sumHeading;
-    final int nHeading = 4;
+    int nHeading = 20;
     public int storeHeading[] = new int[nHeading];
     String displayDistToMark, distUnits;
     int displayBearingToMark;

@@ -70,10 +70,10 @@
     <string name="bow_to_gps_desc">Distance from bow to the device in metres</string>
     <string name="prefs_speed_smooth">prefs_speed_smooth</string>
     <string name="speed_smooth">Speed Smoothing Factor</string>
-    <string name="speed_smooth_desc">Number of readings used for average speed (Default = 4)</string>
+    <string name="speed_smooth_desc">Number of readings used for average speed (1 - 20, Default = 4)</string>
     <string name="prefs_heading_smooth">prefs_heading_smooth</string>
     <string name="heading_smooth">Heading Smoothing Factor</string>
-    <string name="heading_smooth_desc">Number of readings used for average heading (Default = 4)</string>
+    <string name="heading_smooth_desc">Number of readings used for average heading (1 - 20, Default = 4)</string>
     <string name="prefs_proximity_dist">prefs_proximity_dist</string>
     <string name="proximity_dist">Proximity Alerts Distance</string>
     <string name="proximity_dist_desc">Distance from mark for arrival notification in metres (Default = 50)</string>

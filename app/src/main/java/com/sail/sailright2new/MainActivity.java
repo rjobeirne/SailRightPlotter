@@ -280,7 +280,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
         smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
+        if ( smoothSpeedFactor > 20) {
+            smoothSpeedFactor = 20;
+            Toast.makeText(this, "Speed smoothing factor limited to 20", Toast.LENGTH_LONG).show();
+        }
         smoothHeadFactor = Integer.parseInt(sharedPreferences.getString("prefs_heading_smooth", "4"));
+        if ( smoothHeadFactor > 20) {
+            smoothHeadFactor = 20;
+            Toast.makeText(this, "Heading smoothing factor limited to 20", Toast.LENGTH_LONG).show();
         distMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
