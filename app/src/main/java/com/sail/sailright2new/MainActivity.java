@@ -570,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
                     if (alarmFinish) {
                         playSounds("whoop");
                     }
-                    mNextMarkTextView.setText("** FINISHED **");
+                    mNextMarkTextView.setText(R.string.finished);
                     flagFinish = FALSE;
                     posMark = 0;
                 }

@@ -48,12 +48,12 @@
     <string name="time_to_line">Time to Line</string>
     <string name="g_mark">G Mark</string>
     <string name="early_late">Early/Late</string>
-    <string name="course_dist_unit">nm</string>
+    <string name="course_dist_unit">NM</string>
     <string name="clock_time">Time</string>
     <string name="race">Race</string>
     <string name="fin">Fin - </string>
     <string name="mark"> Mark</string>
-    <string name="finished">* FINISHED *</string>
+    <string name="finished">FINISHED !!</string>
     <string name="start_mark">Start - </string>
     <string name="early">Early</string>
     <string name="late">Late</string>
