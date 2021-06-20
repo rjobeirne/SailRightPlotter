@@ -288,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
         if ( smoothHeadFactor > 20) {
             smoothHeadFactor = 20;
             Toast.makeText(this, "Heading smoothing factor limited to 20", Toast.LENGTH_LONG).show();
+        }
         distMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
