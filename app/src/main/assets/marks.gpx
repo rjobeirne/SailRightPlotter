@@ -15,7 +15,6 @@
     <mark name="RBYC4" lat_deg="37" lat_min="53.61" lon_deg="144" lon_min="57.08" />
     <mark name="RBYC5" lat_deg="37" lat_min="53.81" lon_deg="144" lon_min="58.46" />
     <mark name="SYC1" lat_deg="37" lat_min="57.80" lon_deg="144" lon_min="58.89" />
-    <mark name="Finish" lat_deg="37" lat_min="51.875" lon_deg="144" lon_min="57.590" />
     <mark name="Tower RMYS" lat_deg="37" lat_min="51.838" lon_deg="144" lon_min="57.829" />
     <mark name="Arundel6" lat_deg="37" lat_min="49.872" lon_deg="145" lon_min="5.651" />
     <mark name="Tree2" lat_deg="37" lat_min="50.053" lon_deg="145" lon_min="5.539" />
@@ -23,4 +22,6 @@
     <mark name="Rock" lat_deg="37" lat_min="50.024" lon_deg="145" lon_min="5.552" />
     <mark name="Bench" lat_deg="37" lat_min="50.065" lon_deg="145" lon_min="5.525" />
     <mark name="Essex" lat_deg="37" lat_min="49.960" lon_deg="145" lon_min="5.494" />
+    <mark name="Kent" lat_deg="37" lat_min="49.720" lon_deg="145" lon_min="5.600"/>
+    <mark name="KE" lat_deg="37" lat_min="49.718" lon_deg="145" lon_min="5.540"/>
 </list>

@@ -409,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
     public void setNextMark() {
         if (!flagFinish) {
 
-            if (raceCourse.equals("None")) {
+            if (raceCourse.equals("RMYS")) {
                 listMarkSize = theMarks.marks.size();
                 nextMark = theMarks.marks.get(posMark).getmarkName();
 
