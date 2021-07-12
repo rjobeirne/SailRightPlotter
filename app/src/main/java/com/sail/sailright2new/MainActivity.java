@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     final String a = "A"; // Finish line data
     final String h = "H"; // Finish Line Data
 
+    // onCreate
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
