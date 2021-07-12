@@ -391,6 +391,10 @@ public class MainActivity extends AppCompatActivity {
         // Increment to the position of the nMath.abs(ext mark on the list
         if (posMark >= listMarkSize - 1) {
             posMark = 0;
+            // Reset markExtra
+            flagMarkExtra = FALSE;
+            mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.white));
+            mMarkExtraTextView.setText("");
         } else {
             posMark = posMark + 1;
         }
