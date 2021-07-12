@@ -34,7 +34,6 @@
         android:textAlignment="center"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/heading_text"
         app:layout_constraintEnd_toStartOf="@+id/plusCourse"
         app:layout_constraintStart_toEndOf="@+id/minusCourse"
         app:layout_constraintTop_toTopOf="parent" />
@@ -129,6 +128,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/mark_extra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:text="@string/none"
+        android:textColor="@color/normal_text"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/next_mark_name"
+        app:layout_constraintEnd_toEndOf="@+id/next_mark_name"
+        app:layout_constraintTop_toBottomOf="@id/next_mark_name" />
+
+    <TextView
         android:id="@+id/heading_title"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
@@ -144,7 +159,6 @@
         android:id="@+id/heading_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/heading"
         android:textColor="@color/normal_text"
@@ -153,7 +167,7 @@
         app:layout_constraintEnd_toStartOf="@+id/variance_text"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/heading_title"
-        app:layout_constraintTop_toBottomOf="@+id/course_name" />
+        app:layout_constraintTop_toTopOf="@+id/bearing_text" />
 
     <TextView
         android:id="@+id/variance_title"
@@ -195,7 +209,7 @@
         app:layout_constraintEnd_toStartOf="@+id/bearing_title"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/variance_text"
-        app:layout_constraintTop_toBottomOf="@+id/next_mark_name" />
+        app:layout_constraintTop_toBottomOf="@+id/mark_extra" />
 
     <TextView
         android:id="@+id/bearing_title"

@@ -35,7 +35,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -56,7 +55,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -76,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     // UI Widgets.
     private TextView mNextMarkTextView;
+    private TextView mMarkExtraTextView;
     private TextView mCourseTextView;
     private TextView mSpeedTextView;
     private TextView mHeadingTextView;
@@ -128,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     String nextRounding = "A";
     ArrayList courseMarks, markRounding;
     String courseDist;
+    Boolean flagMarkExtra;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish;
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Locate the UI widgets.
         mNextMarkTextView = findViewById(R.id.next_mark_name);
+        mMarkExtraTextView = findViewById(R.id.mark_extra);
         mCourseTextView = findViewById(R.id.course_name);
         mSpeedTextView = findViewById(R.id.speed_text);
         mHeadingTextView = findViewById(R.id.heading_text);
@@ -403,7 +404,11 @@ public class MainActivity extends AppCompatActivity {
         if (posMark <= 0) {
             posMark = listMarkSize - 1;
         } else {
-            posMark = posMark - 1;
+            if (flagMarkExtra) {
+                posMark = posMark - 2;
+            } else {
+                posMark = posMark - 1;
+            }
         }
         flagFinish = FALSE;
         finMark = "race";
@@ -438,15 +443,42 @@ public class MainActivity extends AppCompatActivity {
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
                 mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
             } else {
+
+                // Check to see if next mark is a non-destination mark.
+                // If so, use mMarkExtraTextView to show mark and passing side
+                if (nextMark.contains("[")) {
+                    flagMarkExtra = TRUE;
+                    if (nextRounding.equals("S")) {
+                        mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
+                    }
+                    if (nextRounding.equals("P")) {
+                        mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.port));
+                    }
+                    mMarkExtraTextView.setText(nextMarkFull);
+                    posMark = posMark +1;
+                    nextMark = (String) courseMarks.get(posMark);
+                    nextRounding = (String) markRounding.get(posMark);
+                    if (nextMark.length() == 1) {
+                        nextMarkFull = nextMark + " Mark";
+                    } else {
+                        nextMarkFull = nextMark;
+                    }
+
+                } else {
+                    //Reset to normal mark
+                    flagMarkExtra = FALSE;
+                    mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.white));
+                    mMarkExtraTextView.setText("");
+                }
                 mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.ITALIC);
                 mNextMarkTextView.setTextColor(getResources().getColor(R.color.normal_text));
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.white));
-                if (nextRounding.equals("S")) {
-                    mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
-                }
-                if (nextRounding.equals("P")) {
-                    mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.port));
-                }
+                    if (nextRounding.equals("S")) {
+                        mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
+                    }
+                    if (nextRounding.equals("P")) {
+                        mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.port));
+                    }
             }
             mNextMarkTextView.setText(nextMarkFull);
 
