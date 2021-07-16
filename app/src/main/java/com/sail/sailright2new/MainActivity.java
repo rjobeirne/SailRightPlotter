@@ -338,6 +338,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             posCourse = posCourse + 1;
         }
+        posMark = 0;
         setCourse();
         setNextMark();
     }
@@ -349,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             posCourse = posCourse - 1;
         }
+        posMark = 0;
         setCourse();
         setNextMark();
     }
