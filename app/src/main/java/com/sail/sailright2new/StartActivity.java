@@ -320,7 +320,6 @@ public class StartActivity extends AppCompatActivity {
         Button mButton = findViewById(R.id.start_clock);
         if (timerStarted) {
             Toast.makeText(this, "Clock synchronised", Toast.LENGTH_SHORT).show();
-            mButton.setBackgroundColor(Color.GREEN);
             sync_clock(view);
             showClock(timeToStart);
         } else {
