@@ -1,4 +1,4 @@
-package com.sail.sailright2new;
+package com.sail.sailright;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;

@@ -1,4 +1,4 @@
-package com.sail.sailright2new;
+package com.sail.sailright;
 
 /*
   Copyright 2017 Google Inc. All Rights Reserved.

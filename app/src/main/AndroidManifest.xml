@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sail.sailright2new">
+    package="com.sail.sailright">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,7 +20,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.sail.sailright2new.MainActivity"
+            android:name="com.sail.sailright.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape"
@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name="com.sail.sailright2new.StartActivity"
+            android:name="com.sail.sailright.StartActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape"
@@ -41,7 +41,7 @@
 
         </activity>
 
-        <activity android:name=".SettingsActivity"
+        <activity android:name="com.sail.sailright.SettingsActivity"
             android:theme="@style/SettingsTheme.NoActionBar">
         </activity>
 
