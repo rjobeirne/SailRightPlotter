@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <list>
-    <mark name="A" lat_deg="37" lat_min="51.899" lon_deg="144" lon_min="57.485" />
-    <mark name="B" lat_deg="37" lat_min="53.186" lon_deg="144" lon_min="57.217" />
-    <mark name="C" lat_deg="37" lat_min="52.178" lon_deg="144" lon_min="56.421" />
-    <mark name="D" lat_deg="37" lat_min="51.505" lon_deg="144" lon_min="57.472" />
-    <mark name="E" lat_deg="37" lat_min="52.156" lon_deg="144" lon_min="57.799" />
-    <mark name="F" lat_deg="37" lat_min="53.588" lon_deg="144" lon_min="56.308" />
-    <mark name="G" lat_deg="37" lat_min="50.943" lon_deg="144" lon_min="56.109" />
-    <mark name="H" lat_deg="37" lat_min="51.861" lon_deg="144" lon_min="57.701" />
-    <mark name="P3" lat_deg="37" lat_min="53.40" lon_deg="144" lon_min="52.87" />
-    <mark name="R2" lat_deg="37" lat_min="54.56" lon_deg="144" lon_min="56.34" />
-    <mark name="R3" lat_deg="37" lat_min="56.16" lon_deg="144" lon_min="56.39" />
-    <mark name="RBYC1" lat_deg="37" lat_min="55.63" lon_deg="144" lon_min="58.24" />
-    <mark name="RBYC4" lat_deg="37" lat_min="53.61" lon_deg="144" lon_min="57.08" />
-    <mark name="RBYC5" lat_deg="37" lat_min="53.81" lon_deg="144" lon_min="58.46" />
-    <mark name="SYC1" lat_deg="37" lat_min="57.80" lon_deg="144" lon_min="58.89" />
-    <mark name="Tower RMYS" lat_deg="37" lat_min="51.838" lon_deg="144" lon_min="57.829" />
-    <mark name="Arundel6" lat_deg="37" lat_min="49.872" lon_deg="145" lon_min="5.651" />
-    <mark name="Tree2" lat_deg="37" lat_min="50.053" lon_deg="145" lon_min="5.539" />
-    <mark name="Tree1" lat_deg="37" lat_min="50.055" lon_deg="145" lon_min="5.525" />
-    <mark name="Rock" lat_deg="37" lat_min="50.024" lon_deg="145" lon_min="5.552" />
-    <mark name="Bench" lat_deg="37" lat_min="50.065" lon_deg="145" lon_min="5.525" />
-    <mark name="Essex" lat_deg="37" lat_min="49.960" lon_deg="145" lon_min="5.494" />
+    <mark name="A" lat_deg="37" lat_min="51.899" lon_deg="144" lon_min="57.485"/>
+    <mark name="B" lat_deg="37" lat_min="53.003" lon_deg="144" lon_min="57.248"/>
+    <mark name="C" lat_deg="37" lat_min="52.178" lon_deg="144" lon_min="56.421"/>
+    <mark name="D" lat_deg="37" lat_min="51.505" lon_deg="144" lon_min="57.472"/>
+    <mark name="E" lat_deg="37" lat_min="52.156" lon_deg="144" lon_min="57.799"/>
+    <mark name="F" lat_deg="37" lat_min="53.588" lon_deg="144" lon_min="56.308"/>
+    <mark name="G" lat_deg="37" lat_min="50.943" lon_deg="144" lon_min="56.109"/>
+    <mark name="H" lat_deg="37" lat_min="51.861" lon_deg="144" lon_min="57.701"/>
+    <mark name="P3" lat_deg="37" lat_min="53.40" lon_deg="144" lon_min="52.87"/>
+    <mark name="R2" lat_deg="37" lat_min="54.56" lon_deg="144" lon_min="56.34"/>
+    <mark name="R3" lat_deg="37" lat_min="56.16" lon_deg="144" lon_min="56.39"/>
+    <mark name="RBYC1" lat_deg="37" lat_min="55.63" lon_deg="144" lon_min="58.24"/>
+    <mark name="RBYC4" lat_deg="37" lat_min="53.61" lon_deg="144" lon_min="57.08"/>
+    <mark name="RBYC5" lat_deg="37" lat_min="53.81" lon_deg="144" lon_min="58.46"/>
+    <mark name="SYC1" lat_deg="37" lat_min="57.80" lon_deg="144" lon_min="58.89"/>
+    <mark name="Tower RMYS" lat_deg="37" lat_min="51.84" lon_deg="144" lon_min="57.829"/>
+    <mark name="Arundel6" lat_deg="37" lat_min="49.872" lon_deg="145" lon_min="5.651"/>
+    <mark name="Tree2" lat_deg="37" lat_min="50.053" lon_deg="145" lon_min="5.539"/>
+    <mark name="Tree1" lat_deg="37" lat_min="50.055" lon_deg="145" lon_min="5.525"/>
+    <mark name="Rock" lat_deg="37" lat_min="50.024" lon_deg="145" lon_min="5.552"/>
+    <mark name="Bench" lat_deg="37" lat_min="50.065" lon_deg="145" lon_min="5.525"/>
+    <mark name="Essex" lat_deg="37" lat_min="49.960" lon_deg="145" lon_min="5.494"/>
     <mark name="Kent" lat_deg="37" lat_min="49.720" lon_deg="145" lon_min="5.600"/>
     <mark name="KE" lat_deg="37" lat_min="49.718" lon_deg="145" lon_min="5.540"/>
 </list>
