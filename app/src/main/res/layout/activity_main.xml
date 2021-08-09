@@ -304,26 +304,38 @@
 
     <ImageButton
         android:id="@+id/button_settings"
-        android:contentDescription="@string/hammer_spanner"
         android:layout_width="36dp"
         android:layout_height="56dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/white"
+        android:contentDescription="@string/hammer_spanner"
         android:src="@mipmap/settings128"
         android:textAllCaps="false"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/time_title"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/time"
+        android:textColor="@color/titles"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_text"
+        app:layout_constraintEnd_toEndOf="@+id/time_text"
+        app:layout_constraintStart_toStartOf="@id/time_text" />
+
     <TextClock
         android:id="@+id/time_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
+        android:layout_marginBottom="8dp"
         android:format24Hour="hh:mm:ss"
+        android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
         android:textSize="40sp"
@@ -350,7 +362,7 @@
         android:id="@+id/accuracy_text"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/m"
         android:textColor="@color/normal_text"
@@ -361,10 +373,22 @@
         app:layout_constraintStart_toEndOf="@+id/time_text" />
 
     <TextView
+        android:id="@+id/eta_title"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/eta"
+        android:textColor="@color/titles"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_to_mark"
+        app:layout_constraintEnd_toEndOf="@+id/time_to_mark"
+        app:layout_constraintStart_toStartOf="@id/time_to_mark" />
+
+    <TextView
         android:id="@+id/time_to_mark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/eta"
         android:textColor="@color/normal_text"
