@@ -659,7 +659,7 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.start();
         }
         if (sound.equals("whoop")) {
-            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.whoop);
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.whoop2);
             mediaPlayer.start();
         }
     }
