@@ -38,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTimeToMarkTextView;
     private TextView mCourseDistTextView;
     private ImageButton settingsBtn;
+    private TextClock mClock;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -189,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView = findViewById(R.id.time_to_mark);
         settingsBtn = findViewById(R.id.button_settings);
         mCourseDistTextView = findViewById(R.id.course_dist);
+        mClock = findViewById(R.id.time_text);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -641,6 +644,7 @@ public class MainActivity extends AppCompatActivity {
         if (bearingVariance > 2) {
             mDiscrepTextView.setTextColor(getResources().getColor(R.color.app_green));
         }
+        mClock.setFormat24Hour("HH:mm:ss");
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
     }
