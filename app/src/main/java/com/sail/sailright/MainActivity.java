@@ -133,11 +133,12 @@ public class MainActivity extends AppCompatActivity {
     Boolean autoAdvance, alarmProx, alarmFinish;
 
     int directionFactor;
-    Location aMark, hMark, lastMark, finishPoint;
+    Location aMark, hMark, tower, lastMark, finishPoint;
     Double distToFinish;
 
     final String a = "A"; // Finish line data
     final String h = "H"; // Finish Line Data
+    final String twr = "Tower RMYS";
 
     // onCreate
     @Override
@@ -499,8 +500,9 @@ public class MainActivity extends AppCompatActivity {
                 // Should have A Mark, H Mark to create the Finish Line Object
                 aMark = theMarks.getNextMark(a);
                 hMark = theMarks.getNextMark(h);
+                tower = theMarks.getNextMark(twr);
                 lastMark = theMarks.getNextMark(lastMarkName);
-                theFinish = new FinishLine(aMark, hMark, lastMark);
+                theFinish = new FinishLine(aMark, hMark, tower, lastMark);
 
                 // Find the direction of approach to the finish line
                 directionFactor = theFinish.getFinishDirection();

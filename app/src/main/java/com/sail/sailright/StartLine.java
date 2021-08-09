@@ -8,6 +8,7 @@ public class StartLine {
     String startTarget = null;
     final Location markA;
     final Location markH;
+    final Location tower;
     final double latA;
     final double lonA;
     final double latFirstMark;
@@ -33,17 +34,18 @@ public class StartLine {
      * @param h name of the other end of the line
      * @param first name of the first mark after the start
      */
-    public StartLine (Location a, Location h, Location first) {
+    public StartLine (Location a, Location h, Location twr, Location first) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
+        tower = twr;
 //        Location firstMark = first;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
         latFirstMark = first.getLatitude();
 
         // Define finish line as linear equation lat = slope * lon + constant
-        float lineBearing = markA.bearingTo(markH);
+        float lineBearing = markA.bearingTo(tower);
 
         // Convert line bearing to angle from latitude (not north)
         if ( lineBearing > 0) {

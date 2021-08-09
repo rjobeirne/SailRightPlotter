@@ -106,11 +106,13 @@ public class StartActivity extends AppCompatActivity {
         // Create the Start object here, and pass in 'A' Mark, and 'H' Mark
         String a = "A"; // Start line data
         String h = "H"; // Start Line Data
+        String twr = "Tower RMYS";
         Location aMark = theMarks.getNextMark(a);
         Location hMark = theMarks.getNextMark(h);
+        Location tower = theMarks.getNextMark(twr);
         Location firstMark = theMarks.getNextMark(firstMarkName);
         // Should have A Mark, H Mark to create the Start Line Object
-        theLine = new StartLine(aMark, hMark, firstMark);
+        theLine = new StartLine(aMark, hMark, tower, firstMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -169,7 +171,7 @@ public class StartActivity extends AppCompatActivity {
         distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
 
         // Create the start line
-        theLine = new StartLine(aMark, hMark, firstMark);
+        theLine = new StartLine(aMark, hMark, tower, firstMark);
 
         StartDisplay(startCourse, startMark + " Mark");
         updateGPS();

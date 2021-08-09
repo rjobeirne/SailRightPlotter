@@ -8,6 +8,7 @@ public class FinishLine {
     String finishTarget = null;
     final Location markA;
     final Location markH;
+    final Location tower;
     final double latA;
     final double lonA;
     final double latLastMark;
@@ -33,16 +34,17 @@ public class FinishLine {
      * @param h Location of the H Mark
      * @param last Location of the last mark on the course
      */
-    public FinishLine (Location a, Location h, Location last) {
+    public FinishLine (Location a, Location h, Location twr, Location last) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
+        tower = twr;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
         latLastMark = last.getLatitude();
 
         // Define finish line as linear equation lat = slope * lon + constant
-        float lineBearing = markA.bearingTo(markH);
+        float lineBearing = markA.bearingTo(tower);
 
         // Convert line bearing to angle from latitude (not north)
         if ( lineBearing > 0) {
