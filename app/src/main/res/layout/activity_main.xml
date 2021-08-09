@@ -147,13 +147,13 @@
         android:id="@+id/heading_title"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="@string/heading"
         android:textColor="@color/titles"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/heading_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minusCourse" />
+        app:layout_constraintTop_toTopOf="@+id/heading_text" />
 
     <TextView
         android:id="@+id/heading_text"
@@ -215,14 +215,14 @@
         android:id="@+id/bearing_title"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="@string/bearing"
         android:textColor="@color/titles"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bearing_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bearing_text"
-        app:layout_constraintTop_toBottomOf="@+id/next_mark_name" />
+        app:layout_constraintTop_toTopOf="@+id/bearing_text" />
 
     <TextView
         android:id="@+id/speed_title"
@@ -249,7 +249,6 @@
         android:textColor="@color/normal_text"
         android:textSize="64sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/time_text"
         app:layout_constraintEnd_toStartOf="@id/distance_text"
         app:layout_constraintStart_toEndOf="@id/speed_title"
         app:layout_constraintTop_toBottomOf="@+id/heading_text" />
@@ -362,7 +361,7 @@
         android:id="@+id/accuracy_text"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/m"
         android:textColor="@color/normal_text"
