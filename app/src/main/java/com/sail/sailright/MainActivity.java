@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mCourseDistTextView;
     private ImageButton settingsBtn;
     private TextClock mClock;
+    private TextView mKeepTextView;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn = findViewById(R.id.button_settings);
         mCourseDistTextView = findViewById(R.id.course_dist);
         mClock = findViewById(R.id.time_text);
+        mKeepTextView = findViewById(R.id.keep_title);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -212,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
         // set all properties of LocationRequest
         locationRequest = new LocationRequest();
@@ -453,12 +454,14 @@ public class MainActivity extends AppCompatActivity {
                 mNextMarkTextView.setTextColor(getResources().getColor(R.color.red));
                 mNextMarkTextView.setBackgroundColor(getResources().getColor(R.color.button_background));
                 mNextMarkTextView.setTypeface(mNextMarkTextView.getTypeface(), Typeface.BOLD);
+                mKeepTextView.setVisibility(View.INVISIBLE);
             } else {
 
                 // Check to see if next mark is a non-destination mark.
                 // If so, use mMarkExtraTextView to show mark and passing side
                 if (nextMark.contains("[")) {
                     flagMarkExtra = TRUE;
+                    mKeepTextView.setVisibility(View.VISIBLE);
                     if (nextRounding.equals("S")) {
                         mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.starboard));
                     }
@@ -478,6 +481,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //Reset to normal mark
                     flagMarkExtra = FALSE;
+                    mKeepTextView.setVisibility(View.INVISIBLE);
                     mMarkExtraTextView.setBackgroundColor(getResources().getColor(R.color.white));
                     mMarkExtraTextView.setText("");
                 }
