@@ -21,8 +21,10 @@ public class StartLine {
     Location mCurrentLocation = null;
     double latBoat = 0;
     double lonBoat = 0;
-    float boatHeading, bearingToA, bearingToH;
+    float boatHeading, bearingToA, bearingToH, deltaBearing;
+    float distToA, distToH;
     float negBoatHeading, displayBearingToA, displayBearingToH;
+    String nearestMark;
     double slopeBoat = 0;
     float slopeBoatAngle;
     double constBoat = 0;
@@ -101,6 +103,9 @@ public class StartLine {
                 } else {
                     displayBearingToH = bearingToH;
                 }
+        deltaBearing = Math.abs(bearingToA-bearingToH);
+
+
     }
 
     /**
@@ -128,29 +133,40 @@ public class StartLine {
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
-        if (directionFactor == 1) {
-            // Approaching from the north
-            // Use compass bearing
-            if (boatHeading > displayBearingToA) {
-                startTarget = "A";
-            } else if (boatHeading < displayBearingToH) {
-                startTarget = "H";
-            } else {
-                startTarget = "Line";
-            }
+        if(deltaBearing > 20) {
+            // Approaching the line squarish
+            if (directionFactor == 1) {
+                // Approaching from the north
+                // Use compass bearing
+                if (boatHeading > displayBearingToA) {
+                    startTarget = "A";
+                } else if (boatHeading < displayBearingToH) {
+                    startTarget = "H";
+                } else {
+                    startTarget = "Line";
+                }
 
-        } else {
-            // Approaching from the south
-            // Use bearing +/- from north
-            if (negBoatHeading < bearingToA) {
-                startTarget = "A";
-            } else if (negBoatHeading > bearingToH) {
-                startTarget = "H";
             } else {
-                startTarget = "Line";
+                // Approaching from the south
+                // Use bearing +/- from north
+                if (negBoatHeading < bearingToA) {
+                    startTarget = "A";
+                } else if (negBoatHeading > bearingToH) {
+                    startTarget = "H";
+                } else {
+                    startTarget = "Line";
+                }
+            }
+        } else {
+            // Approaching the start from the side
+            // Find nearest mark
+            if (distToA < distToH) {
+                startTarget = "A";
+            } else {
+                startTarget = "H";
             }
         }
-        return  startTarget;
+        return startTarget;
     }
 
     /**
