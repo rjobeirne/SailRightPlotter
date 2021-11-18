@@ -35,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_UPDATE_INTERVAL = 3;
     public static final int FAST_UPDATE_INTERVAL = 1;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
+    public static final  int LONG_PRESS_DELAY_MILLIS = 3000;
 
     // Location request is a config file for all settings related to fusedLocationProviderClient
     LocationRequest locationRequest;
@@ -117,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
     int bearingVariance;
     boolean flagFinish = FALSE;
     boolean flagStart = FALSE;
+    boolean flagFinished = FALSE;
+    boolean doubleFinToEndPressOnce = FALSE;
 
     String displayDistToMark;
     String ttmDisplay;
@@ -244,6 +248,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Setup long click of "FINISHED" to close app
+        mNextMarkTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (flagFinished) {
+                    switch (v.getId()) {
+                        case R.id.next_mark_name:
+                            ;
+                            initSendInfo(v, System.currentTimeMillis());
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return true;
+            }
+        });
+
 
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()
@@ -627,6 +650,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     mNextMarkTextView.setText(R.string.finished);
                     flagFinish = FALSE;
+                    flagFinished = TRUE;
                     posMark = 0;
                 }
             }
@@ -694,6 +718,21 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Long click to get to Settings", Toast.LENGTH_LONG).show();
     }
 
+    // Long press of "FINISHED" to close app
+    private void initSendInfo(final View v, final long startTime) {
+        Toast.makeText(this, "Hold for 3 seconds to close app", Toast.LENGTH_LONG).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (v.isPressed() && System.currentTimeMillis() - startTime >+ LONG_PRESS_DELAY_MILLIS) {
+                    System.exit(0);
+                    return;
+                } else if (!v.isPressed()) {
+                    return;
+                }
+            }
+        }, LONG_PRESS_DELAY_MILLIS);
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
