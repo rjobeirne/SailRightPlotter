@@ -58,7 +58,7 @@ public class StartActivity extends AppCompatActivity {
     double mSpeed, mSmoothSpeed;
     double distToMark;
     double approachAngle, distToDevice;
-    int deviceOffset, startMargin, smoothSpeedFactor, smoothHeadFactor;
+    int deviceOffset, startMargin, smoothSpeedFactor, smoothHeadFactor, deltaBearingSwitch;
     Boolean alarmMinute, alarmStart, alarmBadStart;
 
     // Define clock variables
@@ -111,8 +111,6 @@ public class StartActivity extends AppCompatActivity {
         Location hMark = theMarks.getNextMark(h);
         Location tower = theMarks.getNextMark(twr);
         Location firstMark = theMarks.getNextMark(firstMarkName);
-        // Should have A Mark, H Mark to create the Start Line Object
-        theLine = new StartLine(aMark, hMark, tower, firstMark);
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -167,11 +165,12 @@ public class StartActivity extends AppCompatActivity {
         alarmMinute = sharedPreferences.getBoolean("prefs_mins_airhorn", Boolean.parseBoolean("TRUE"));
         alarmStart = sharedPreferences.getBoolean("prefs_start_gun", Boolean.parseBoolean("TRUE"));
         alarmBadStart = sharedPreferences.getBoolean("prefs_bad_start", Boolean.parseBoolean("TRUE"));
+        deltaBearingSwitch = Integer.parseInt(sharedPreferences.getString("prefs_delta_bearing", "15"));
 
         distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
 
         // Create the start line
-        theLine = new StartLine(aMark, hMark, tower, firstMark);
+        theLine = new StartLine(aMark, hMark, tower, firstMark, deltaBearingSwitch);
 
         StartDisplay(startCourse, startMark + " Mark");
         updateGPS();

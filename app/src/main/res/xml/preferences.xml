@@ -49,6 +49,12 @@
             android:title="@string/acceptable_start_margin"
             android:defaultValue="15"  />
 
+        <EditTextPreference
+            android:key="prefs_delta_bearing"
+            android:summary="@string/switch_delta_bearing_desc"
+            android:title="@string/switch_delta_bearing"
+            android:defaultValue="15"  />
+
         </PreferenceCategory>
 
         <PreferenceCategory android:title="Notifications">

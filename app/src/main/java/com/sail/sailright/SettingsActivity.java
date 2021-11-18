@@ -57,6 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
                     getPreferenceManager().findPreference("prefs_proximity_dist");
             androidx.preference.EditTextPreference editTextPreference6 =
                     getPreferenceManager().findPreference("prefs_start_margin");
+            androidx.preference.EditTextPreference editTextPreference7 =
+                    getPreferenceManager().findPreference("prefs_delta_bearing");
 
             editTextPreference1.setOnBindEditTextListener(
                     new androidx.preference.EditTextPreference.OnBindEditTextListener() {
@@ -105,6 +107,14 @@ public class SettingsActivity extends AppCompatActivity {
                     editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
             });
+
+            editTextPreference7.setOnBindEditTextListener(
+                    new androidx.preference.EditTextPreference.OnBindEditTextListener() {
+                        @Override
+                        public void onBindEditText(@NonNull EditText editText) {
+                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        }
+                    });
 
             Preference button = findPreference(getString(R.string.restore_defaults));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

@@ -29,6 +29,7 @@ public class StartLine {
     float slopeBoatAngle;
     double constBoat = 0;
     int directionFactor;
+    int deltaBearingSwitch;
 
     /**
      * Define the start line from the mark locations
@@ -36,11 +37,12 @@ public class StartLine {
      * @param h name of the other end of the line
      * @param first name of the first mark after the start
      */
-    public StartLine (Location a, Location h, Location twr, Location first) {
+    public StartLine (Location a, Location h, Location twr, Location first, int approach) {
         // constructor with 'A' Mark, and 'H' mark location details, and first currentLocation
         markA = a;
         markH = h;
         tower = twr;
+        deltaBearingSwitch = approach;
 //        Location firstMark = first;
         latA = markA.getLatitude();
         lonA = markA.getLongitude();
@@ -72,6 +74,8 @@ public class StartLine {
         latBoat = mCurrentLocation.getLatitude();
         lonBoat = mCurrentLocation.getLongitude();
         boatHeading = mCurrentLocation.getBearing();
+        distToA = mCurrentLocation.distanceTo(markA);
+        distToH = mCurrentLocation.distanceTo(markH);
 
         // Convert boat heading to angle from latitude (not north)
         if ( boatHeading > 0) {
@@ -133,7 +137,7 @@ public class StartLine {
         mCurrentLocation = currentLocation;
         setBoatDetails(mCurrentLocation);  // Update current boat location details
 
-        if(deltaBearing > 20) {
+        if(deltaBearing > deltaBearingSwitch) {
             // Approaching the line squarish
             if (directionFactor == 1) {
                 // Approaching from the north
