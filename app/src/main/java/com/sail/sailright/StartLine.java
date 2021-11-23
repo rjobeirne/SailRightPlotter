@@ -19,9 +19,11 @@ public class StartLine {
 
     // Initialise boat details
     Location mCurrentLocation = null;
+    Calculator theCalculator = null;
     double latBoat = 0;
     double lonBoat = 0;
     float boatHeading, bearingToA, bearingToH, deltaBearing;
+    int mBearingToA, mBearingToH;
     float distToA, distToH;
     float negBoatHeading, displayBearingToA, displayBearingToH;
     String nearestMark;
@@ -69,6 +71,10 @@ public class StartLine {
      * @param currentLocation current gps location
      */
     private void setBoatDetails(Location currentLocation) {
+
+        // Create theCalculator object for processing data readings
+        theCalculator = new Calculator();
+
         // Define boat heading as linear equation lat = slope * lon + constant
         mCurrentLocation = currentLocation;
         latBoat = mCurrentLocation.getLatitude();
@@ -95,13 +101,15 @@ public class StartLine {
         }
 
         // Convert bearings compass bearings
-        bearingToA = mCurrentLocation.bearingTo(markA);
+        mBearingToA = (int) mCurrentLocation.bearingTo(markA);
+        bearingToA = theCalculator.getSmoothBearing(mBearingToA, 5);
                 if ( bearingToA < 0) {
                     displayBearingToA = bearingToA + 360;
                 } else {
                     displayBearingToA = bearingToA;
                 }
-        bearingToH = mCurrentLocation.bearingTo(markH);
+        mBearingToH = (int) mCurrentLocation.bearingTo(markH);
+        bearingToH = theCalculator.getSmoothBearing(mBearingToH, 5);
                 if ( bearingToH < 0) {
                     displayBearingToH = bearingToH + 360;
                 } else {

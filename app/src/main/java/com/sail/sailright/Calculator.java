@@ -11,8 +11,11 @@ public class Calculator {
     int nSpeed = 20;
     public double storeSpeed[] = new double[nSpeed];
     int mSmoothHeading, sumHeading;
+    int mSmoothBearing, sumBearing;
     int nHeading = 20;
+    int nBearing = 20;
     public int storeHeading[] = new int[nHeading];
+    public int storeBearing[] = new int[nHeading];
     String displayDistToMark, distUnits;
     int displayBearingToMark;
     int rawVariance, bearingVariance;
@@ -48,6 +51,20 @@ public class Calculator {
         sumHeading = sumHeading + storeHeading[0];
         mSmoothHeading = sumHeading / nHeading;
         return mSmoothHeading;
+    }
+
+      public int getSmoothBearing(int mBearing, int nBearing) {
+       // Process gps data for display on UI
+        // Get heading and smooth for n=nHeading readings
+        sumBearing = 0;
+        for ( int i = nBearing - 1; i > 0; i--) {
+            storeBearing[i] = storeBearing[i - 1];
+            sumBearing = sumBearing + storeBearing[i];
+        }
+        storeBearing[0] = mBearing;
+        sumBearing = sumBearing + storeBearing[0];
+        mSmoothBearing = sumBearing / nBearing;
+        return mSmoothBearing;
     }
 
     public String getDistScale(double distToMark) {
