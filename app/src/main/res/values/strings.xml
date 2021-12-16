@@ -84,7 +84,7 @@
     <string name="prefs_start_margin">prefs_start_margin</string>
     <string name="acceptable_start_margin">Late Start Margin</string>
     <string name="acceptable_start_margin_desc">Notification given if starting more than this many seconds after start time</string>
-    <string name="switch_delta_bearing">Side approach margin</string>
+    <string name="switch_delta_bearing">Side Approach Bearing Margin</string>
     <string name="switch_delta_bearing_desc">If difference in bearings to A and H exceed this, then
         determine best start location, if less than this use nearest mark</string>
     <string name="prefs_mins_airhorn">prefs_mins_airhorn</string>
