@@ -249,7 +249,7 @@
         android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
-        android:textSize="36sp"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/time_to_start"
         app:layout_constraintStart_toStartOf="parent" />
 
