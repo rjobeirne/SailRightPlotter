@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class StartActivity extends AppCompatActivity {
     TextView mBearingTextView, mTimeVarianceTextView, mEarlyLateTextView;
     TextView mTimeToMarkTextView, mAccuracyTextView;
     TextView mClockTextView;
+    private TextClock mClock;
 
     // Define variables
     Location destMark;
@@ -92,6 +94,7 @@ public class StartActivity extends AppCompatActivity {
         mTimeToMarkTextView = findViewById(R.id.time_to_line);
         mAccuracyTextView = findViewById(R.id.accuracy_text);
         mClockTextView = findViewById(R.id.time_to_start);
+        mClock = findViewById(R.id.time_text);
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
@@ -280,6 +283,7 @@ public class StartActivity extends AppCompatActivity {
         mTimeVarianceTextView.setText(displayTimeVariance);
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
+        mClock.setFormat24Hour("HH:mm:ss");
 
         if (timeliness.equals("Late")) {
             mTimeVarianceTextView.setTextColor(getResources().getColor(R.color.app_red));

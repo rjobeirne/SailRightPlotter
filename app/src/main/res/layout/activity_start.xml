@@ -164,8 +164,8 @@
 
     <Button
         android:id="@+id/start_clock"
-        android:layout_width="wrap_content"
-        android:layout_height="88dp"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
         android:layout_marginBottom="16dp"
         android:background="@color/button_go"
         android:gravity="center|center_horizontal|center_vertical"
@@ -185,7 +185,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/start_time_early_late"
         app:layout_constraintEnd_toStartOf="@id/time_to_line_title"
-        app:layout_constraintStart_toEndOf="@+id/start_clock" />
+        app:layout_constraintStart_toStartOf="@+id/time_to_start" />
 
     <TextView
         android:id="@+id/start_time_early_late"
@@ -198,7 +198,7 @@
         app:layout_constraintBottom_toTopOf="@id/time_to_start"
         app:layout_constraintEnd_toStartOf="@id/time_to_line"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/start_clock" />
+        app:layout_constraintStart_toStartOf="@+id/time_to_start" />
 
 
     <TextView
@@ -227,6 +227,32 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/start_time_early_late" />
 
+    <TextView
+        android:id="@+id/time_title"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/time"
+        android:textColor="@color/titles"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_text"
+        app:layout_constraintEnd_toEndOf="@+id/time_text"
+        app:layout_constraintStart_toStartOf="@id/time_text" />
+
+
+    <TextClock
+        android:id="@+id/time_text"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:format12Hour="hh:mm:ss a"
+        android:format24Hour="HH:mm:ss"
+        android:gravity="center"
+        android:text="@string/clock_time"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_to_start"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 
 
@@ -242,7 +268,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/time_plus"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/start_clock" />
+        app:layout_constraintStart_toEndOf="@+id/time_text" />
 
     <Button
         android:id="@+id/time_plus"
