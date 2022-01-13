@@ -19,4 +19,4 @@ Access to the settings page is only available when the course is showing 'RMYS'.
 ### Screen Orientation
 The app is only intented to operate in landscape orientation and it is locked that way.
 ### Navigation Bars
-To maximise screen space the navigation bars will appear only temporarily. In order to acces them it is necessary to either swipe left from the right or swipe down from the top , and they will be visible for about 2 seconds. To exit the app, swipe left from the right and tap the back symbol **twice**.
+To maximise screen space the navigation bars will appear only temporarily. In order to access them it is necessary to either swipe left from the right or swipe down from the top , and they will be visible for about 2 seconds. To exit the app, swipe left from the right and tap the back symbol **twice**.
