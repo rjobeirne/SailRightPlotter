@@ -154,6 +154,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // The request code used in ActivityCompat.requestPermissions()
+        // and returned in the Activity's onRequestPermissionsResult()
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
+
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
         File fileCourse = new File(dir + "courses.gpx");
@@ -266,20 +279,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-        // The request code used in ActivityCompat.requestPermissions()
-        // and returned in the Activity's onRequestPermissionsResult()
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {
-          Manifest.permission.ACCESS_FINE_LOCATION,
-          Manifest.permission.READ_EXTERNAL_STORAGE,
-          android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        };
-
-        if (!hasPermissions(this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
 
         // Set audio volume to maximum
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
