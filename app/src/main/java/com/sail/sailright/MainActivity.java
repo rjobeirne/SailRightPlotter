@@ -564,6 +564,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent start = new Intent(this, StartActivity.class);
         start.putExtra("course", raceCourse);
+        start.putExtra("summary", courseSummary);
         start.putExtra("mark", nextMark);
         start.putExtra("first", firstMarkName);
         startActivity(start);

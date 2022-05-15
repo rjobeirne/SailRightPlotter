@@ -42,7 +42,7 @@ public class StartActivity extends AppCompatActivity {
     StartLine theLine;
     Calculator theCalculator = null;
 
-    TextView startCourseTextView, startNextMarkTextView;
+    TextView startCourseTextView, startCourseSummaryTextView, startNextMarkTextView;
     TextView mSpeedTextView, mHeadingTextView, mDistanceTextView, mDistanceUnitTextView;
     TextView mBearingTextView, mTimeVarianceTextView, mEarlyLateTextView;
     TextView mTimeToMarkTextView, mAccuracyTextView;
@@ -79,10 +79,12 @@ public class StartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String startCourse = intent.getStringExtra("course");
+        String startCourseSummary = intent.getStringExtra("summary");
         String firstMarkName = intent.getStringExtra("first");
 
         // Locate the UI widgets.
         startCourseTextView = findViewById(R.id.start_course_name);
+        startCourseSummaryTextView = findViewById(R.id.start_summary);
         startNextMarkTextView = findViewById(R.id.start_next_mark_name);
         mSpeedTextView = findViewById(R.id.speed_text);
         mHeadingTextView = findViewById(R.id.heading_text);
@@ -175,7 +177,7 @@ public class StartActivity extends AppCompatActivity {
         // Create the start line
         theLine = new StartLine(aMark, hMark, tower, firstMark, deltaBearingSwitch);
 
-        StartDisplay(startCourse, startMark + " Mark");
+        StartDisplay(startCourse, startCourseSummary, startMark + " Mark");
         updateGPS();
         showClock(timeToStart);
         startLocationUpdates();
@@ -213,8 +215,9 @@ public class StartActivity extends AppCompatActivity {
      * @param startCourse Course selected
      * @param startMark Nearest mark or the line
      */
-    public void StartDisplay(String startCourse, String startMark) {
+    public void StartDisplay(String startCourse, String startCourseSummary, String startMark) {
         startCourseTextView.setText(startCourse);
+        startCourseSummaryTextView.setText(startCourseSummary);
         startNextMarkTextView.setText(startMark);
     }
 
