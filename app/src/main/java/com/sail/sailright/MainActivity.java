@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton settingsBtn;
     private TextClock mClock;
     private TextView mKeepTextView;
+    private TextView mCourseListTextView;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     String nextRounding = "A";
     ArrayList courseMarks, markRounding;
     String courseDist;
+    String courseList, courseSummary, courseSummary1;
     Boolean flagMarkExtra;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         mCourseDistTextView = findViewById(R.id.course_dist);
         mClock = findViewById(R.id.time_text);
         mKeepTextView = findViewById(R.id.keep_title);
+        mCourseListTextView = findViewById(R.id.course_details);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -393,6 +396,13 @@ public class MainActivity extends AppCompatActivity {
         markRounding = theCourses.getRounding(raceCourse);
         courseDist = theCourses.getCourseDist(raceCourse);
 
+        courseList = String.valueOf(courseMarks);
+        courseSummary1 = courseList.substring(0,courseList.lastIndexOf(","));
+        courseSummary =  courseSummary1.substring(courseSummary1.indexOf(",")+1);
+        if (raceCourse.equals("RMYS")) {
+            courseSummary = "";
+        }
+
         mCourseTextView.setBackgroundColor(getResources().getColor(R.color.white));
 
         if (markRounding.get(0).equals("S")) {
@@ -404,6 +414,7 @@ public class MainActivity extends AppCompatActivity {
 
         mCourseTextView.setText(raceCourse);
         mCourseDistTextView.setText(courseDist);
+        mCourseListTextView.setText(courseSummary);
 
 
         if (posCourse == 0) {

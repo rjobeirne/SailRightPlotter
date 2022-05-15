@@ -39,6 +39,19 @@
         app:layout_constraintStart_toEndOf="@+id/minusCourse"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/course_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="course list"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@id/course_name"
+        app:layout_constraintEnd_toEndOf="@id/course_name"
+        app:layout_constraintTop_toBottomOf="@id/course_name" />
+
     <Button
         android:id="@+id/plusCourse"
         android:layout_width="48dp"
