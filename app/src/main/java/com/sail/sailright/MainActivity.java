@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     String nextRounding = "A";
     ArrayList courseMarks, markRounding;
     String courseDist;
-    String courseList, courseSummary, courseSummary1;
+    String courseList, courseSummary;
     Boolean flagMarkExtra;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
@@ -397,9 +397,9 @@ public class MainActivity extends AppCompatActivity {
         courseDist = theCourses.getCourseDist(raceCourse);
 
         courseList = String.valueOf(courseMarks);
-        courseSummary1 = courseList.substring(0,courseList.lastIndexOf(","));
-        courseSummary =  courseSummary1.substring(courseSummary1.indexOf(",")+1);
-        if (raceCourse.equals("RMYS")) {
+        if (!raceCourse.equals("RMYS")) {
+            courseSummary = courseList.substring(courseList.indexOf(",")+1, courseList.lastIndexOf(","));
+        } else {
             courseSummary = "";
         }
 
