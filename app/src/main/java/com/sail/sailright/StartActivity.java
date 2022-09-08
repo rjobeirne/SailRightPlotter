@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class StartActivity extends AppCompatActivity {
     double distToMark;
     double approachAngle, distToDevice;
     int deviceOffset, startMargin, smoothSpeedFactor, smoothHeadFactor, deltaBearingSwitch;
-    Boolean alarmMinute, alarmStart, alarmBadStart;
+    Boolean alarmMinute, alarmStart, alarmBadStart, maxBright;
 
     // Define clock variables
     long timeRemain = 75;
@@ -171,7 +172,14 @@ public class StartActivity extends AppCompatActivity {
         alarmStart = sharedPreferences.getBoolean("prefs_start_gun", Boolean.parseBoolean("TRUE"));
         alarmBadStart = sharedPreferences.getBoolean("prefs_bad_start", Boolean.parseBoolean("TRUE"));
         deltaBearingSwitch = Integer.parseInt(sharedPreferences.getString("prefs_delta_bearing", "15"));
+        maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
 
+        // Set screen to maximum brightness
+        if (maxBright) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.screenBrightness = 1;
+            getWindow().setAttributes(lp);
+        }
         distToDevice = deviceOffset * Math.sin(Math.toRadians(approachAngle));
 
         // Create the start line

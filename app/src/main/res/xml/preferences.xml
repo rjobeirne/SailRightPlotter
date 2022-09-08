@@ -86,6 +86,14 @@
 
         </PreferenceCategory>
 
+        <PreferenceCategory android:title="Display">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/prefs_max_bright"
+            android:title="@string/max_bright" />
+
+        </PreferenceCategory>
+
         <PreferenceCategory android:title="Reset">
         <Preference android:title="Restore default values"
             android:summary=""

@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     Boolean flagMarkExtra;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
-    Boolean autoAdvance, alarmProx, alarmFinish;
+    Boolean autoAdvance, alarmProx, alarmFinish, maxBright;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -154,10 +154,8 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-                lp.screenBrightness = 1;
-                getWindow().setAttributes(lp);
 
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()
@@ -335,6 +333,14 @@ public class MainActivity extends AppCompatActivity {
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
+        maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
+
+        // Set screen to maximum brightness
+        if (maxBright) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.screenBrightness = 1;
+            getWindow().setAttributes(lp);
+        }
     }
 
     private void updateGPS() {
