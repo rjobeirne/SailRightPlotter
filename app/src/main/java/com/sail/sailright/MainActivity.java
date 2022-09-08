@@ -22,8 +22,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -57,9 +60,23 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Set;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.modules.ArchiveFileFactory;
+import org.osmdroid.tileprovider.modules.IArchiveFile;
+import org.osmdroid.tileprovider.modules.OfflineTileProvider;
+import org.osmdroid.tileprovider.tilesource.FileBasedTileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -101,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     FinishLine theFinish = null;
     StartActivity theStart = null;
     Calculator theCalculator = null;
+    Plotter thePlotter = null;
 
     // Define parameters of next mark
     double mSpeed;
@@ -137,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
     String courseDist;
     String courseList, courseSummary;
     Boolean flagMarkExtra;
+    MapView map = null;
+    private Marker courseMark;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright;
@@ -181,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
+        thePlotter = new Plotter();
+
+        //inflate and create the map
+        map = (MapView) findViewById(R.id.map);
+        setMapOfflineSource();
+        showMarks();
 
         // Create the ArrayList in the constructor, so only done once
         try {
@@ -292,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateGPS();
         startLocationUpdates();
+
     } // end onCreate method
 
 
@@ -365,6 +392,136 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
             }
         }
+    }
+
+    void setMapOfflineSource() {
+        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/");
+        if (f.exists()) {
+            File[] list = f.listFiles();
+            if (list != null) {
+                for (File aList : list) {
+                    if (aList.isDirectory()) {
+                        continue;
+                    }
+                    String name = aList.getName().toLowerCase();
+                    if (!name.contains(".")) {
+                        continue;
+                    }
+                    name = name.substring(name.lastIndexOf(".") + 1);
+                    if (name.length() == 0) {
+                        continue;
+                    }
+                    if (ArchiveFileFactory.isFileExtensionRegistered(name)) {
+                        try {
+                            OfflineTileProvider tileProvider =
+                                    new OfflineTileProvider(new SimpleRegisterReceiver(this),
+                                    new File[]{aList});
+                            map.setTileProvider(tileProvider);
+                            String source = "";
+                            IArchiveFile[] archives = tileProvider.getArchives();
+                            if (archives.length > 0) {
+                                Set<String> tileSources = archives[0].getTileSources();
+                                if (!tileSources.isEmpty()) {
+                                    source = tileSources.iterator().next();
+                                    map.setTileSource(FileBasedTileSource.getSource(source));
+                                } else {
+                                    map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+                                }
+                            } else {
+                                map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+                            }
+                            map.setUseDataConnection(false);
+                            IMapController mapController = map.getController();
+                            mapController.setZoom(13.0);
+                            GeoPoint startPoint = new GeoPoint(-37.87, 144.954);
+                            mapController.setCenter(startPoint);
+                            map.setMinZoomLevel(12.0);
+                            map.setMaxZoomLevel(17.0);
+                            map.setScrollableAreaLimitLatitude(-37.82, -38.0, 0);
+                            map.setScrollableAreaLimitLongitude(144.8, 145.05, 0);
+                            map.invalidate();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public MapView showMarks() {
+//        setContentView(R.layout.activity_main);
+//
+//        // The request code used in ActivityCompat.requestPermissions()
+//        // and returned in the Activity's onRequestPermissionsResult()
+//        int PERMISSION_ALL = 1;
+//        String[] PERMISSIONS = {
+//                Manifest.permission.ACCESS_FINE_LOCATION,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//        };
+//
+//        if (!hasPermissions(this, PERMISSIONS)) {
+//            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+//        }
+
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
+//        theMarks = new Marks();
+        courseMark = new Marker(map);
+//        // Create the ArrayList in the constructor, so only done once
+//        try {
+//            theMarks.parseXML();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        listMarkSize = theMarks.listNames.size();
+
+//        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
+//        mLocationOverlay.enableFollowLocation();
+//        mLocationOverlay.enableMyLocation();
+//        mLocationOverlay.setPersonHotspot(51, 51);
+//        Bitmap bitmapStationary = BitmapFactory.decodeResource(getResources(), R.drawable.my_location);
+//        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow1);
+//        mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
+//        mLocationOverlay.setPersonIcon(bitmapStationary);
+//        map.getOverlays().add(mLocationOverlay);
+
+//        Plotter.MyLocationListener locationListener = new Plotter.MyLocationListener();
+//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+////            return;
+//        }
+
+
+        for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
+            String nameMark = (String) theMarks.listNames.get(i);
+            String nameMarkFull = nameMark;
+            if (nameMark.length() ==1) {
+                nameMarkFull = nameMark + " Mark";
+            }
+            Location locationMark = theMarks.getNextMark(nameMark);
+            double lat = locationMark.getLatitude();
+            double lon = locationMark.getLongitude();
+
+            Marker courseMark = new Marker(map);
+            courseMark.setTitle(nameMarkFull);
+            courseMark.setPosition(new GeoPoint(lat, lon));
+            courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
+            map.getOverlays().add(courseMark);
+            map.invalidate();
+        }
+        return map;
     }
 
     /**
