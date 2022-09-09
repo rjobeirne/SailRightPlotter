@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
     FinishLine theFinish = null;
     StartActivity theStart = null;
     Calculator theCalculator = null;
-    Plotter thePlotter = null;
 
     // Define parameters of next mark
     double mSpeed;
@@ -200,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
-        thePlotter = new Plotter();
 
         //inflate and create the map
         map = (MapView) findViewById(R.id.map);
@@ -450,25 +448,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public MapView showMarks() {
-//        setContentView(R.layout.activity_main);
-//
-//        // The request code used in ActivityCompat.requestPermissions()
-//        // and returned in the Activity's onRequestPermissionsResult()
-//        int PERMISSION_ALL = 1;
-//        String[] PERMISSIONS = {
-//                Manifest.permission.ACCESS_FINE_LOCATION,
-//                Manifest.permission.READ_EXTERNAL_STORAGE,
-//                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//        };
-//
-//        if (!hasPermissions(this, PERMISSIONS)) {
-//            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-//        }
 
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
-//        theMarks = new Marks();
         courseMark = new Marker(map);
         // Create the ArrayList in the constructor, so only done once
         try {
@@ -476,8 +459,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        listMarkSize = theMarks.listNames.size();
 
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
         mLocationOverlay.enableFollowLocation();
@@ -488,20 +469,6 @@ public class MainActivity extends AppCompatActivity {
         mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
         mLocationOverlay.setPersonIcon(bitmapStationary);
         map.getOverlays().add(mLocationOverlay);
-
-//        Plotter.MyLocationListener locationListener = new Plotter.MyLocationListener();
-//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-////            return;
-//        }
-
 
         for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
             String nameMark = (String) theMarks.listNames.get(i);
