@@ -694,8 +694,8 @@ public class MainActivity extends AppCompatActivity {
             double lon = locationNextMark.getLongitude();
             courseMark.setTitle(nextMarkFull);
             courseMark.setPosition(new GeoPoint(lat, lon));
-            courseMark.setIcon(getResources().getDrawable(R.drawable.pin));
-            courseMark.setAnchor((float) 0.42, (float) 1.0);
+            courseMark.setIcon(getResources().getDrawable(R.drawable.pin75));
+            courseMark.setAnchor((float) 0.42, (float) 1.10);
             map.getOverlays().add(courseMark);
             map.invalidate();
         }
