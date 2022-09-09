@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
@@ -72,6 +74,7 @@ import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -476,15 +479,15 @@ public class MainActivity extends AppCompatActivity {
 
 //        listMarkSize = theMarks.listNames.size();
 
-//        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
-//        mLocationOverlay.enableFollowLocation();
-//        mLocationOverlay.enableMyLocation();
-//        mLocationOverlay.setPersonHotspot(51, 51);
-//        Bitmap bitmapStationary = BitmapFactory.decodeResource(getResources(), R.drawable.my_location);
-//        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow1);
-//        mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
-//        mLocationOverlay.setPersonIcon(bitmapStationary);
-//        map.getOverlays().add(mLocationOverlay);
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
+        mLocationOverlay.enableFollowLocation();
+        mLocationOverlay.enableMyLocation();
+        mLocationOverlay.setPersonHotspot(51, 51);
+        Bitmap bitmapStationary = BitmapFactory.decodeResource(getResources(), R.drawable.my_location);
+        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow1);
+        mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
+        mLocationOverlay.setPersonIcon(bitmapStationary);
+        map.getOverlays().add(mLocationOverlay);
 
 //        Plotter.MyLocationListener locationListener = new Plotter.MyLocationListener();
 //        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
