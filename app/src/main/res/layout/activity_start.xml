@@ -11,13 +11,13 @@
         android:id="@+id/start_course_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:gravity="center_horizontal"
         android:text="@string/none"
         android:textAlignment="center"
         android:textColor="@color/normal_text"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/stop_start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,26 +25,26 @@
 
     <Button
         android:id="@+id/stop_start"
-        android:layout_width="96dp"
+        android:layout_width="97dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:background="@color/button_background"
         android:text="@string/race"
         android:textColor="@color/normal_text"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@id/bearing_text"
         app:layout_constraintStart_toEndOf="@id/heading_text"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/start_course_name" />
 
     <TextView
         android:id="@+id/start_summary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="course summary"
+        android:layout_marginTop="16dp"
+        android:text="summy"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@id/heading_text"
         app:layout_constraintEnd_toStartOf="@id/bearing_text"
         app:layout_constraintTop_toBottomOf="@id/stop_start" />
@@ -53,44 +53,45 @@
         android:id="@+id/start_next_mark_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:gravity="center_horizontal"
         android:text="@string/a_mark"
         android:textAlignment="center"
         android:textColor="@color/normal_text"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/stop_start"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/start_course_name" />
 
     <TextView
         android:id="@+id/heading_title"
-        android:layout_width="80dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:gravity="end"
         android:text="@string/heading"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_course_name" />
+        app:layout_constraintTop_toTopOf="@id/heading_text" />
 
     <TextView
         android:id="@+id/heading_text"
-        android:layout_width="120dp"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
-        android:text="@string/heading"
+        android:text="333"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/heading_title"
-        app:layout_constraintTop_toBottomOf="@+id/start_course_name" />
+        app:layout_constraintTop_toBottomOf="@+id/start_summary" />
 
     <TextView
         android:id="@+id/bearing_text"
-        android:layout_width="120dp"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/bearing"
@@ -99,30 +100,30 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/distance_text"
         app:layout_constraintEnd_toStartOf="@+id/bearing_title"
-        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name"
+        app:layout_constraintTop_toTopOf="@id/heading_text"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/bearing_title"
-        android:layout_width="80dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:gravity="start"
         android:text="@string/bearing"
         android:textColor="@color/titles"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/start_next_mark_name"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="@id/bearing_text"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/speed_title"
-        android:layout_width="80dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:gravity="end"
         android:text="@string/kts"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/speed_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/speed_text"
@@ -130,8 +131,9 @@
 
     <TextView
         android:id="@+id/speed_text"
-        android:layout_width="120dp"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
@@ -142,37 +144,37 @@
 
     <TextView
         android:id="@+id/distance_text"
-        android:layout_width="120dp"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/distance"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/speed_text"
+        app:layout_constraintTop_toTopOf="@+id/speed_text"
         app:layout_constraintEnd_toStartOf="@+id/dist_title" />
 
 
     <TextView
         android:id="@+id/dist_title"
-        android:layout_width="80dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:text="@string/distance"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/dist_unit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/distance_text" />
 
     <TextView
         android:id="@+id/dist_unit"
-        android:layout_width="72dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:text="@string/nm"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/dist_title"
         app:layout_constraintTop_toBottomOf="@+id/dist_title" />
 
@@ -196,15 +198,16 @@
         android:gravity="center"
         android:text="@string/early_late"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/start_time_early_late"
-        app:layout_constraintEnd_toStartOf="@id/time_to_line_title"
-        app:layout_constraintStart_toStartOf="@+id/time_to_start" />
+        app:layout_constraintEnd_toEndOf="@id/start_time_early_late"
+        app:layout_constraintStart_toStartOf="@+id/start_time_early_late" />
 
     <TextView
         android:id="@+id/start_time_early_late"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/countdown"
         android:textSize="36sp"
@@ -222,10 +225,10 @@
         android:gravity="center"
         android:text="@string/time_to_line"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/time_to_line"
-        app:layout_constraintEnd_toStartOf="@+id/time_plus"
-        app:layout_constraintStart_toEndOf="@+id/start_time_early_late_title" />
+        app:layout_constraintEnd_toEndOf="@id/time_to_line"
+        app:layout_constraintStart_toStartOf="@id/time_to_line" />
 
     <TextView
         android:id="@+id/time_to_line"
@@ -235,9 +238,8 @@
         android:text="@string/countdown"
         android:textColor="@color/normal_text"
         android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/time_to_start"
-        app:layout_constraintEnd_toStartOf="@+id/time_plus"
+        app:layout_constraintBottom_toBottomOf="@id/start_time_early_late"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/start_time_early_late" />
 
@@ -248,7 +250,7 @@
         android:gravity="center"
         android:text="@string/time"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/time_text"
         app:layout_constraintEnd_toEndOf="@+id/time_text"
         app:layout_constraintStart_toStartOf="@id/time_text" />
@@ -258,17 +260,15 @@
         android:id="@+id/time_text"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:format12Hour="hh:mm:ss a"
         android:format24Hour="HH:mm:ss"
         android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/time_to_start"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/start_clock" />
 
     <TextView
         android:id="@+id/time_to_start"
@@ -277,12 +277,12 @@
         android:gravity="center|center_horizontal"
         android:text="@string/countdown"
         android:textColor="@color/normal_text"
-        android:textSize="96sp"
+        android:textSize="120sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/time_plus"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/time_text" />
+        app:layout_constraintBottom_toTopOf="@id/time_plus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0" />
 
     <Button
         android:id="@+id/time_plus"
@@ -313,12 +313,12 @@
 
     <TextView
         android:id="@+id/accuracy_title"
-        android:layout_width="96dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/accuracy"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/accuracy_text"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_text"
         app:layout_constraintStart_toStartOf="@+id/accuracy_text"
@@ -327,12 +327,12 @@
 
     <TextView
         android:id="@+id/accuracy_text"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/_105"
         android:textColor="@color/normal_text"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/accuracy_title"
         app:layout_constraintBottom_toBottomOf="@+id/speed_text"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
