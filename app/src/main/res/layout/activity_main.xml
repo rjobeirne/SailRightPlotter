@@ -25,9 +25,8 @@
     <TextView
         android:id="@+id/course_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"
@@ -37,7 +36,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/plusCourse"
         app:layout_constraintStart_toEndOf="@+id/minusCourse"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse"/>
 
     <TextView
         android:id="@+id/course_details"
@@ -56,7 +55,7 @@
         android:id="@+id/plusCourse"
         android:layout_width="32dp"
         android:layout_height="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="4dp"
         android:background="@color/button_background"
         android:onClick="next_course"
@@ -66,20 +65,20 @@
         app:layout_constraintEnd_toStartOf="@+id/course_dist"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/course_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse" />
 
     <TextView
         android:id="@+id/course_dist"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:text="8.8"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintStart_toEndOf="@id/plusCourse"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse" />
 
     <TextView
         android:id="@+id/course_dist_unit"
@@ -98,7 +97,7 @@
         android:layout_width="32dp"
         android:layout_height="36dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:background="@color/button_background"
         android:onClick="previous_mark"
         android:text="@string/lt"
@@ -107,14 +106,14 @@
         app:layout_constraintEnd_toStartOf="@+id/next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/course_dist"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse" />
 
     <TextView
         android:id="@+id/next_mark_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:gravity="center_horizontal"
         android:textAlignment="center"
@@ -123,23 +122,23 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/plus"
         app:layout_constraintStart_toEndOf="@+id/minus"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse" />
 
     <Button
         android:id="@+id/plus"
         android:layout_width="32dp"
         android:layout_height="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="4dp"
         android:background="@color/button_background"
         android:onClick="next_mark"
         android:text="@string/gt"
         android:textColor="@color/black"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/next_mark_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/minusCourse" />
 
     <TextView
         android:id="@+id/keep_title"
@@ -178,7 +177,7 @@
         android:gravity="center"
         android:text="@string/heading"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/heading_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/heading_text" />
@@ -204,7 +203,7 @@
         android:gravity="center"
         android:text="@string/variance"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/variance_text"
         app:layout_constraintEnd_toStartOf="@+id/keep_title"
         app:layout_constraintHorizontal_bias="0.0"
@@ -227,7 +226,7 @@
         android:id="@+id/bearing_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
@@ -245,7 +244,7 @@
         android:gravity="center"
         android:text="@string/bearing"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/bearing_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bearing_text"
@@ -258,7 +257,7 @@
         android:gravity="center"
         android:text="@string/kts"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/speed_text"
         app:layout_constraintEnd_toStartOf="@+id/speed_text"
         app:layout_constraintHorizontal_bias="0.4"
@@ -270,7 +269,7 @@
         android:id="@+id/speed_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
@@ -312,8 +311,9 @@
         android:gravity="center"
         android:text="@string/dist_to_mark"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dist_unit"
         app:layout_constraintTop_toTopOf="@+id/distance_text" />
 
     <TextView
@@ -323,24 +323,25 @@
         android:gravity="center"
         android:text="@string/nm"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/distance_text"
         app:layout_constraintStart_toEndOf="@+id/distance_text"
         app:layout_constraintTop_toBottomOf="@+id/dist_title" />
 
     <ImageButton
         android:id="@+id/button_settings"
-        android:layout_width="36dp"
-        android:layout_height="56dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:background="@color/white"
         android:contentDescription="@string/hammer_spanner"
         android:src="@mipmap/settings128"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/map"
+        app:layout_constraintTop_toBottomOf="@id/speed_text"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -350,7 +351,8 @@
         android:gravity="center"
         android:text="@string/time"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/speed_text"
         app:layout_constraintBottom_toTopOf="@+id/time_text"
         app:layout_constraintEnd_toEndOf="@+id/time_text"
         app:layout_constraintStart_toStartOf="@id/time_text" />
@@ -365,8 +367,8 @@
         android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@id/map"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/time_title"
         app:layout_constraintEnd_toStartOf="@+id/accuracy_text"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/button_settings" />
@@ -378,7 +380,8 @@
         android:gravity="center"
         android:text="@string/accuracy"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/speed_text"
         app:layout_constraintBottom_toTopOf="@+id/accuracy_text"
         app:layout_constraintEnd_toEndOf="@+id/accuracy_text"
         app:layout_constraintEnd_toStartOf="@+id/time_to_mark"
@@ -393,8 +396,8 @@
         android:gravity="center"
         android:text="@string/m"
         android:textColor="@color/normal_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/map"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/accuracy_title"
         app:layout_constraintEnd_toStartOf="@+id/time_to_mark"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/time_text" />
@@ -406,7 +409,8 @@
         android:gravity="center"
         android:text="@string/eta"
         android:textColor="@color/titles"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/distance_text"
         app:layout_constraintBottom_toTopOf="@+id/time_to_mark"
         app:layout_constraintEnd_toEndOf="@+id/time_to_mark"
         app:layout_constraintStart_toStartOf="@id/time_to_mark" />
@@ -419,17 +423,16 @@
         android:gravity="center"
         android:text="@string/eta"
         android:textColor="@color/normal_text"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@id/map"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/eta_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/accuracy_text" />
 
     <org.osmdroid.views.MapView android:id="@+id/map"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="540dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time_text"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
