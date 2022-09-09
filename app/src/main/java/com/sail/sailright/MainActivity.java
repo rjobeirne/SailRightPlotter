@@ -22,11 +22,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
-import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -38,7 +35,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -76,7 +72,6 @@ import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -163,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
+    Location locationNextMark;
     Double distToFinish;
 
     final String a = "A"; // Finish line data
@@ -471,12 +467,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        theMarks = new Marks();
         courseMark = new Marker(map);
-//        // Create the ArrayList in the constructor, so only done once
-//        try {
-//            theMarks.parseXML();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        // Create the ArrayList in the constructor, so only done once
+        try {
+            theMarks.parseXML();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        listMarkSize = theMarks.listNames.size();
 
@@ -721,6 +717,17 @@ public class MainActivity extends AppCompatActivity {
                 flagFinish = FALSE;
             }
             updateLocationUI();
+
+            // Put balloon over next mark
+            locationNextMark = theMarks.getNextMark(nextMark);
+            double lat = locationNextMark.getLatitude();
+            double lon = locationNextMark.getLongitude();
+            courseMark.setTitle(nextMarkFull);
+            courseMark.setPosition(new GeoPoint(lat, lon));
+            courseMark.setIcon(getResources().getDrawable(R.drawable.pin));
+            courseMark.setAnchor((float) 0.42, (float) 1.0);
+            map.getOverlays().add(courseMark);
+            map.invalidate();
         }
     }
 
