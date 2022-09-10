@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         if (!fileCourse.exists()) {
             copyAsset("courses.gpx");
             copyAsset("marks.gpx");
+            copyAsset("map.sqlite");
         }
 
         //Create the ArrayList object here, for use in all the MainActivity
@@ -392,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setMapOfflineSource() {
-        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/osmdroid/");
+        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SailRight/");
         if (f.exists()) {
             File[] list = f.listFiles();
             if (list != null) {
