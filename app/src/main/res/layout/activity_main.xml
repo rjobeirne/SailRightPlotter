@@ -331,17 +331,17 @@
 
     <ImageButton
         android:id="@+id/button_settings"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:background="@color/white"
         android:contentDescription="@string/hammer_spanner"
-        android:src="@mipmap/settings128"
+        android:src="@mipmap/settings"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/speed_text"
+        app:layout_constraintBottom_toBottomOf="@id/time_text"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -431,8 +431,9 @@
 
     <org.osmdroid.views.MapView android:id="@+id/map"
         android:layout_width="fill_parent"
-        android:layout_height="540dp"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_text"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
