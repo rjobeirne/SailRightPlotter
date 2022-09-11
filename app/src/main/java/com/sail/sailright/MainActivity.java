@@ -190,12 +190,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
-        File fileCourse = new File(dir + "courses.gpx");
-        if (!fileCourse.exists()) {
-            copyAsset("courses.gpx");
-            copyAsset("marks.gpx");
-            copyAsset("map.sqlite");
-        }
+        copyAsset("courses.gpx");
+        copyAsset("marks.gpx");
+        copyAsset("map.sqlite");
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
@@ -925,14 +922,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void copyAsset(String filename) {
-        File fileCourse = new File(dir + "/" + filename);
 
         // Check if SailRight directory exists, if not create it
         if (!dir.exists()) {
             dir.mkdir();
         }
         // If courses or marks file do not exist copy them from assets
-        if (!fileCourse.exists()) {
+        File storedFile = new File(dir + "/" + filename);
+        if (!storedFile.exists()) {
             AssetManager assetManager = getAssets();
             InputStream in = null;
             OutputStream out = null;
