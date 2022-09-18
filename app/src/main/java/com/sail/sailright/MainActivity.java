@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     String courseList, courseSummary;
     Boolean flagMarkExtra;
     MapView map = null;
-    private Marker courseMark;
+    private Marker targetMark;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright;
@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
-        courseMark = new Marker(map);
+        targetMark = new Marker(map);
         // Create the ArrayList in the constructor, so only done once
         try {
             theMarks.parseXML();
@@ -687,14 +687,15 @@ public class MainActivity extends AppCompatActivity {
             updateLocationUI();
 
             // Put balloon over next mark
+            map.getOverlays().remove(targetMark);
             locationNextMark = theMarks.getNextMark(nextMark);
             double lat = locationNextMark.getLatitude();
             double lon = locationNextMark.getLongitude();
-            courseMark.setTitle(nextMarkFull);
-            courseMark.setPosition(new GeoPoint(lat, lon));
-            courseMark.setIcon(getResources().getDrawable(R.drawable.pin75));
-            courseMark.setAnchor((float) 0.42, (float) 1.10);
-            map.getOverlays().add(courseMark);
+            targetMark.setTitle(nextMarkFull);
+            targetMark.setPosition(new GeoPoint(lat, lon));
+            targetMark.setIcon(getResources().getDrawable(R.drawable.balloon));
+            targetMark.setAnchor((float) 0.42, (float) 1.10);
+            map.getOverlays().add(targetMark);
             map.invalidate();
         }
     }
