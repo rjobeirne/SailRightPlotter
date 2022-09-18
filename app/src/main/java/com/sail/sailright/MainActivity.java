@@ -74,6 +74,7 @@ import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
@@ -166,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
     final String a = "A"; // Finish line data
     final String h = "H"; // Finish Line Data
     final String twr = "Tower RMYS";
+
+    private Polyline courseLine;
 
     // onCreate
     @Override
@@ -553,6 +556,32 @@ public class MainActivity extends AppCompatActivity {
             settingsBtn.setVisibility(View.INVISIBLE);
         }
 
+        courseLine = new Polyline();
+        GeoPoint dMark = new GeoPoint(-37.858400, 144.957900);
+        GeoPoint cMark = new GeoPoint(-37.869600,144.940400);
+        GeoPoint r2Mark = new GeoPoint(-37.909300, 144.939000);
+        GeoPoint bMark = new GeoPoint(-37.886500,144.953800);
+        GeoPoint mid212 = GeoPoint.fromCenterBetween(dMark, cMark);
+        GeoPoint mid214 = GeoPoint.fromCenterBetween(dMark, mid212);
+        GeoPoint mid234 = GeoPoint.fromCenterBetween(mid212, cMark);
+        mid214 = new GeoPoint(mid214.getLatitude() + 0.001,
+                mid214.getLongitude() + .0001);
+        mid234 = new GeoPoint(mid234.getLatitude() + 0.001,
+                mid234.getLongitude() + .0001);
+
+        ArrayList route = new ArrayList();
+        route.add(dMark);
+        route.add(mid214);
+        route.add(mid234);
+        route.add(cMark);
+        route.add(r2Mark);
+        route.add(cMark);
+        route.add(bMark);
+        courseLine.setColor(R.color.red);
+        courseLine.setWidth(5F);
+        courseLine.setPoints(route);
+
+
     }
 
     /**
@@ -696,6 +725,7 @@ public class MainActivity extends AppCompatActivity {
             targetMark.setIcon(getResources().getDrawable(R.drawable.balloon));
             targetMark.setAnchor((float) 0.42, (float) 1.10);
             map.getOverlays().add(targetMark);
+            map.getOverlays().add(courseLine);
             map.invalidate();
         }
     }
