@@ -40,13 +40,12 @@
         android:id="@+id/start_summary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="summy"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/heading_text"
-        app:layout_constraintEnd_toStartOf="@id/bearing_text"
+        app:layout_constraintEnd_toEndOf="@+id/stop_start"
+        app:layout_constraintStart_toStartOf="@+id/stop_start"
         app:layout_constraintTop_toBottomOf="@id/stop_start" />
 
     <TextView
