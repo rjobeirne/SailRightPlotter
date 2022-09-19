@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     final String twr = "Tower RMYS";
 
     private Polyline courseLine;
+    GeoPoint aMarkGeo, hMarkGeo;
 
     // onCreate
     @Override
@@ -218,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        aMark = theMarks.getNextMark(a);
+        hMark = theMarks.getNextMark(h);
+        tower = theMarks.getNextMark(twr);
+        aMarkGeo = new GeoPoint(aMark.getLatitude(), aMark.getLongitude());
+        hMarkGeo = new GeoPoint(hMark.getLatitude(), hMark.getLongitude());
 
         // Create theCalculator object for processing data readings
         theCalculator = new Calculator();
@@ -556,32 +563,33 @@ public class MainActivity extends AppCompatActivity {
             settingsBtn.setVisibility(View.INVISIBLE);
         }
 
+        // Display the course route
+        if (courseLine != null) {
+            map.getOverlays().remove(courseLine);
+        }
+        GeoPoint startFin = GeoPoint.fromCenterBetween(aMarkGeo, hMarkGeo);
         courseLine = new Polyline();
-        GeoPoint dMark = new GeoPoint(-37.858400, 144.957900);
-        GeoPoint cMark = new GeoPoint(-37.869600,144.940400);
-        GeoPoint r2Mark = new GeoPoint(-37.909300, 144.939000);
-        GeoPoint bMark = new GeoPoint(-37.886500,144.953800);
-        GeoPoint mid212 = GeoPoint.fromCenterBetween(dMark, cMark);
-        GeoPoint mid214 = GeoPoint.fromCenterBetween(dMark, mid212);
-        GeoPoint mid234 = GeoPoint.fromCenterBetween(mid212, cMark);
-        mid214 = new GeoPoint(mid214.getLatitude() + 0.001,
-                mid214.getLongitude() + .0001);
-        mid234 = new GeoPoint(mid234.getLatitude() + 0.001,
-                mid234.getLongitude() + .0001);
-
         ArrayList route = new ArrayList();
-        route.add(dMark);
-        route.add(mid214);
-        route.add(mid234);
-        route.add(cMark);
-        route.add(r2Mark);
-        route.add(cMark);
-        route.add(bMark);
+        GeoPoint wayPt;
+        String nextWayPt;
+
+        if (posCourse != 0) {
+            for (int i = 0; i < courseMarks.size(); i++) {
+                if (i == 0 || i == courseMarks.size() - 1) {
+                    wayPt = startFin;
+                } else {
+                    nextWayPt = (String) courseMarks.get(i);
+                    Location xx = theMarks.getNextMark(nextWayPt);
+                    double lat = xx.getLatitude();
+                    double lon = xx.getLongitude();
+                    wayPt = new GeoPoint(lat, lon);
+                }
+                route.add(wayPt);
+            }
+        }
         courseLine.setColor(R.color.red);
-        courseLine.setWidth(5F);
+        courseLine.setWidth(3F);
         courseLine.setPoints(route);
-
-
     }
 
     /**
@@ -697,9 +705,6 @@ public class MainActivity extends AppCompatActivity {
                 lastMarkName = (String) courseMarks.get(listMarkSize - 2);
 
                 // Should have A Mark, H Mark to create the Finish Line Object
-                aMark = theMarks.getNextMark(a);
-                hMark = theMarks.getNextMark(h);
-                tower = theMarks.getNextMark(twr);
                 lastMark = theMarks.getNextMark(lastMarkName);
                 theFinish = new FinishLine(aMark, hMark, tower, lastMark);
 
