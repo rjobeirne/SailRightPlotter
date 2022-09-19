@@ -492,6 +492,7 @@ public class MainActivity extends AppCompatActivity {
             courseMark.setTitle(nameMarkFull);
             courseMark.setPosition(new GeoPoint(lat, lon));
             courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
+            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
             map.getOverlays().add(courseMark);
             map.invalidate();
         }
@@ -728,7 +729,7 @@ public class MainActivity extends AppCompatActivity {
             targetMark.setTitle(nextMarkFull);
             targetMark.setPosition(new GeoPoint(lat, lon));
             targetMark.setIcon(getResources().getDrawable(R.drawable.balloon));
-            targetMark.setAnchor((float) 0.42, (float) 1.10);
+            targetMark.setAnchor((float) 0.33, (float) 0.86); // set for Laser787
             map.getOverlays().add(targetMark);
             map.getOverlays().add(courseLine);
             map.invalidate();
