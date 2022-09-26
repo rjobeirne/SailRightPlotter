@@ -637,7 +637,7 @@ public class MainActivity extends AppCompatActivity {
             if (raceCourse.equals("RMYS")) {
                 listMarkSize = theMarks.marks.size();
                 nextMark = theMarks.marks.get(posMark).getmarkName();
-
+                nextRounding = "A";
             } else {
                 listMarkSize = courseMarks.size();
                 nextMark = (String) courseMarks.get(posMark);
