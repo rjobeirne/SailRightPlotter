@@ -540,6 +540,7 @@ public class MainActivity extends AppCompatActivity {
         courseList = String.valueOf(courseMarks);
         if (!raceCourse.equals("RMYS")) {
             courseSummary = courseList.substring(courseList.indexOf(",")+1, courseList.lastIndexOf(","));
+            map.getOverlays().remove(courseLine);
         } else {
             courseSummary = "";
         }
@@ -729,7 +730,7 @@ public class MainActivity extends AppCompatActivity {
             targetMark.setTitle(nextMarkFull);
             targetMark.setPosition(new GeoPoint(lat, lon));
             targetMark.setIcon(getResources().getDrawable(R.drawable.balloon));
-            targetMark.setAnchor((float) 0.33, (float) 0.86); // set for Laser787
+            targetMark.setAnchor((float) 0.45, (float) 1.1); // set for Laser787
             map.getOverlays().add(targetMark);
             map.getOverlays().add(courseLine);
             map.invalidate();
