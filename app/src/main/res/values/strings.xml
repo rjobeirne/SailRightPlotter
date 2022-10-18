@@ -27,8 +27,8 @@
     <string name="none">None</string>
     <string name="speed">Speed</string>
     <string name="heading">Head</string>
-    <string name="lt"><![CDATA[<]]></string>
-    <string name="gt"><![CDATA[>]]></string>
+    <string name="lt"><![CDATA[v]]></string>
+    <string name="gt"><![CDATA[^]]></string>
     <string name="start">Start</string>
     <string name="sync">Sync</string>
     <string name="plus">+</string>
