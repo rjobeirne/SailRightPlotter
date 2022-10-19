@@ -28,7 +28,7 @@
         android:text="@string/none"
         android:textAlignment="center"
         android:textColor="@color/normal_text"
-        android:textSize="24sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@+id/plusCourse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speed_text" />
@@ -319,17 +319,16 @@
 
     <ImageButton
         android:id="@+id/button_settings"
-        android:layout_width="36dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
         android:background="@color/white"
         android:contentDescription="@string/hammer_spanner"
         android:src="@mipmap/settings"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/time_text"
+        app:layout_constraintTop_toTopOf="@id/time_text"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
