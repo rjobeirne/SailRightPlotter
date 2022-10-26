@@ -10,19 +10,20 @@
 
     <Button
         android:id="@+id/minusCourse"
-        android:layout_width="40dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
         android:background="@color/button_background"
         android:onClick="previous_course"
         android:text="@string/lt"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@id/plusCourse"
-        app:layout_constraintTop_toBottomOf="@id/plusCourse" />
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/course_name" />
 
     <TextView
         android:id="@+id/course_name"
-        android:layout_width="232dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
         android:gravity="center_horizontal"
         android:text="@string/none"
@@ -30,7 +31,7 @@
         android:textColor="@color/normal_text"
         android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@+id/plusCourse"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/minusCourse"
         app:layout_constraintTop_toBottomOf="@+id/speed_text" />
 
     <TextView
@@ -41,64 +42,63 @@
         android:text="summy"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/course_name"
         app:layout_constraintEnd_toEndOf="@id/course_name"
         app:layout_constraintTop_toBottomOf="@id/course_name" />
 
     <Button
         android:id="@+id/plusCourse"
-        android:layout_width="40dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="4dp"
         android:background="@color/button_background"
         android:onClick="next_course"
         android:text="@string/gt"
         android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textSize="24sp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/course_name"
-        app:layout_constraintEnd_toStartOf="@+id/course_dist"
+        app:layout_constraintEnd_toStartOf="@id/course_dist"
         app:layout_constraintTop_toTopOf="@+id/course_name" />
 
     <TextView
         android:id="@+id/course_dist"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_height="0dp"
         android:text="8.8"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/plus"
         app:layout_constraintStart_toEndOf="@id/plusCourse"
+        app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintTop_toTopOf="@id/plusCourse" />
 
     <TextView
         android:id="@+id/course_dist_unit"
         android:layout_width="32dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/course_dist_unit"
         android:textAlignment="center"
         android:textColor="@color/titles"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@id/plus"
         app:layout_constraintStart_toEndOf="@id/plusCourse"
+        app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintTop_toBottomOf="@id/course_dist" />
 
     <Button
         android:id="@+id/minus"
-        android:layout_width="40dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="60dp"
         android:background="@color/button_background"
         android:onClick="previous_mark"
         android:text="@string/lt"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@id/plus"
+        app:layout_constraintEnd_toStartOf="@id/next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/plus"
-        app:layout_constraintTop_toBottomOf="@id/plus" />
+        app:layout_constraintStart_toEndOf="@id/course_dist"
+        app:layout_constraintTop_toTopOf="@id/plusCourse" />
 
     <TextView
         android:id="@+id/next_mark_name"
@@ -109,28 +109,29 @@
         android:textAlignment="center"
         android:textColor="@color/normal_text"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/plus"
-        app:layout_constraintTop_toTopOf="@id/plus" />
+        app:layout_constraintStart_toEndOf="@+id/minus"
+        app:layout_constraintEnd_toStartOf="@id/plus"
+        app:layout_constraintTop_toTopOf="@id/minus" />
 
     <Button
         android:id="@+id/plus"
-        android:layout_width="40dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="60dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/button_background"
         android:onClick="next_mark"
         android:text="@string/gt"
         android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textSize="24sp"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/course_dist"
+        app:layout_constraintStart_toEndOf="@id/next_mark_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/course_dist" />
 
     <TextView
         android:id="@+id/keep_title"
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/keep"
@@ -200,7 +201,7 @@
 
     <TextView
         android:id="@+id/variance_text"
-        android:layout_width="120dp"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/_105"
@@ -227,7 +228,7 @@
 
     <TextView
         android:id="@+id/bearing_title"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/bearing"
@@ -294,15 +295,16 @@
 
     <TextView
         android:id="@+id/dist_title"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/dist_to_mark"
         android:textColor="@color/titles"
         android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/distance_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dist_unit"
-        app:layout_constraintTop_toTopOf="@+id/distance_text" />
+        app:layout_constraintTop_toBottomOf="@id/bearing_text" />
 
     <TextView
         android:id="@+id/dist_unit"
@@ -420,7 +422,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/minusCourse"
+        app:layout_constraintTop_toBottomOf="@id/course_details"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

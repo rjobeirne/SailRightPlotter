@@ -471,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
         mLocationOverlay.enableMyLocation();
         mLocationOverlay.setPersonHotspot(51, 51);
         Bitmap bitmapStationary = BitmapFactory.decodeResource(getResources(), R.drawable.my_location);
-        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow1);
+        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow2);
         mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
         mLocationOverlay.setPersonIcon(bitmapStationary);
         map.getOverlays().add(mLocationOverlay);
@@ -632,6 +632,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setNextMark() {
         if (!flagFinish) {
+            mNextMarkTextView.setTextSize(32);
 
             if (raceCourse.equals("RMYS")) {
                 listMarkSize = theMarks.marks.size();
@@ -729,7 +730,7 @@ public class MainActivity extends AppCompatActivity {
         double lon = locationNextMark.getLongitude();
         targetMark.setTitle(nextMarkFull);
         targetMark.setPosition(new GeoPoint(lat, lon));
-        targetMark.setIcon(getResources().getDrawable(R.drawable.balloon));
+        targetMark.setIcon(getResources().getDrawable(R.drawable.balloon2));
         targetMark.setAnchor((float) 0.45, (float) 1.1); // set for Laser787
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
@@ -837,6 +838,7 @@ public class MainActivity extends AppCompatActivity {
                     if (alarmFinish) {
                         playSounds("whoop");
                     }
+                    mNextMarkTextView.setTextSize(24);
                     mNextMarkTextView.setText(R.string.finished);
                     flagFinish = FALSE;
                     flagFinished = TRUE;
