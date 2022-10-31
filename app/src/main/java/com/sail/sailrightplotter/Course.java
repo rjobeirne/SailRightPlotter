@@ -1,4 +1,4 @@
-package com.sail.sailright;
+package com.sail.sailrightplotter;
 
 public class Course {
 

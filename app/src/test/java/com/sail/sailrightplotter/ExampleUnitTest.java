@@ -1,4 +1,4 @@
-package com.sail.sailright;
+package com.sail.sailrightplotter;
 
 import org.junit.Test;
 

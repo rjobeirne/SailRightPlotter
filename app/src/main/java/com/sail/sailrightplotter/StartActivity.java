@@ -1,4 +1,4 @@
-package com.sail.sailright;
+package com.sail.sailrightplotter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;

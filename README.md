@@ -1,8 +1,8 @@
-# SailRight
+# SailRightPlotter
 An android app to navigate around the Royal Melbourne Yacht Squadron pursuit courses. The app includes the courses and mark locations as specified in the Sailing Instructions V6.0. Some mark locations have been updated from a club survey conducted May 2020.
 
 ## Operation
-The app uses the devices GPS system to determine the speed, heading and location of the boat. It only operates in a dashboard fashion providing only numerical data and not any graphical or map information. It operates in one of two modes:
+The app uses the devices GPS system to determine the speed, heading and location of the boat. It provides both numerical data and graphical map information. It operates in one of two modes:
 ### Start Mode
 A countdown clock is provided for timing the start. The time to reach the start line is calculated from the boat's speed, location and where the boat will cross the line based on current heading. A warning tone (airhorn) is given at every minute of the countdown. A shotgun sound is heard when the clock reaches zero and the screen changes to Race Mode and the first mark of the course is set as the destination. If the device calculates the boat will cross the line more than a preset time after the alloted start time (default 15 seconds) a disappointment tone (wah wah) will sound. A button is provide to manually return the app to Race Mode if needed.
 ### Race Mode
@@ -17,6 +17,6 @@ The app calls for updated GPS data as frequently as possible which is about 1 pe
 ### Settings
 Access to the settings page is only available when the course is showing 'RMYS'. To enter the settings page a long press of the spanner and screwdriver icon is requred to prevent inadvertent pressing. Settings allow changes to speed and heading smoothing factors, proximity alert distance, auto advance to next mark and default start time for the start countdown clock. Individual notification tone can be stopped.
 ### Screen Orientation
-The app is only intented to operate in landscape orientation and it is locked that way.
+The app is only intended to operate in landscape orientation and it is locked that way.
 ### Navigation Bars
 To maximise screen space the navigation bars will appear only temporarily. In order to access them it is necessary to either swipe left from the right or swipe down from the top , and they will be visible for about 2 seconds. To exit the app, swipe left from the right and tap the back symbol **twice**.
