@@ -820,7 +820,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (distToMark < distMarkProximity
                     && finMark.equals("race")
-                    && autoAdvance) {
+                    && autoAdvance
+                    && !raceCourse.equals("RMYS")) {
                 posMark = posMark + 1;
                 setNextMark();
                 if (alarmProx) {
