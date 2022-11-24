@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     final String h = "H"; // Finish Line Data
     final String twr = "Tower RMYS";
 
-    private Polyline courseLine;
+    private Polyline courseLine, startLine;
     GeoPoint aMarkGeo, hMarkGeo;
 
     // onCreate
@@ -492,6 +492,7 @@ public class MainActivity extends AppCompatActivity {
             courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
 //            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
             map.getOverlays().add(courseMark);
+            map.getOverlays().add(startLine);
             map.invalidate();
         }
         return map;
@@ -567,6 +568,13 @@ public class MainActivity extends AppCompatActivity {
         if (courseLine != null) {
             map.getOverlays().remove(courseLine);
         }
+
+        startLine = new Polyline();
+        ArrayList lineStartFin = new ArrayList();
+        lineStartFin.add(aMarkGeo);
+        lineStartFin.add(hMarkGeo);
+        startLine.setPoints(lineStartFin);
+
         GeoPoint startFin = GeoPoint.fromCenterBetween(aMarkGeo, hMarkGeo);
         courseLine = new Polyline();
         ArrayList route = new ArrayList();
