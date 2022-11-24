@@ -435,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             map.setUseDataConnection(false);
                             IMapController mapController = map.getController();
-                            mapController.setZoom(13.0);
+                            mapController.setZoom(14.0);
                             GeoPoint startPoint = new GeoPoint(-37.87, 144.954);
                             mapController.setCenter(startPoint);
                             map.setMinZoomLevel(12.0);
