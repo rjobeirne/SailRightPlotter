@@ -492,13 +492,12 @@ public class MainActivity extends AppCompatActivity {
             courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
 //            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
             map.getOverlays().add(courseMark);
-            map.getOverlays().add(startLine);
             map.invalidate();
         }
         return map;
     }
 
-    /**
+    /**course
      * This method is called when the + course button is pressed
      */
     public void next_course(View view) {
@@ -573,6 +572,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList lineStartFin = new ArrayList();
         lineStartFin.add(aMarkGeo);
         lineStartFin.add(hMarkGeo);
+        startLine.setColor(R.color.black);
+        startLine.setWidth(10F);
         startLine.setPoints(lineStartFin);
 
         GeoPoint startFin = GeoPoint.fromCenterBetween(aMarkGeo, hMarkGeo);
@@ -742,6 +743,7 @@ public class MainActivity extends AppCompatActivity {
         targetMark.setAnchor((float) 0.45, (float) 1.1); // set for Laser787
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
+        map.getOverlays().add(startLine);
         map.invalidate();
     }
 
