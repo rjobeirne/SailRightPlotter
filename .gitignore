@@ -14,3 +14,7 @@
 .cxx
 
 .idea/deploymentTargetDropDown.xml
+
+.idea/compiler.xml
+
+.idea/misc.xml

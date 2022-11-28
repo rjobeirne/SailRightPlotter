@@ -79,7 +79,6 @@
         android:id="@+id/heading_text"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
@@ -132,7 +131,6 @@
         android:id="@+id/speed_text"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
@@ -177,9 +175,16 @@
         app:layout_constraintEnd_toEndOf="@+id/dist_title"
         app:layout_constraintTop_toBottomOf="@+id/dist_title" />
 
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speed_text"
+        app:layout_constraintBottom_toTopOf="@id/start_time_early_late_title"/>
+
     <Button
         android:id="@+id/start_clock"
-        android:layout_width="108dp"
+        android:layout_width="72dp"
         android:layout_height="108dp"
         android:layout_marginBottom="16dp"
         android:background="@color/button_go"
@@ -206,7 +211,7 @@
         android:id="@+id/start_time_early_late"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/countdown"
         android:textSize="36sp"
@@ -276,17 +281,17 @@
         android:gravity="center|center_horizontal"
         android:text="@string/countdown"
         android:textColor="@color/normal_text"
-        android:textSize="120sp"
+        android:textSize="80dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/time_plus"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/time_title"
+        app:layout_constraintEnd_toStartOf="@+id/time_plus"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/start_clock" />
 
     <Button
         android:id="@+id/time_plus"
         android:layout_width="72dp"
-        android:layout_height="96dp"
+        android:layout_height="72dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
         android:onClick="time_plus"
@@ -300,7 +305,7 @@
     <Button
         android:id="@+id/time_minus"
         android:layout_width="72dp"
-        android:layout_height="96dp"
+        android:layout_height="72dp"
         android:layout_marginEnd="8dp"
         android:onClick="time_minus"
         android:text="@string/minus"

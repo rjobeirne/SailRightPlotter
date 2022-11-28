@@ -740,7 +740,7 @@ public class MainActivity extends AppCompatActivity {
         targetMark.setTitle(nextMarkFull);
         targetMark.setPosition(new GeoPoint(lat, lon));
         targetMark.setIcon(getResources().getDrawable(R.drawable.balloon2));
-        targetMark.setAnchor((float) 0.45, (float) 1.1); // set for Laser787
+//        targetMark.setAnchor((float) 0.45, (float) 1.1); // set for Laser787
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
         map.getOverlays().add(startLine);

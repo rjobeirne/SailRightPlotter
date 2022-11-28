@@ -5,14 +5,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,8 +31,25 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.modules.ArchiveFileFactory;
+import org.osmdroid.tileprovider.modules.IArchiveFile;
+import org.osmdroid.tileprovider.modules.OfflineTileProvider;
+import org.osmdroid.tileprovider.tilesource.FileBasedTileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class StartActivity extends AppCompatActivity {
@@ -72,6 +93,8 @@ public class StartActivity extends AppCompatActivity {
     CountDownTimer startClock;
     double secsLeft;
     String clockControl = "Go";
+    MapView map = null;
+    Polyline startLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +121,11 @@ public class StartActivity extends AppCompatActivity {
         mAccuracyTextView = findViewById(R.id.accuracy_text);
         mClockTextView = findViewById(R.id.time_to_start);
         mClock = findViewById(R.id.time_text);
+
+        //inflate and create the map
+        map = (MapView) findViewById(R.id.map);
+        setMapOfflineSource();
+        showStart();
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
@@ -189,6 +217,7 @@ public class StartActivity extends AppCompatActivity {
         updateGPS();
         showClock(timeToStart);
         startLocationUpdates();
+        setMapOfflineSource();
     } // end of onCreate
 
 
@@ -218,6 +247,143 @@ public class StartActivity extends AppCompatActivity {
         }
     }
 
+    void setMapOfflineSource() {
+        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SailRight/");
+        if (f.exists()) {
+            File[] list = f.listFiles();
+            if (list != null) {
+                for (File aList : list) {
+                    if (aList.isDirectory()) {
+                        continue;
+                    }
+                    String name = aList.getName().toLowerCase();
+                    if (!name.contains(".")) {
+                        continue;
+                    }
+                    name = name.substring(name.lastIndexOf(".") + 1);
+                    if (name.length() == 0) {
+                        continue;
+                    }
+                    for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
+            String nameMark = (String) theMarks.listNames.get(i);
+            String nameMarkFull = nameMark;
+            if (nameMark.length() ==1) {
+                nameMarkFull = nameMark + " Mark";
+            }
+            Location locationMark = theMarks.getNextMark(nameMark);
+            double lat = locationMark.getLatitude();
+            double lon = locationMark.getLongitude();
+
+            Marker courseMark = new Marker(map);
+            courseMark.setTitle(nameMarkFull);
+            courseMark.setPosition(new GeoPoint(lat, lon));
+            courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
+//            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
+//            map.getOverlays().add(courseMark);
+            map.invalidate();
+        }
+                    if (ArchiveFileFactory.isFileExtensionRegistered(name)) {
+                        try {
+                            OfflineTileProvider tileProvider =
+                                    new OfflineTileProvider(new SimpleRegisterReceiver(this),
+                                    new File[]{aList});
+                            map.setTileProvider(tileProvider);
+                            String source = "";
+                            IArchiveFile[] archives = tileProvider.getArchives();
+                            if (archives.length > 0) {
+                                Set<String> tileSources = archives[0].getTileSources();
+                                if (!tileSources.isEmpty()) {
+                                    source = tileSources.iterator().next();
+                                    map.setTileSource(FileBasedTileSource.getSource(source));
+                                } else {
+                                    map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+                                }
+                            } else {
+                                map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+                            }
+                            map.setUseDataConnection(false);
+                            IMapController mapController = map.getController();
+                            mapController.setZoom(14.0);
+                            GeoPoint startPoint = new GeoPoint(-37.87, 144.954);
+                            mapController.setCenter(startPoint);
+                            map.setMinZoomLevel(12.0);
+                            map.setMaxZoomLevel(17.0);
+                            map.setScrollableAreaLimitLatitude(-37.82, -38.0, 0);
+                            map.setScrollableAreaLimitLongitude(144.8, 145.05, 0);
+                            map.invalidate();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public MapView showMarks() {
+
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
+//        targetMark = new Marker(map);
+        // Create the ArrayList in the constructor, so only done once
+        try {
+            theMarks.parseXML();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(map);
+        mLocationOverlay.enableFollowLocation();
+        mLocationOverlay.enableMyLocation();
+        mLocationOverlay.setPersonHotspot(51, 51);
+        Bitmap bitmapStationary = BitmapFactory.decodeResource(getResources(), R.drawable.my_location);
+        Bitmap bitmapMoving = BitmapFactory.decodeResource(getResources(), R.drawable.arrow2);
+        mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
+        mLocationOverlay.setPersonIcon(bitmapStationary);
+        map.getOverlays().add(mLocationOverlay);
+
+//        for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
+//            String nameMark = (String) theMarks.listNames.get(i);
+//            String nameMarkFull = nameMark;
+//            if (nameMark.length() ==1) {
+//                nameMarkFull = nameMark + " Mark";
+//            }
+//            Location locationMark = theMarks.getNextMark(nameMark);
+//            double lat = locationMark.getLatitude();
+//            double lon = locationMark.getLongitude();
+//
+//            Marker courseMark = new Marker(map);
+//            courseMark.setTitle(nameMarkFull);
+//            courseMark.setPosition(new GeoPoint(lat, lon));
+//            courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
+////            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
+//            map.getOverlays().add(courseMark);
+//            map.invalidate();
+//        }
+        return map;
+
+    }
+
+    /**
+     * Show the start line on the map
+     */
+    public void showStart() {
+
+        GeoPoint aMarkGeo = new GeoPoint(theMarks.getNextMark("A").getLatitude(),
+                theMarks.getNextMark("A").getLongitude());
+        GeoPoint hMarkGeo = new GeoPoint(theMarks.getNextMark("H").getLatitude(),
+                theMarks.getNextMark("H").getLongitude());
+        startLine = new Polyline();
+        ArrayList lineStartFin = new ArrayList();
+        lineStartFin.add(aMarkGeo);
+        lineStartFin.add(hMarkGeo);
+        startLine.setColor(R.color.black);
+        startLine.setWidth(10F);
+        startLine.setPoints(lineStartFin);
+        map.getOverlays().add(startLine);
+        map.invalidate();
+    }
     /**
      * Display course and start mark
      * @param startCourse Course selected
