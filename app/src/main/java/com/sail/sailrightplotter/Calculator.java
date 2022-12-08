@@ -134,7 +134,7 @@ public class Calculator {
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeToMark)));
             }
         } else {
-            ttmDisplay = "--h --' --\"";
+            ttmDisplay = "--' --\"";
         }
         return ttmDisplay;
     }
@@ -143,14 +143,12 @@ public class Calculator {
         // Calc early/late to line
         timeVariance = timeRemain - timeToMark;
         if (timeVariance < 360000 && timeVariance > -360000) {
-            timeVarDisplay = String.format("%02dh %02d' %02d\"",
-                    TimeUnit.SECONDS.toHours(timeVariance),
-                    abs(TimeUnit.SECONDS.toMinutes(timeVariance) -
-                            TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeVariance))),
+            timeVarDisplay = String.format("%02d' %02d\"",
+                    abs(TimeUnit.SECONDS.toMinutes(timeVariance)),
                     abs(TimeUnit.SECONDS.toSeconds(timeVariance) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(timeVariance))));
         } else {
-            timeVarDisplay = "--h --' --\"";
+            timeVarDisplay = "--' --\"";
         }
         return timeVarDisplay;
     }
