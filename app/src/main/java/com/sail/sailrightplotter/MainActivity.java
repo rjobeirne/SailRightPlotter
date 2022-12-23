@@ -328,18 +328,6 @@ public class MainActivity extends AppCompatActivity {
         updateGPS();
         startLocationUpdates();
 
-        Boolean charging = chargeReceiver.onCharge();
-
-        if(charging) {
-            // Do something when power connected
-            Log.e("Charging", " ** Charging");
-        }
-        else {
-            Log.e("Not Charging", " ** Not Charging");
-            // Do something when power disconnected
-        }
-
-
     } // end onCreate method
 
 
