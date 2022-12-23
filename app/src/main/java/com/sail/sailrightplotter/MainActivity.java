@@ -17,8 +17,10 @@ package com.sail.sailrightplotter;
  */
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -28,6 +30,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,6 +40,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     FinishLine theFinish = null;
     StartActivity theStart = null;
     Calculator theCalculator = null;
+    PlugInControlReceiver chargeReceiver;
 
     // Define parameters of next mark
     double mSpeed;
@@ -201,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
+        chargeReceiver = new PlugInControlReceiver();
 
         //inflate and create the map
         map = (MapView) findViewById(R.id.map);
@@ -321,6 +327,18 @@ public class MainActivity extends AppCompatActivity {
 
         updateGPS();
         startLocationUpdates();
+
+        Boolean charging = chargeReceiver.onCharge();
+
+        if(charging) {
+            // Do something when power connected
+            Log.e("Charging", " ** Charging");
+        }
+        else {
+            Log.e("Not Charging", " ** Not Charging");
+            // Do something when power disconnected
+        }
+
 
     } // end onCreate method
 
