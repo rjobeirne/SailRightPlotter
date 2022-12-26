@@ -889,7 +889,6 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
 
-
         if (charging) {
             mPowerWarning.setVisibility(View.GONE);
             } else {
@@ -946,7 +945,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (v.isPressed() && System.currentTimeMillis() - startTime >+ LONG_PRESS_DELAY_MILLIS) {
-                    System.exit(0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        finishAndRemoveTask();
+                    }
                     return;
                 } else if (!v.isPressed()) {
                     return;
