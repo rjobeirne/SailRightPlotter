@@ -17,6 +17,7 @@ package com.sail.sailrightplotter;
  */
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +31,6 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,7 +40,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -112,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     private TextClock mClock;
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
+    private TextView mPowerWarning;
 
     // Define the 'Marks' and 'Courses' ArraysBoat
     Marks theMarks = null;
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
     boolean flagStart = FALSE;
     boolean flagFinished = FALSE;
     boolean doubleFinToEndPressOnce = FALSE;
+    boolean charging = true;
 
     String displayDistToMark;
     String ttmDisplay;
@@ -177,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
     GeoPoint aMarkGeo, hMarkGeo;
 
     // onCreate
+    @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,7 +208,11 @@ public class MainActivity extends AppCompatActivity {
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
         theCourses = new Courses();
+        IntentFilter filter =  new IntentFilter();
+        filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
+        filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED");
         chargeReceiver = new PlugInControlReceiver();
+        registerReceiver(chargeReceiver, filter);
 
         //inflate and create the map
         map = (MapView) findViewById(R.id.map);
@@ -252,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
         mClock = findViewById(R.id.time_text);
         mKeepTextView = findViewById(R.id.keep_title);
         mCourseListTextView = findViewById(R.id.course_details);
+        mPowerWarning = findViewById(R.id.power_warning);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -881,6 +888,14 @@ public class MainActivity extends AppCompatActivity {
         mClock.setFormat24Hour("HH:mm:ss");
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
+
+
+        if (charging) {
+            mPowerWarning.setVisibility(View.GONE);
+            } else {
+            // Display warning
+            mPowerWarning.setVisibility(View.VISIBLE);
+        }
     }
 
     public void playSounds(String sound) {
@@ -1023,6 +1038,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//Detect if device is charging
+    public class PlugInControlReceiver extends BroadcastReceiver {
+        String action;
+        public void onReceive(Context context, Intent intent) {
+            action = intent.getAction();
+
+            if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
+                // Do something when power connected
+                charging = true;
+            } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+                // Do something when power disconnected
+                charging = false;
+            }
+        }
+    }
 }
 
 

@@ -8,6 +8,7 @@
     android:keepScreenOn="true"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/minusCourse"
         android:layout_width="48dp"
@@ -443,11 +444,28 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/accuracy_text" />
 
+    <TextView
+        android:id="@+id/power_warning"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="POWER DISCONNECTED"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:background="@color/red"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/course_details" />
+
     <org.osmdroid.views.MapView android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/course_details"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/power_warning"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </org.osmdroid.views.MapView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
