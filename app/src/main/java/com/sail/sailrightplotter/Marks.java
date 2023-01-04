@@ -55,10 +55,8 @@ public class Marks {
                 // Create an ArrayList of mark names and coords from the parsed marks.gpx file
                 Mark model = new Mark();
                 model.setmarkName(element.getAttribute("name"));
-                markLat = "-" + (Double.parseDouble(element.getAttribute("lat_deg")) +
-                        Double.parseDouble(element.getAttribute("lat_min")) / 60);
-                markLon = String.valueOf(Double.parseDouble(element.getAttribute("lon_deg")) +
-                        Double.parseDouble(element.getAttribute("lon_min"))/60) ;
+                markLat = "-" + (Double.parseDouble(element.getAttribute("lat_deg")));
+                markLon = String.valueOf(Double.parseDouble(element.getAttribute("lon_deg")));
 
                 model.setMarkLat(markLat);
                 model.setMarkLon(markLon);

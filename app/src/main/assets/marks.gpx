@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <list>
-    <mark name="A" lat_deg="37" lat_min="51.895" lon_deg="144" lon_min="57.490"/>
-    <mark name="B" lat_deg="37" lat_min="53.192" lon_deg="144" lon_min="57.230"/>
-    <mark name="C" lat_deg="37" lat_min="52.178" lon_deg="144" lon_min="56.421"/>
-    <mark name="D" lat_deg="37" lat_min="51.505" lon_deg="144" lon_min="57.472"/>
-    <mark name="E" lat_deg="37" lat_min="52.156" lon_deg="144" lon_min="57.799"/>
-    <mark name="F" lat_deg="37" lat_min="53.588" lon_deg="144" lon_min="56.308"/>
-    <mark name="G" lat_deg="37" lat_min="50.943" lon_deg="144" lon_min="56.109"/>
-    <mark name="H" lat_deg="37" lat_min="51.861" lon_deg="144" lon_min="57.701"/>
-    <mark name="P3" lat_deg="37" lat_min="53.40" lon_deg="144" lon_min="52.87"/>
-    <mark name="R2" lat_deg="37" lat_min="54.56" lon_deg="144" lon_min="56.34"/>
-    <mark name="R3" lat_deg="37" lat_min="53.16" lon_deg="144" lon_min="56.39"/>
-    <mark name="RBYC1" lat_deg="37" lat_min="54.63" lon_deg="144" lon_min="58.24"/>
-    <mark name="RBYC4" lat_deg="37" lat_min="53.61" lon_deg="144" lon_min="57.08"/>
-    <mark name="RBYC5" lat_deg="37" lat_min="53.81" lon_deg="144" lon_min="58.46"/>
-    <mark name="SYC1" lat_deg="37" lat_min="57.80" lon_deg="144" lon_min="58.89"/>
-    <mark name="T25" lat_deg="37" lat_min="52.48" lon_deg="144" lon_min="55.91"/>
-    <mark name="Tower RMYS" lat_deg="37" lat_min="51.838" lon_deg="144" lon_min="57.829"/>
+    <mark name="A" lat_deg="37.86492" lon_deg="144.95817"/>
+    <mark name="B" lat_deg="37.88653" lon_deg="144.95383"/>
+    <mark name="C" lat_deg="37.86963" lon_deg="144.94035"/>
+    <mark name="D" lat_deg="37.85842" lon_deg="144.95787"/>
+    <mark name="E" lat_deg="37.86927" lon_deg="144.96332"/>
+    <mark name="F" lat_deg="37.89313" lon_deg="144.93847"/>
+    <mark name="G" lat_deg="37.84905" lon_deg="144.93515"/>
+    <mark name="H" lat_deg="37.86435" lon_deg="144.96168"/>
+    <mark name="P3" lat_deg="37.89" lon_deg="144.88117"/>
+    <mark name="R2" lat_deg="37.90933" lon_deg="144.939"/>
+    <mark name="R3" lat_deg="37.88683" lon_deg="144.94033"/>
+    <mark name="RBYC1" lat_deg="37.9105" lon_deg="144.97067"/>
+    <mark name="RBYC4" lat_deg="37.8935" lon_deg="144.95133"/>
+    <mark name="RBYC5" lat_deg="37.89683" lon_deg="144.97433"/>
+    <mark name="SYC1" lat_deg="37.96333" lon_deg="144.9815"/>
+    <mark name="T25" lat_deg="37.87467" lon_deg="144.93183"/>
+    <mark name="Tower RMYS" lat_deg="37.86397" lon_deg="144.96382"/>
 </list>
