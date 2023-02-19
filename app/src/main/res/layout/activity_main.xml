@@ -195,7 +195,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/heading_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/heading_text" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/heading_text"
@@ -204,7 +204,7 @@
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
-        android:textSize="48sp"
+        android:textSize="56sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/variance_text"
         app:layout_constraintHorizontal_bias="0.5"
@@ -231,7 +231,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/_105"
-        android:textSize="40sp"
+        android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
@@ -245,7 +245,7 @@
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
-        android:textSize="48sp"
+        android:textSize="56sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/bearing_title"
         app:layout_constraintHorizontal_bias="0.5"
@@ -263,7 +263,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/bearing_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bearing_text"
-        app:layout_constraintTop_toTopOf="@+id/bearing_text" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/speed_title"
@@ -288,7 +288,7 @@
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
-        android:textSize="48sp"
+        android:textSize="56sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/distance_text"
         app:layout_constraintStart_toEndOf="@id/speed_title"
@@ -313,7 +313,7 @@
         android:gravity="center"
         android:text="@string/distance"
         android:textColor="@color/normal_text"
-        android:textSize="48sp"
+        android:textSize="56sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/dist_title"
         app:layout_constraintStart_toEndOf="@id/speed_text"
@@ -323,14 +323,15 @@
         android:id="@+id/dist_title"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/dist_to_mark"
         android:textColor="@color/titles"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/distance_text"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dist_unit"
-        app:layout_constraintTop_toBottomOf="@id/bearing_text" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/distance_text"
+        app:layout_constraintTop_toTopOf="@+id/distance_text" />
 
     <TextView
         android:id="@+id/dist_unit"
@@ -341,7 +342,6 @@
         android:textColor="@color/titles"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/distance_text"
         app:layout_constraintStart_toEndOf="@+id/distance_text"
         app:layout_constraintTop_toBottomOf="@+id/dist_title" />
 
@@ -356,8 +356,9 @@
         android:src="@mipmap/settings"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="@id/time_text"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/time_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time_text" />
 
     <TextView
         android:id="@+id/time_title"
@@ -467,5 +468,23 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
     </org.osmdroid.views.MapView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bearing_text"
+        app:layout_constraintTop_toTopOf="@+id/bearing_text"
+        app:srcCompat="@drawable/buoys" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/heading_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/heading_text"
+        app:srcCompat="@drawable/boat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
