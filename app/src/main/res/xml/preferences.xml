@@ -7,7 +7,7 @@
                     android:key="@string/prefs_bow_to_gps"
                     android:summary="@string/bow_to_gps_desc"
                     android:title="@string/bow_to_gps"
-                    android:defaultValue="9" />
+                    android:defaultValue="7" />
 
                 <EditTextPreference
                     android:key="@string/prefs_speed_smooth"

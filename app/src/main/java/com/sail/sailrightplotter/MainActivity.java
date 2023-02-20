@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // Get settings from preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
+        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "7"));
         smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
         if ( smoothSpeedFactor > 20) {
             smoothSpeedFactor = 20;
