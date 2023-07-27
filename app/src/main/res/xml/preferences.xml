@@ -33,6 +33,12 @@
                     android:summary="@string/auto_advance_mark_desc"
                     android:title="@string/auto_advance_mark" />
 
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:key="@string/prefs_ext_power"
+                    android:summary="@string/ext_power_desc"
+                    android:title="@string/ext_power" />
+
         </PreferenceCategory>
 
         <PreferenceCategory android:title="Start">

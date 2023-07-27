@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     private Marker targetMark;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
-    Boolean autoAdvance, alarmProx, alarmFinish, maxBright;
+    Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -374,6 +374,7 @@ public class MainActivity extends AppCompatActivity {
         }
         distMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
+        extPower = sharedPreferences.getBoolean("prefs_ext_power", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
         maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
@@ -889,11 +890,11 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
 
-        if (charging) {
-            mPowerWarning.setVisibility(View.GONE);
+        if (!charging && extPower) {
+            mPowerWarning.setVisibility(View.VISIBLE);
             } else {
             // Display warning
-            mPowerWarning.setVisibility(View.VISIBLE);
+            mPowerWarning.setVisibility(View.GONE);
         }
     }
 
