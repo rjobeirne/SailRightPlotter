@@ -350,15 +350,15 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="24dp"
         android:background="@color/white"
         android:contentDescription="@string/hammer_spanner"
         android:src="@mipmap/settings"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/time_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/time_text" />
+        app:layout_constraintBottom_toTopOf="@+id/course_dist"
+        app:layout_constraintEnd_toStartOf="@+id/distance_text"
+        app:layout_constraintStart_toEndOf="@+id/speed_text"
+        app:layout_constraintTop_toBottomOf="@+id/variance_text" />
 
     <TextView
         android:id="@+id/time_title"
@@ -377,17 +377,16 @@
         android:id="@+id/time_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:format24Hour="HH:mm:ss"
         android:format12Hour="hh:mm:ss a"
+        android:format24Hour="HH:mm:ss"
         android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/time_title"
+        android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@+id/accuracy_text"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/button_settings" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_title" />
 
     <TextView
         android:id="@+id/accuracy_title"
@@ -435,15 +434,14 @@
         android:id="@+id/time_to_mark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/eta"
         android:textColor="@color/normal_text"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/eta_title"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/accuracy_text" />
+        app:layout_constraintStart_toEndOf="@+id/accuracy_text"
+        app:layout_constraintTop_toBottomOf="@id/eta_title" />
 
     <TextView
         android:id="@+id/power_warning"
