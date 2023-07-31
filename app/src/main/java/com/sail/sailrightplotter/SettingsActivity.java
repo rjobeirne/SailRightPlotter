@@ -3,7 +3,9 @@ package com.sail.sailrightplotter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,16 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.idFrameLayout, new SettingsFragment())
                     .commit();
         }
+
+                //Locate go back button
+        TextView goBack = findViewById(R.id.back_button);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat
