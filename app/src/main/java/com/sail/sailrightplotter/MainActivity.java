@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         copyAsset("courses.gpx");
         copyAsset("marks.gpx");
         copyAsset("map.sqlite");
+        copyAsset("launch3.png");
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
