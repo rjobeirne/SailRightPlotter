@@ -183,6 +183,15 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+   if(getResources().getDisplayMetrics().widthPixels>getResources().getDisplayMetrics().
+            heightPixels)
+        {
+            Toast.makeText(this,"Screen switched to Landscape mode",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this,"Screen switched to Portrait mode",Toast.LENGTH_SHORT).show();
+        }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

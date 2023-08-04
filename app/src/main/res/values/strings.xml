@@ -36,6 +36,7 @@
     <string name="a_mark">A Mark</string>
     <string name="bearing">Bearing</string>>
     <string name="kts">Speed\nkts</string>
+    <string name="kts_land">Speed kts</string>
     <string name="nm">nm</string>
     <string name="_105">-105</string>
     <string name="variance">Variance</string>

@@ -26,9 +26,7 @@
         <activity
             android:name="com.sail.sailrightplotter.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="sensorPortrait"
-            tools:ignore="LockedOrientationActivity">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,9 +37,7 @@
         <activity
             android:name="com.sail.sailrightplotter.StartActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="sensorPortrait"
-            tools:ignore="LockedOrientationActivity">
+            android:screenOrientation="fullSensor">
 
         </activity>
 
