@@ -183,15 +183,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-   if(getResources().getDisplayMetrics().widthPixels>getResources().getDisplayMetrics().
-            heightPixels)
-        {
-            Toast.makeText(this,"Screen switched to Landscape mode",Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(this,"Screen switched to Portrait mode",Toast.LENGTH_SHORT).show();
-        }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -364,6 +355,18 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle data) {
+        data.putInt("course", posCourse);
+        data.putInt("mark", posMark);
+        super.onSaveInstanceState(data);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        posCourse = savedInstanceState.getInt("course");
+        posMark = savedInstanceState.getInt("mark");
     }
 
     @Override
