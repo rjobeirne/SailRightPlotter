@@ -98,6 +98,14 @@
             android:key="@string/prefs_max_bright"
             android:title="@string/max_bright" />
 
+        <ListPreference
+            android:key="@string/prefs_orientation"
+            android:title="@string/orientation"
+            android:summary="@string/orientation_desc"
+            android:defaultValue="3"
+            android:entries="@array/orientation"
+            android:entryValues="@array/orientationValues" />
+
         </PreferenceCategory>
 
         <PreferenceCategory android:title="Reset">

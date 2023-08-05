@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
+    String screenOrientation;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -391,12 +393,25 @@ public class MainActivity extends AppCompatActivity {
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
         maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
+        screenOrientation = sharedPreferences.getString("prefs_orientation", "both");
 
         // Set screen to maximum brightness
         if (maxBright) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.screenBrightness = 1;
             getWindow().setAttributes(lp);
+        }
+
+        switch(screenOrientation) {
+            case "both":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+               break;
+            case "portrait":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+               break;
+            case "landscape":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+               break;
         }
     }
 

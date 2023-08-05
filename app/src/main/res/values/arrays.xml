@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orientation">
+        <item name="both">Both</item>
+        <item name="portrait">Portrait Only</item>
+        <item name="landscape">Landscape Only</item>
+    </string-array>
+
+    <string-array name="orientationValues">
+        <item name="both">both</item>
+        <item name="portrait">portrait</item>
+        <item name="landscape">landscape</item>
+    </string-array>
+</resources>

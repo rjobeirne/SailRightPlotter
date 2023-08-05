@@ -105,5 +105,8 @@
     <string name="prefs_ext_power">prefs_ext_power</string>
     <string name="ext_power_desc">Detect external power for auto start and shutdown. Gives warning when disconnected</string>
     <string name="ext_power">External Power Detection</string>
+    <string name="prefs_orientation">prefs_orientation</string>
+    <string name="orientation_desc">Select allowable screen orientations</string>
+    <string name="orientation">Screen Orientation</string>
 
 </resources>
