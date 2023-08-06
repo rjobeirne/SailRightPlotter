@@ -32,8 +32,8 @@
         android:id="@+id/course_name"
         android:layout_width="0dp"
         android:layout_height="68dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
         android:shadowColor="@color/white"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
@@ -42,14 +42,15 @@
         android:textAlignment="center"
         android:textColor="@color/normal_text"
         android:textSize="32sp"
-        app:layout_constraintStart_toEndOf="@id/minusCourse"
         app:layout_constraintEnd_toStartOf="@id/plusCourse"
+        app:layout_constraintStart_toEndOf="@id/minusCourse"
         app:layout_constraintTop_toBottomOf="@+id/course_dist" />
 
     <TextView
         android:id="@+id/course_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="sum"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -59,7 +60,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/minusCourse"
         app:layout_constraintTop_toBottomOf="@id/minusCourse"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0" />
 
     <Button
         android:id="@+id/plusCourse"
@@ -83,6 +84,7 @@
         android:id="@+id/course_dist_title"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:text="Course Distance"
         android:textAlignment="center"
         android:textColor="@color/titles"
@@ -206,6 +208,7 @@
         android:id="@+id/heading_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/heading"
         android:textColor="@color/titles"
@@ -238,7 +241,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/bearing_text"
         app:layout_constraintStart_toStartOf="@+id/bearing_text"
-        app:layout_constraintTop_toBottomOf="@+id/time_to_mark" />
+        app:layout_constraintTop_toTopOf="@+id/heading_title" />
 
     <TextView
         android:id="@+id/bearing_text"
@@ -270,7 +273,7 @@
         android:id="@+id/variance_text"
         android:layout_width="144dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/_105"
         android:textSize="48sp"
@@ -283,6 +286,7 @@
         android:id="@+id/speed_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/kts_land"
         android:textColor="@color/titles"
@@ -333,7 +337,7 @@
         app:layout_constraintBottom_toTopOf="@+id/distance_text"
         app:layout_constraintEnd_toEndOf="@id/distance_text"
         app:layout_constraintStart_toStartOf="@id/distance_text"
-        app:layout_constraintTop_toBottomOf="@id/variance_text" />
+        app:layout_constraintTop_toTopOf="@+id/speed_title" />
 
     <TextView
         android:id="@+id/dist_unit"
@@ -456,7 +460,7 @@
 
     <org.osmdroid.views.MapView
         android:id="@+id/map"
-        android:layout_width="500dp"
+        android:layout_width="540dp"
         android:layout_height="fill_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
