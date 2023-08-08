@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+RMYS courses from 'rmys-NON-pursuit-course-list-as-of-28-Oct-2021.pdf'
+Division 1 - Spinnaker
+-->
+
+<list>
+    <course name="RMYS" route="None,Finish" rounding="A,A" dist="-"/>
+    <course name='01s' route='Start,D,G,R2,E,Finish' rounding='P,P,P,P,P,P,P' dist='8.2'/>
+    <course name='02s' route='Start,G,R3,E,Finish' rounding='P,P,P,P,P,P,P' dist='5.4'/>
+    <course name='03s' route='Start,D,F,E,Finish' rounding='P,P,P,P,P,P,P' dist='5.2'/>
+    <course name='04s' route='Start,D,C,R2,E,Finish' rounding='P,P,P,P,P,P,P' dist='6.9'/>
+    <course name='05s' route='Start,G,RBYC4,E,Finish' rounding='P,P,P,P,P,P,P' dist='6.0'/>
+    <course name='06s' route='Start,D,C,RBYC4,E,Finish' rounding='P,P,P,P,P,P,P' dist='5.0'/>
+    <course name='07s' route='Start,G,R3,E,Finish' rounding='P,P,P,P,P,P,P' dist='6.0'/>
+    <course name='08s' route='Start,D,F,B,E,Finish' rounding='P,P,P,P,P,P,P' dist='7.0'/>
+    <course name='09s' route='Start,D,T25,E,Finish' rounding='P,P,P,P,P,P,P' dist='4.1'/>
+    <course name='15s' route='Start,E,R2,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='8.2'/>
+    <course name='16s' route='Start,E,B,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='5.6'/>
+    <course name='17s' route='Start,E,R2,D,Finish' rounding='S,S,S,S,S,S,S' dist='6.6'/>
+    <course name='18s' route='Start,E,R2,C,D,Finish' rounding='S,S,S,S,S,S,S' dist='6.9'/>
+    <course name='19s' route='Start,B,F,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='6.5'/>
+    <course name='20s' route='Start,E,R3,D,Finish' rounding='S,S,S,S,S,S,S' dist='4.1'/>
+    <course name='21s' route='Start,E,F,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='6.6'/>
+    <course name='22s' route='Start,RBYC5,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='7.0'/>
+    <course name='23s' route='Start,RBYC5,G,D,Finish' rounding='S,S,S,S,S,S,S' dist='7.0'/>
+    <course name='31s' route='Start,G,R3,D,Finish' rounding='A,P,P,S,A' dist='5.9'/>
+    <course name='32s' route='Start,D,R3,G,D,Finish' rounding='A,P,S,S,S,A' dist='6.0'/>
+    <course name='33s' route='Start,RBYC5,E,C,D,Finish' rounding='A,P,P,S,S,A' dist='6.4'/>
+    <course name='34s' route='Start,D,C,E,RBYC5,Finish' rounding='A,P,P,S,S,A' dist='6.4'/>
+    <course name='35s' route='Start,E,C,R2,E,Finish' rounding='A,S,P,P,P,A' dist='6.8'/>
+    <course name='36s' route='Start,E,R2,C,E,Finish' rounding='A,S,S,S,P,A' dist='6.8'/>
+    <course name='37s' route='Start,E,F,G,C,D,Finish' rounding='A,S,S,S,P,S,A' dist='7.8'/>
+    <course name='38s' route='Start,D,R2,C,B,E,Finish' rounding='A,P,S,S,P,P,A' dist='8.8'/>
+    <course name='39s' route='Start,E,B,C,R2,D,Finish' rounding='A,S,S,P,P,S,A' dist='8.8'/>
+    <course name='40s' route='Start,E,RBYC4,C,R2,D,Finish' rounding='A,S,S,P,S,S,A' dist='9.4'/>
+    <course name='41s' route='Start,RBYC5,F,E,D,Finish' rounding='A,S,S,S,S,A' dist='8.5'/>
+    <course name='42s' route='Start,RBYC5,G,C,E,Finish' rounding='A,S,P,P,P,A' dist='8.1'/>
+    <course name='43s' route='Start,B,G,C,E,Finish' rounding='A,S,P,P,P,A' dist='6.5'/>
+    <course name='44s' route='Start,G,RBYC5,C,E,Finish' rounding='A,P,S,S,P,A' dist='8.5'/>
+    <course name='45s' route='Start,D,C,B,F,RBYC5,E,Finish' rounding='A,P,P,S,P,P,P,A' dist='7.5'/>
+    <course name='46s' route='Start,B,G,R3,E,Finish' rounding='A,S,P,P,P,A' dist='7.9'/>
+    <course name='47s' route='Start,D,C,R2,R3,RBYC5,E,Finish' rounding='A,P,P,P,S,P,P,A' dist='9.1'/>
+    <course name='48s' route='Start,F,B,C,D,Finish' rounding='A,P,P,S,S,A' dist='5.6'/>
+    <course name='49s' route='Start,E,C,RBYC5,F,D,Finish' rounding='A,S,P,S,S,S,A' dist='8.4'/>
+    <course name='50s' route='Start,RBYC4,G,F,E,Finish' rounding='A,S,P,P,P,A' dist='9.5'/>
+    <course name='51s' route='Start,D,RBYC4,RBYC5,C,E,Finish' rounding='A,P,P,P,S,P,A' dist='7.5'/>
+</list>

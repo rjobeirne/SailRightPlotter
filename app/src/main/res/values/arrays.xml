@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="orientation">
+        <item name="both">Both</item>
+        <item name="portrait">Portrait Only</item>
+        <item name="landscape">Landscape Only</item>
+    </string-array>
+
+    <string-array name="orientationValues">
+        <item name="both">both</item>
+        <item name="portrait">portrait</item>
+        <item name="landscape">landscape</item>
+    </string-array>
+
+    <string-array name="division">
+        <item name="div1">"Div 1 - Spinnaker"</item>
+        <item name="div2">"Div 2 - Non-Spinnaker"</item>
+    </string-array>
+
+    <string-array name="divisionValues">
+        <item name="div1">"1"</item>
+        <item name="div2">"2"</item>
+    </string-array>
+
+</resources>

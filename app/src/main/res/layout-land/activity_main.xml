@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:keepScreenOn="true"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/minusCourse"
+        android:layout_width="44dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/button_background"
+        android:gravity="center_horizontal|top"
+        android:onClick="previous_course"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:text="@string/minus"
+        android:textColor="@color/black"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/course_name" />
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:text="@string/none"
+        android:textAlignment="center"
+        android:textColor="@color/normal_text"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@id/plusCourse"
+        app:layout_constraintStart_toEndOf="@id/minusCourse"
+        app:layout_constraintTop_toBottomOf="@+id/course_dist" />
+
+    <TextView
+        android:id="@+id/course_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="sum"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/plusCourse"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/minusCourse"
+        app:layout_constraintTop_toBottomOf="@id/minusCourse"
+        app:layout_constraintVertical_bias="0" />
+
+    <Button
+        android:id="@+id/plusCourse"
+        android:layout_width="48dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/button_background"
+        android:onClick="next_course"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:text="@string/plus"
+        android:textColor="@color/black"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toStartOf="@+id/minus"
+        app:layout_constraintStart_toEndOf="@+id/course_name"
+        app:layout_constraintTop_toTopOf="@+id/course_name" />
+
+    <TextView
+        android:id="@+id/course_dist_title"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="Course Distance"
+        android:textAlignment="center"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintTop_toBottomOf="@+id/speed_text" />
+
+    <TextView
+        android:id="@+id/course_dist"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        android:text="8.8"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/course_dist_title"
+        app:layout_constraintEnd_toStartOf="@id/course_dist_unit"
+        app:layout_constraintTop_toBottomOf="@+id/course_dist_title" />
+
+    <TextView
+        android:id="@+id/course_dist_unit"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="@string/course_dist_unit"
+        android:textColor="@color/titles"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/course_dist"
+        app:layout_constraintEnd_toEndOf="@id/course_dist_title"
+        app:layout_constraintStart_toEndOf="@id/course_dist"
+        app:layout_constraintTop_toTopOf="@id/course_dist" />
+
+    <Button
+        android:id="@+id/minus"
+        android:layout_width="48dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/button_background"
+        android:onClick="previous_mark"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:text="@string/lt"
+        android:textColor="@color/black"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toStartOf="@id/next_mark_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/course_dist"
+        app:layout_constraintTop_toTopOf="@id/plusCourse" />
+
+    <TextView
+        android:id="@+id/next_mark_name"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/none"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:textAlignment="center"
+        android:textColor="@color/normal_text"
+        android:textSize="32sp"
+        app:layout_constraintStart_toEndOf="@+id/minus"
+        app:layout_constraintEnd_toStartOf="@id/plus"
+        app:layout_constraintTop_toTopOf="@id/minus" />
+
+    <Button
+        android:id="@+id/plus"
+        android:layout_width="48dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/button_background"
+        android:onClick="next_mark"
+        android:shadowColor="@color/white"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
+        android:text="@string/gt"
+        android:textColor="@color/black"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/next_mark_name"
+        app:layout_constraintTop_toTopOf="@id/next_mark_name" />
+
+    <TextView
+        android:id="@+id/keep_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/keep"
+        android:textColor="@color/titles"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mark_extra"
+        app:layout_constraintEnd_toStartOf="@+id/mark_extra"
+        app:layout_constraintStart_toStartOf="@id/next_mark_name"
+        app:layout_constraintTop_toTopOf="@+id/mark_extra" />
+
+
+    <TextView
+        android:id="@+id/mark_extra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:text="@string/none"
+        android:textColor="@color/normal_text"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/keep_title"
+        app:layout_constraintEnd_toEndOf="@+id/next_mark_name"
+        app:layout_constraintTop_toBottomOf="@id/next_mark_name" />
+
+    <TextView
+        android:id="@+id/heading_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/heading"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/heading_text"
+        app:layout_constraintStart_toStartOf="@id/heading_text"
+        app:layout_constraintTop_toBottomOf="@+id/time_to_mark" />
+
+    <TextView
+        android:id="@+id/heading_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="333"
+        android:textColor="@color/normal_text"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintTop_toBottomOf="@id/heading_title"
+        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintEnd_toStartOf="@id/bearing_text"/>
+
+    <TextView
+        android:id="@+id/bearing_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/bearing"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/bearing_text"
+        app:layout_constraintStart_toStartOf="@+id/bearing_text"
+        app:layout_constraintTop_toTopOf="@+id/heading_title" />
+
+    <TextView
+        android:id="@+id/bearing_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="333"
+        android:textColor="@color/normal_text"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@id/heading_text"
+        app:layout_constraintTop_toBottomOf="@+id/bearing_title" />
+
+    <TextView
+        android:id="@+id/variance_title"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="@string/variance"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/variance_text"
+        app:layout_constraintTop_toTopOf="@+id/variance_text"
+        app:layout_constraintBottom_toBottomOf="@id/variance_text"/>
+
+    <TextView
+        android:id="@+id/variance_text"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/_105"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/accuracy_text"
+        app:layout_constraintStart_toStartOf="@id/accuracy_text"
+        app:layout_constraintTop_toBottomOf="@id/heading_text" />
+
+    <TextView
+        android:id="@+id/speed_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/kts_land"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_text"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@id/speed_text"
+        app:layout_constraintTop_toBottomOf="@+id/variance_text" />
+
+    <TextView
+        android:id="@+id/speed_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:gravity="center"
+        android:text="@string/speed"
+        android:textColor="@color/normal_text"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/speed_title"
+        app:layout_constraintEnd_toStartOf="@id/distance_text"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/distance_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:gravity="center
+"
+        android:text="@string/distance"
+        android:textColor="@color/normal_text"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/speed_text"
+        app:layout_constraintEnd_toStartOf="@+id/dist_unit"
+        app:layout_constraintStart_toEndOf="@id/speed_text"
+        app:layout_constraintTop_toTopOf="@id/speed_text" />
+
+    <TextView
+        android:id="@+id/dist_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/dist_to_mark"
+        android:textColor="@color/titles"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/distance_text"
+        app:layout_constraintEnd_toEndOf="@id/distance_text"
+        app:layout_constraintStart_toStartOf="@id/distance_text"
+        app:layout_constraintTop_toTopOf="@+id/speed_title" />
+
+    <TextView
+        android:id="@+id/dist_unit"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="@string/nm"
+        android:textColor="@color/titles"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintStart_toEndOf="@+id/distance_text"
+        app:layout_constraintTop_toTopOf="@id/distance_text"
+        app:layout_constraintBottom_toBottomOf="@id/distance_text"/>
+
+    <ImageButton
+        android:id="@+id/button_settings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:contentDescription="@string/hammer_spanner"
+        android:src="@mipmap/settings"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/course_dist_title"
+        app:layout_constraintEnd_toStartOf="@+id/distance_text"
+        app:layout_constraintStart_toEndOf="@+id/speed_text"
+        app:layout_constraintTop_toBottomOf="@+id/variance_text" />
+
+    <TextView
+        android:id="@+id/time_title"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/time"
+        android:textColor="@color/titles"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/time_text"
+        app:layout_constraintEnd_toEndOf="@+id/time_text"
+        app:layout_constraintStart_toStartOf="@id/time_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextClock
+        android:id="@+id/time_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:format12Hour="hh:mm:ss a"
+        android:format24Hour="HH:mm:ss"
+        android:gravity="center"
+        android:text="@string/clock_time"
+        android:textColor="@color/normal_text"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/accuracy_text"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_title" />
+
+    <TextView
+        android:id="@+id/accuracy_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/accuracy"
+        android:textColor="@color/titles"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_text"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_text"
+        app:layout_constraintTop_toTopOf="@id/time_text"/>
+
+    <TextView
+        android:id="@+id/accuracy_text"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/m"
+        android:textColor="@color/normal_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/time_text"
+        app:layout_constraintEnd_toStartOf="@+id/time_to_mark"
+        app:layout_constraintStart_toEndOf="@+id/time_text"
+        app:layout_constraintTop_toBottomOf="@id/accuracy_title" />
+
+    <TextView
+        android:id="@+id/eta_title"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/eta"
+        android:textColor="@color/titles"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/time_to_mark"
+        app:layout_constraintStart_toStartOf="@id/time_to_mark"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time_to_mark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/eta"
+        android:textColor="@color/normal_text"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/accuracy_text"
+        app:layout_constraintTop_toBottomOf="@id/eta_title" />
+
+    <TextView
+        android:id="@+id/power_warning"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/red"
+        android:gravity="center_vertical"
+        android:text="POWER DISCONNECTED"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/map" />
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="540dp"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </org.osmdroid.views.MapView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintStart_toEndOf="@+id/bearing_text"
+        app:layout_constraintTop_toTopOf="@+id/bearing_text"
+        app:layout_constraintBottom_toBottomOf="@id/bearing_text"
+        app:srcCompat="@drawable/buoys" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/heading_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/heading_text"
+        app:layout_constraintBottom_toBottomOf="@id/heading_text"
+        app:srcCompat="@drawable/boat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

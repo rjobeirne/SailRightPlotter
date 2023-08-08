@@ -36,6 +36,7 @@
     <string name="a_mark">A Mark</string>
     <string name="bearing">Bearing</string>>
     <string name="kts">Speed\nkts</string>
+    <string name="kts_land">Speed kts</string>
     <string name="nm">nm</string>
     <string name="_105">-105</string>
     <string name="variance">Variance</string>
@@ -104,5 +105,10 @@
     <string name="prefs_ext_power">prefs_ext_power</string>
     <string name="ext_power_desc">Detect external power for auto start and shutdown. Gives warning when disconnected</string>
     <string name="ext_power">External Power Detection</string>
-
+    <string name="prefs_orientation">prefs_orientation</string>
+    <string name="orientation_desc">Select allowable screen orientations</string>
+    <string name="orientation">Screen Orientation</string>
+    <string name="prefs_division">prefs_division</string>
+    <string name="division">Race Division</string>
+    <string name="division_desc">Select division</string>
 </resources>

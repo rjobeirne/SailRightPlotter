@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -113,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
 
-    // Define the 'Marks' and 'Courses' ArraysBoat
+    // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
-    Courses theCourses = null;
+    Courses1 theCourses1 = null;
+    Courses2 theCourses2 = null;
 
     // Define the other classes
     FinishLine theFinish = null;
@@ -164,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
+    String screenOrientation, division;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -201,14 +204,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
-        copyAsset("courses.gpx");
+        copyAsset("courses2.gpx");
         copyAsset("marks.gpx");
         copyAsset("map.sqlite");
         copyAsset("launch3.png");
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
-        theCourses = new Courses();
+        theCourses1 = new Courses1();
+        theCourses2 = new Courses2();
+
         IntentFilter filter =  new IntentFilter();
         filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
         filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED");
@@ -228,7 +233,8 @@ public class MainActivity extends AppCompatActivity {
         }
         // Load all courses
         try {
-            theCourses.parseXML();
+            theCourses1.parseXML();
+            theCourses2.parseXML();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -356,6 +362,18 @@ public class MainActivity extends AppCompatActivity {
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
     }
+    @Override
+    protected void onSaveInstanceState(Bundle data) {
+        data.putInt("course", posCourse);
+        data.putInt("mark", posMark);
+        super.onSaveInstanceState(data);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        posCourse = savedInstanceState.getInt("course");
+        posMark = savedInstanceState.getInt("mark");
+    }
 
     @Override
     protected void onResume() {
@@ -379,12 +397,26 @@ public class MainActivity extends AppCompatActivity {
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
         maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
+        screenOrientation = sharedPreferences.getString("prefs_orientation", "both");
+        division = sharedPreferences.getString("prefs_division", "2");
 
         // Set screen to maximum brightness
         if (maxBright) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.screenBrightness = 1;
             getWindow().setAttributes(lp);
+        }
+
+        switch(screenOrientation) {
+            case "both":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+               break;
+            case "portrait":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+               break;
+            case "landscape":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+               break;
         }
     }
 
@@ -544,11 +576,19 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setCourse() {
 
-        listCourseSize = theCourses.courses.size();
-        raceCourse = theCourses.courses.get(posCourse).getCourseName();
-        courseMarks = theCourses.getCourse(raceCourse);
-        markRounding = theCourses.getRounding(raceCourse);
-        courseDist = theCourses.getCourseDist(raceCourse);
+        if(division.equals("1")) {
+            listCourseSize = theCourses1.courses.size();
+            raceCourse = theCourses1.courses.get(posCourse).getCourseName();
+            courseMarks = theCourses1.getCourse(raceCourse);
+            markRounding = theCourses1.getRounding(raceCourse);
+            courseDist = theCourses1.getCourseDist(raceCourse);
+        } else {
+            listCourseSize = theCourses2.courses.size();
+            raceCourse = theCourses2.courses.get(posCourse).getCourseName();
+            courseMarks = theCourses2.getCourse(raceCourse);
+            markRounding = theCourses2.getRounding(raceCourse);
+            courseDist = theCourses2.getCourseDist(raceCourse);
+        }
 
         courseList = String.valueOf(courseMarks);
         if (!raceCourse.equals("RMYS")) {
