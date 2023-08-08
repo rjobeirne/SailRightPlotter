@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
 
-    // Define the 'Marks' and 'Courses' ArraysBoat
+    // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
     Courses1 theCourses1 = null;
     Courses2 theCourses2 = null;

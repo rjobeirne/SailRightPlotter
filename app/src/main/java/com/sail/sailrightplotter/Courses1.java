@@ -21,7 +21,7 @@ public class Courses1 {
     ArrayList<Course> courses = new ArrayList<>();
 
 
-    // Parse the courses.gpx file to an ArrayList of name and route
+    // Parse the courses1.gpx file to an ArrayList of name and route
   public void parseXML() throws IOException {
         String appDirectory = "SailRight";
 
