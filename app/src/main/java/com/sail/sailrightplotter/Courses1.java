@@ -16,7 +16,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class Courses {
+public class Courses1 {
 
     ArrayList<Course> courses = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class Courses {
         String appDirectory = "SailRight";
 
         File dir = new File(Environment.getExternalStorageDirectory(), appDirectory);
-        File courseFile = new File(dir, "courses2.gpx");
+        File courseFile = new File(dir, "courses1.gpx");
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;

@@ -3,6 +3,14 @@
 
         <PreferenceCategory android:title="Boat">
 
+                <ListPreference
+                    android:key="@string/prefs_division"
+                    android:defaultValue="2"
+                    android:title="@string/division"
+                    android:summary="@string/division_desc"
+                    android:entries="@array/division"
+                    android:entryValues="@array/divisionValues" />
+
                 <EditTextPreference
                     android:key="@string/prefs_bow_to_gps"
                     android:summary="@string/bow_to_gps_desc"

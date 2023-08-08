@@ -74,6 +74,8 @@ public class SettingsActivity extends AppCompatActivity {
                     getPreferenceManager().findPreference("prefs_delta_bearing");
             ListPreference orientation =
                     getPreferenceManager().findPreference("prefs_orientation");
+            ListPreference division =
+                    getPreferenceManager().findPreference("prefs_division");
 
             editTextPreference1.setOnBindEditTextListener(
                     new EditTextPreference.OnBindEditTextListener() {
@@ -132,6 +134,13 @@ public class SettingsActivity extends AppCompatActivity {
                     });
 
             orientation.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    return true;
+                }
+            });
+
+            division.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     return true;
