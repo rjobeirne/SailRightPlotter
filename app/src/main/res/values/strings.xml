@@ -102,6 +102,8 @@
     <string name="max_bright">Maximum Brightness</string>
     <string name="restore_defaults">Restore default values</string>
     <string name="keep">Keep</string>
+    <string name="settings_return">Go Back to Plotter</string>
+    <string name="help_return">Go Back to Settings</string>
     <string name="prefs_ext_power">prefs_ext_power</string>
     <string name="ext_power_desc">Detect external power for auto start and shutdown. Gives warning when disconnected</string>
     <string name="ext_power">External Power Detection</string>
