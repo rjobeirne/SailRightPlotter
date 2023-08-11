@@ -1,5 +1,7 @@
 package com.sail.sailrightplotter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
@@ -47,6 +49,16 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                finish();
+            }
+        });
+
+                //Locate help button
+        TextView helpPage = findViewById(R.id.help_button);
+        helpPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SettingsActivity.this, HelpActivity.class);
+                startActivity(i);
             }
         });
     }
