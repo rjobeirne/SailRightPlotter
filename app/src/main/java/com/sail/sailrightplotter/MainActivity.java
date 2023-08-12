@@ -29,7 +29,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -42,7 +41,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -670,15 +668,10 @@ public class MainActivity extends AppCompatActivity {
         if ( latFirstMark < latStart ) {
             rotateArrow = 180 + rotateArrow;
         }
-
-        if ( posCourse != 0 ) {
-            startDirection = new Marker(map);
-            startDirection.setPosition(startFin);
-            startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up));
-            startDirection.setRotation((float) rotateArrow);
-        } else {
-            startDirection = null;
-        }
+        startDirection = new Marker(map);
+        startDirection.setPosition(startFin);
+        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up));
+        startDirection.setRotation((float) rotateArrow);
     }
 
     /**
@@ -825,7 +818,9 @@ public class MainActivity extends AppCompatActivity {
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
         map.getOverlays().add(startLine);
-        map.getOverlays().add(startDirection);
+        if ( posCourse != 0) {
+            map.getOverlays().add(startDirection);
+        }
         map.invalidate();
     }
 
