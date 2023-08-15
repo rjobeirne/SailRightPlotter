@@ -179,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Polyline courseLine, startLine;
     GeoPoint aMarkGeo, hMarkGeo;
+    Marker startDirection;
+    Location firstMark;
 
     // onCreate
     @SuppressLint("MissingInflatedId")
@@ -595,6 +597,7 @@ public class MainActivity extends AppCompatActivity {
         if (!raceCourse.equals("RMYS")) {
             courseSummary = courseList.substring(courseList.indexOf(",")+1, courseList.lastIndexOf(","));
             map.getOverlays().remove(courseLine);
+            map.getOverlays().remove(startDirection);
         } else {
             courseSummary = "";
         }
@@ -623,6 +626,7 @@ public class MainActivity extends AppCompatActivity {
         if (courseLine != null) {
             map.getOverlays().remove(courseLine);
         }
+        map.getOverlays().remove(startDirection);
 
         startLine = new Polyline();
         ArrayList lineStartFin = new ArrayList();
@@ -653,6 +657,22 @@ public class MainActivity extends AppCompatActivity {
         courseLine.setColor(R.color.red);
         courseLine.setWidth(3F);
         courseLine.setPoints(route);
+
+        firstMark = theMarks.getNextMark((String) courseMarks.get(1));
+        double lonStart = startFin.getLongitude();
+        double latStart = startFin.getLatitude();
+        double lonFirstMark = firstMark.getLongitude();
+        double latFirstMark = firstMark.getLatitude();
+        double arrowCorrectionFactor = 0.8;  // Required to make startDirection align with route
+        double rotateArrow = - Math.atan((lonFirstMark - lonStart)/(latFirstMark - latStart))
+                * 180 / Math.PI * arrowCorrectionFactor;
+        if ( latFirstMark < latStart ) {
+            rotateArrow = 180 + rotateArrow;
+        }
+        startDirection = new Marker(map);
+        startDirection.setPosition(startFin);
+        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up));
+        startDirection.setRotation((float) rotateArrow);
     }
 
     /**
@@ -788,6 +808,7 @@ public class MainActivity extends AppCompatActivity {
         // Put balloon over next mark
         map.getOverlays().remove(targetMark);
         map.getOverlays().remove(courseLine);
+        map.getOverlays().remove(startDirection);
         locationNextMark = theMarks.getNextMark(nextMark);
         double lat = locationNextMark.getLatitude();
         double lon = locationNextMark.getLongitude();
@@ -798,6 +819,9 @@ public class MainActivity extends AppCompatActivity {
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
         map.getOverlays().add(startLine);
+        if ( posCourse != 0) {
+            map.getOverlays().add(startDirection);
+        }
         map.invalidate();
     }
 
