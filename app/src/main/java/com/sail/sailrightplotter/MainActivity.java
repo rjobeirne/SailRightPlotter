@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
+        copyAsset("courses1.gpx");
         copyAsset("courses2.gpx");
         copyAsset("marks.gpx");
         copyAsset("map.sqlite");
