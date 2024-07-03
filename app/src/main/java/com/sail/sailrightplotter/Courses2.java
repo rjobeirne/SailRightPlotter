@@ -16,17 +16,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class Courses {
+public class Courses2 {
 
     ArrayList<Course> courses = new ArrayList<>();
 
 
-    // Parse the courses.gpx file to an ArrayList of name and route
+    // Parse the courses2.gpx file to an ArrayList of name and route
   public void parseXML() throws IOException {
         String appDirectory = "SailRight";
 
         File dir = new File(Environment.getExternalStorageDirectory(), appDirectory);
-        File courseFile = new File(dir, "courses.gpx");
+        File courseFile = new File(dir, "courses2.gpx");
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;

@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
     <application
         android:allowBackup="true"
@@ -24,9 +26,7 @@
         <activity
             android:name="com.sail.sailrightplotter.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="sensorPortrait"
-            tools:ignore="LockedOrientationActivity">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,15 +37,26 @@
         <activity
             android:name="com.sail.sailrightplotter.StartActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="sensorPortrait"
-            tools:ignore="LockedOrientationActivity">
+            android:screenOrientation="fullSensor">
 
         </activity>
 
         <activity android:name="com.sail.sailrightplotter.SettingsActivity"
             android:theme="@style/SettingsTheme.NoActionBar">
         </activity>
+
+        <activity android:name="com.sail.sailrightplotter.HelpActivity"
+            android:theme="@style/SettingsTheme.NoActionBar">
+        </activity>
+
+        <receiver android:enabled="true" android:name=".BootUpReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <service android:name="Launcher" />
 
     </application>
 

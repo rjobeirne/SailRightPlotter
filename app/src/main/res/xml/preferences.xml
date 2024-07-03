@@ -3,11 +3,19 @@
 
         <PreferenceCategory android:title="Boat">
 
+                <ListPreference
+                    android:key="@string/prefs_division"
+                    android:defaultValue="2"
+                    android:title="@string/division"
+                    android:summary="@string/division_desc"
+                    android:entries="@array/division"
+                    android:entryValues="@array/divisionValues" />
+
                 <EditTextPreference
                     android:key="@string/prefs_bow_to_gps"
                     android:summary="@string/bow_to_gps_desc"
                     android:title="@string/bow_to_gps"
-                    android:defaultValue="9" />
+                    android:defaultValue="7" />
 
                 <EditTextPreference
                     android:key="@string/prefs_speed_smooth"
@@ -32,6 +40,12 @@
                     android:key="@string/prefs_auto_advance"
                     android:summary="@string/auto_advance_mark_desc"
                     android:title="@string/auto_advance_mark" />
+
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:key="@string/prefs_ext_power"
+                    android:summary="@string/ext_power_desc"
+                    android:title="@string/ext_power" />
 
         </PreferenceCategory>
 
@@ -91,6 +105,14 @@
             android:defaultValue="true"
             android:key="@string/prefs_max_bright"
             android:title="@string/max_bright" />
+
+        <ListPreference
+            android:key="@string/prefs_orientation"
+            android:title="@string/orientation"
+            android:summary="@string/orientation_desc"
+            android:defaultValue="3"
+            android:entries="@array/orientation"
+            android:entryValues="@array/orientationValues" />
 
         </PreferenceCategory>
 

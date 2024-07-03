@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -113,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
 
-    // Define the 'Marks' and 'Courses' ArraysBoat
+    // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
-    Courses theCourses = null;
+    Courses1 theCourses1 = null;
+    Courses2 theCourses2 = null;
 
     // Define the other classes
     FinishLine theFinish = null;
@@ -163,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
     private Marker targetMark;
 
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
-    Boolean autoAdvance, alarmProx, alarmFinish, maxBright;
+    Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
+    String screenOrientation, division;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -176,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Polyline courseLine, startLine;
     GeoPoint aMarkGeo, hMarkGeo;
+    Marker startDirection;
+    Location firstMark;
 
     // onCreate
     @SuppressLint("MissingInflatedId")
@@ -201,13 +206,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Check device has course files. If not copy course and mark files from assets
         dir = new File(Environment.getExternalStorageDirectory() + "/SailRight");
-        copyAsset("courses.gpx");
+        copyAsset("courses1.gpx");
+        copyAsset("courses2.gpx");
         copyAsset("marks.gpx");
         copyAsset("map.sqlite");
+        copyAsset("launch3.png");
 
         //Create the ArrayList object here, for use in all the MainActivity
         theMarks = new Marks();
-        theCourses = new Courses();
+        theCourses1 = new Courses1();
+        theCourses2 = new Courses2();
+
         IntentFilter filter =  new IntentFilter();
         filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
         filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED");
@@ -227,7 +236,8 @@ public class MainActivity extends AppCompatActivity {
         }
         // Load all courses
         try {
-            theCourses.parseXML();
+            theCourses1.parseXML();
+            theCourses2.parseXML();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -355,13 +365,25 @@ public class MainActivity extends AppCompatActivity {
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
     }
+    @Override
+    protected void onSaveInstanceState(Bundle data) {
+        data.putInt("course", posCourse);
+        data.putInt("mark", posMark);
+        super.onSaveInstanceState(data);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        posCourse = savedInstanceState.getInt("course");
+        posMark = savedInstanceState.getInt("mark");
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         // Get settings from preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "10"));
+        deviceOffset = Integer.parseInt(sharedPreferences.getString("prefs_bot_to_gps", "7"));
         smoothSpeedFactor = Integer.parseInt(sharedPreferences.getString("prefs_speed_smooth", "4"));
         if ( smoothSpeedFactor > 20) {
             smoothSpeedFactor = 20;
@@ -374,15 +396,30 @@ public class MainActivity extends AppCompatActivity {
         }
         distMarkProximity = Integer.parseInt(sharedPreferences.getString("prefs_proximity_dist", "50"));
         autoAdvance = sharedPreferences.getBoolean("prefs_auto_advance", Boolean.parseBoolean("TRUE"));
+        extPower = sharedPreferences.getBoolean("prefs_ext_power", Boolean.parseBoolean("TRUE"));
         alarmProx = sharedPreferences.getBoolean("prefs_mark_prox", Boolean.parseBoolean("TRUE"));
         alarmFinish = sharedPreferences.getBoolean("prefs_finish", Boolean.parseBoolean("TRUE"));
         maxBright = sharedPreferences.getBoolean("prefs_max_bright", Boolean.parseBoolean("TRUE"));
+        screenOrientation = sharedPreferences.getString("prefs_orientation", "both");
+        division = sharedPreferences.getString("prefs_division", "2");
 
         // Set screen to maximum brightness
         if (maxBright) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.screenBrightness = 1;
             getWindow().setAttributes(lp);
+        }
+
+        switch(screenOrientation) {
+            case "both":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+               break;
+            case "portrait":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+               break;
+            case "landscape":
+               setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+               break;
         }
     }
 
@@ -542,16 +579,25 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setCourse() {
 
-        listCourseSize = theCourses.courses.size();
-        raceCourse = theCourses.courses.get(posCourse).getCourseName();
-        courseMarks = theCourses.getCourse(raceCourse);
-        markRounding = theCourses.getRounding(raceCourse);
-        courseDist = theCourses.getCourseDist(raceCourse);
+        if(division.equals("1")) {
+            listCourseSize = theCourses1.courses.size();
+            raceCourse = theCourses1.courses.get(posCourse).getCourseName();
+            courseMarks = theCourses1.getCourse(raceCourse);
+            markRounding = theCourses1.getRounding(raceCourse);
+            courseDist = theCourses1.getCourseDist(raceCourse);
+        } else {
+            listCourseSize = theCourses2.courses.size();
+            raceCourse = theCourses2.courses.get(posCourse).getCourseName();
+            courseMarks = theCourses2.getCourse(raceCourse);
+            markRounding = theCourses2.getRounding(raceCourse);
+            courseDist = theCourses2.getCourseDist(raceCourse);
+        }
 
         courseList = String.valueOf(courseMarks);
         if (!raceCourse.equals("RMYS")) {
             courseSummary = courseList.substring(courseList.indexOf(",")+1, courseList.lastIndexOf(","));
             map.getOverlays().remove(courseLine);
+            map.getOverlays().remove(startDirection);
         } else {
             courseSummary = "";
         }
@@ -580,6 +626,7 @@ public class MainActivity extends AppCompatActivity {
         if (courseLine != null) {
             map.getOverlays().remove(courseLine);
         }
+        map.getOverlays().remove(startDirection);
 
         startLine = new Polyline();
         ArrayList lineStartFin = new ArrayList();
@@ -610,6 +657,22 @@ public class MainActivity extends AppCompatActivity {
         courseLine.setColor(R.color.red);
         courseLine.setWidth(3F);
         courseLine.setPoints(route);
+
+        firstMark = theMarks.getNextMark((String) courseMarks.get(1));
+        double lonStart = startFin.getLongitude();
+        double latStart = startFin.getLatitude();
+        double lonFirstMark = firstMark.getLongitude();
+        double latFirstMark = firstMark.getLatitude();
+        double arrowCorrectionFactor = 0.8;  // Required to make startDirection align with route
+        double rotateArrow = - Math.atan((lonFirstMark - lonStart)/(latFirstMark - latStart))
+                * 180 / Math.PI * arrowCorrectionFactor;
+        if ( latFirstMark < latStart ) {
+            rotateArrow = 180 + rotateArrow;
+        }
+        startDirection = new Marker(map);
+        startDirection.setPosition(startFin);
+        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up));
+        startDirection.setRotation((float) rotateArrow);
     }
 
     /**
@@ -745,6 +808,7 @@ public class MainActivity extends AppCompatActivity {
         // Put balloon over next mark
         map.getOverlays().remove(targetMark);
         map.getOverlays().remove(courseLine);
+        map.getOverlays().remove(startDirection);
         locationNextMark = theMarks.getNextMark(nextMark);
         double lat = locationNextMark.getLatitude();
         double lon = locationNextMark.getLongitude();
@@ -755,6 +819,9 @@ public class MainActivity extends AppCompatActivity {
         map.getOverlays().add(targetMark);
         map.getOverlays().add(courseLine);
         map.getOverlays().add(startLine);
+        if ( posCourse != 0) {
+            map.getOverlays().add(startDirection);
+        }
         map.invalidate();
     }
 
@@ -842,6 +909,7 @@ public class MainActivity extends AppCompatActivity {
             if (distToMark < distMarkProximity
                     && finMark.equals("race")
                     && autoAdvance
+                    && !nextMark.equals("Start")
                     && !raceCourse.equals("RMYS")) {
                 posMark = posMark + 1;
                 setNextMark();
@@ -889,11 +957,11 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
 
-        if (charging) {
-            mPowerWarning.setVisibility(View.GONE);
+        if (!charging && extPower) {
+            mPowerWarning.setVisibility(View.VISIBLE);
             } else {
             // Display warning
-            mPowerWarning.setVisibility(View.VISIBLE);
+            mPowerWarning.setVisibility(View.GONE);
         }
     }
 

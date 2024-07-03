@@ -120,7 +120,7 @@ public class Calculator {
         if (timeToMark < 360000 && timeToMark > 0) {
 
             if (timeToMark > 3559) {
-                ttmDisplay = String.format("%02dh %02d' %02d\"",
+                ttmDisplay = String.format("%2dh %02d' %02d\"",
                         TimeUnit.SECONDS.toHours(timeToMark),
                         TimeUnit.SECONDS.toMinutes(timeToMark) -
                                 TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(timeToMark)),
