@@ -32,15 +32,18 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -182,7 +185,10 @@ public class MainActivity extends AppCompatActivity {
     Marker startDirection;
     Location firstMark;
 
+    int batteryLevel;
+
     // onCreate
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -957,12 +963,20 @@ public class MainActivity extends AppCompatActivity {
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
 
-        if (!charging && extPower) {
+        batteryLevel = getBatteryPercentage();
+        Log.e("Battery Level =", String.valueOf(batteryLevel));
+        if(batteryLevel < 15 ) {
             mPowerWarning.setVisibility(View.VISIBLE);
-            } else {
+        } else {
             // Display warning
             mPowerWarning.setVisibility(View.GONE);
         }
+//        if (!charging && extPower) {
+//            mPowerWarning.setVisibility(View.VISIBLE);
+//            } else {
+//            // Display warning
+//            mPowerWarning.setVisibility(View.GONE);
+//        }
     }
 
     public void playSounds(String sound) {
@@ -1121,6 +1135,27 @@ public class MainActivity extends AppCompatActivity {
                 charging = false;
             }
         }
+    }
+
+    public int getBatteryPercentage() {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+
+             BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
+             return bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+        } else {
+
+             IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+             Intent batteryStatus = registerReceiver(null, iFilter);
+
+             int level = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) : -1;
+             int scale = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1) : -1;
+
+             double batteryPct = level / (double) scale;
+
+             return (int) (batteryPct * 100);
+       }
     }
 }
 

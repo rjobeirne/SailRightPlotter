@@ -442,7 +442,7 @@
         android:id="@+id/power_warning"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="POWER DISCONNECTED"
+        android:text="LOW BATTERY - BELOW 15%"
         android:textAlignment="center"
         android:gravity="center_vertical"
         android:background="@color/red"
