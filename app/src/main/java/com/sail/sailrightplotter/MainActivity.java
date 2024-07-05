@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
+//    private TextView mBatteryLevel;
 
     // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
     Location firstMark;
 
     int batteryLevel;
+    Boolean flagBatteryWarn =false;
 
     // onCreate
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -965,11 +967,18 @@ public class MainActivity extends AppCompatActivity {
 
         batteryLevel = getBatteryPercentage();
         Log.e("Battery Level =", String.valueOf(batteryLevel));
-        if(batteryLevel < 15 ) {
+        if(batteryLevel < 95 ) {
+            if(!flagBatteryWarn) {
+                playSounds("air_horn");
+                flagBatteryWarn = true;
+            }
             mPowerWarning.setVisibility(View.VISIBLE);
+            mPowerWarning.setText("LOW BATTERY WARNING - " + batteryLevel + "% REMAINING");
         } else {
             // Display warning
             mPowerWarning.setVisibility(View.GONE);
+            flagBatteryWarn = false;
+
         }
 //        if (!charging && extPower) {
 //            mPowerWarning.setVisibility(View.VISIBLE);
