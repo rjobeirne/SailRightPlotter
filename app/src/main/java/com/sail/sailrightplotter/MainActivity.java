@@ -115,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private TextClock mClock;
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
-    private TextView mPowerWarning;
-//    private TextView mBatteryLevel;
+    private TextView mBatteryWarning;
 
     // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
@@ -187,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     Location firstMark;
 
     int batteryLevel;
-    Boolean flagBatteryWarn =false;
+    Boolean flagBatteryWarn =true;
 
     // onCreate
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -276,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
         mClock = findViewById(R.id.time_text);
         mKeepTextView = findViewById(R.id.keep_title);
         mCourseListTextView = findViewById(R.id.course_details);
-        mPowerWarning = findViewById(R.id.power_warning);
+        mBatteryWarning = findViewById(R.id.power_warning);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -966,26 +965,19 @@ public class MainActivity extends AppCompatActivity {
         mAccuracyTextView.setText(accuracy);
 
         batteryLevel = getBatteryPercentage();
-        Log.e("Battery Level =", String.valueOf(batteryLevel));
-        if(batteryLevel < 95 ) {
-            if(!flagBatteryWarn) {
-                playSounds("air_horn");
-                flagBatteryWarn = true;
+        Log.e(" Battery Level = ", String.valueOf(batteryLevel));
+        if(batteryLevel < 15 ) {
+            if(flagBatteryWarn) {
+                playSounds("siren");
+                flagBatteryWarn = false;
             }
-            mPowerWarning.setVisibility(View.VISIBLE);
-            mPowerWarning.setText("LOW BATTERY WARNING - " + batteryLevel + "% REMAINING");
+            mBatteryWarning.setVisibility(View.VISIBLE);
+            mBatteryWarning.setText("LOW BATTERY WARNING - " + batteryLevel + "% REMAINING");
         } else {
             // Display warning
-            mPowerWarning.setVisibility(View.GONE);
-            flagBatteryWarn = false;
-
+            mBatteryWarning.setVisibility(View.GONE);
+            flagBatteryWarn = true;
         }
-//        if (!charging && extPower) {
-//            mPowerWarning.setVisibility(View.VISIBLE);
-//            } else {
-//            // Display warning
-//            mPowerWarning.setVisibility(View.GONE);
-//        }
     }
 
     public void playSounds(String sound) {
@@ -999,6 +991,10 @@ public class MainActivity extends AppCompatActivity {
         }
         if (sound.equals("whoop")) {
             final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.whoop2);
+            mediaPlayer.start();
+        }
+        if (sound.equals("siren")) {
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.siren);
             mediaPlayer.start();
         }
     }
