@@ -13,7 +13,7 @@
         android:id="@+id/minusCourse"
         android:layout_width="44dp"
         android:layout_height="68dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="0dp"
         android:background="@color/button_background"
         android:gravity="center_horizontal|top"
         android:onClick="previous_course"
@@ -90,7 +90,7 @@
         android:textColor="@color/titles"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintEnd_toStartOf="@id/course_dist"
         app:layout_constraintTop_toBottomOf="@+id/speed_text" />
 
     <TextView
@@ -101,9 +101,9 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/course_dist_title"
+        app:layout_constraintStart_toEndOf="@id/course_dist_title"
         app:layout_constraintEnd_toStartOf="@id/course_dist_unit"
-        app:layout_constraintTop_toBottomOf="@+id/course_dist_title" />
+        app:layout_constraintTop_toTopOf="@+id/course_dist_title" />
 
     <TextView
         android:id="@+id/course_dist_unit"
@@ -113,8 +113,9 @@
         android:text="@string/course_dist_unit"
         android:textColor="@color/titles"
         android:textSize="12sp"
+        android:layout_marginRight="64dp"
         app:layout_constraintBottom_toBottomOf="@id/course_dist"
-        app:layout_constraintEnd_toEndOf="@id/course_dist_title"
+        app:layout_constraintEnd_toStartOf="@id/map"
         app:layout_constraintStart_toEndOf="@id/course_dist"
         app:layout_constraintTop_toTopOf="@id/course_dist" />
 
@@ -134,7 +135,7 @@
         android:textSize="44sp"
         app:layout_constraintEnd_toStartOf="@id/next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/course_dist"
+        app:layout_constraintStart_toStartOf="@id/distance_text"
         app:layout_constraintTop_toTopOf="@id/plusCourse" />
 
     <TextView
@@ -159,7 +160,7 @@
         android:id="@+id/plus"
         android:layout_width="48dp"
         android:layout_height="68dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="0dp"
         android:background="@color/button_background"
         android:onClick="next_mark"
         android:shadowColor="@color/white"
@@ -300,7 +301,7 @@
         android:id="@+id/speed_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="16dp"
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
@@ -465,7 +466,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </org.osmdroid.views.MapView>
 
