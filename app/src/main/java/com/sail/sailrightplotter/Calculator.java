@@ -71,6 +71,9 @@ public class Calculator {
         // Use nautical miles when distToMark is >500m.
         if (distToMark > 500) {
             displayDistToMark = new DecimalFormat("###0.00").format(distToMark / 1852);
+            if (distToMark > 18520) { // Reduce significant figures for > 10 nm
+                displayDistToMark = new DecimalFormat("###0.0").format(distToMark / 1852);
+            }
         } else {
             displayDistToMark = new DecimalFormat("###0").format(distToMark);
         }

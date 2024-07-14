@@ -967,11 +967,14 @@ public class MainActivity extends AppCompatActivity {
         mAccuracyTextView.setText(accuracy);
 
         batteryLevel = getBatteryPercentage();
-        mBatteryLevel.setText(batteryLevel + "%");
-        Log.e(" Battery Level = ", String.valueOf(batteryLevel));
+        String batteryLevelText = String.valueOf(batteryLevel) + "%";
+        Log.e(" Battery Level = ", batteryLevelText);
+        if(batteryLevelText != null) {
+            mBatteryLevel.setText(batteryLevelText);
+        }
         if(batteryLevel < 15 ) {
             if(flagBatteryWarn) {
-                playSounds("siren");
+//                playSounds("siren");
                 flagBatteryWarn = false;
             }
             mBatteryWarning.setVisibility(View.VISIBLE);
