@@ -119,6 +119,17 @@
         app:layout_constraintStart_toEndOf="@id/course_dist"
         app:layout_constraintTop_toTopOf="@id/course_dist" />
 
+    <TextView
+        android:id="@+id/division"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:text="Div2"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/course_dist_unit"
+        app:layout_constraintEnd_toStartOf="@id/map"
+        app:layout_constraintTop_toTopOf="@id/course_dist_unit" />
+
     <Button
         android:id="@+id/minus"
         android:layout_width="48dp"

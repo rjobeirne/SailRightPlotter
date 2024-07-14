@@ -96,6 +96,17 @@
         app:layout_constraintTop_toBottomOf="@id/course_dist" />
 
     <TextView
+        android:id="@+id/division"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:text="Div2"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/course_dist"
+        app:layout_constraintEnd_toEndOf="@id/course_dist"
+        app:layout_constraintTop_toBottomOf="@id/course_dist_unit" />
+
+    <TextView
         android:id="@+id/batt_level_title"
         android:layout_width="72dp"
         android:layout_height="0dp"

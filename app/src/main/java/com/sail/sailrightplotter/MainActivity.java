@@ -115,8 +115,9 @@ public class MainActivity extends AppCompatActivity {
     private TextClock mClock;
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
-    private TextView mBatteryWarning;
-    private TextView mBatteryLevel;
+    private TextView mBatteryWarningTextView;
+    private TextView mBatteryLevelTextView;
+    private TextView mDivisionTextView;
 
     // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
@@ -276,8 +277,9 @@ public class MainActivity extends AppCompatActivity {
         mClock = findViewById(R.id.time_text);
         mKeepTextView = findViewById(R.id.keep_title);
         mCourseListTextView = findViewById(R.id.course_details);
-        mBatteryWarning = findViewById(R.id.power_warning);
-        mBatteryLevel = findViewById(R.id.battery_level);
+        mBatteryWarningTextView = findViewById(R.id.power_warning);
+        mBatteryLevelTextView = findViewById(R.id.battery_level);
+        mDivisionTextView = findViewById(R.id.division);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -623,7 +625,7 @@ public class MainActivity extends AppCompatActivity {
         mCourseTextView.setText(raceCourse);
         mCourseDistTextView.setText(courseDist);
         mCourseListTextView.setText(courseSummary);
-
+        mDivisionTextView.setText("Div" + division);
 
         if (posCourse == 0) {
             settingsBtn.setVisibility(View.VISIBLE);
@@ -970,18 +972,18 @@ public class MainActivity extends AppCompatActivity {
         String batteryLevelText = String.valueOf(batteryLevel) + "%";
         Log.e(" Battery Level = ", batteryLevelText);
         if(batteryLevelText != null) {
-            mBatteryLevel.setText(batteryLevelText);
+            mBatteryLevelTextView.setText(batteryLevelText);
         }
         if(batteryLevel < 15 ) {
             if(flagBatteryWarn) {
-//                playSounds("siren");
+                playSounds("siren");
                 flagBatteryWarn = false;
             }
-            mBatteryWarning.setVisibility(View.VISIBLE);
-            mBatteryWarning.setText("LOW BATTERY WARNING - " + batteryLevel + "% REMAINING");
+            mBatteryWarningTextView.setVisibility(View.VISIBLE);
+            mBatteryWarningTextView.setText("LOW BATTERY WARNING - " + batteryLevel + "% REMAINING");
         } else {
             // Display warning
-            mBatteryWarning.setVisibility(View.GONE);
+            mBatteryWarningTextView.setVisibility(View.GONE);
             flagBatteryWarn = true;
         }
     }
