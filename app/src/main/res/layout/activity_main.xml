@@ -101,6 +101,7 @@
         android:layout_height="0dp"
         android:text="Div2"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/course_dist"
         app:layout_constraintEnd_toEndOf="@id/course_dist"

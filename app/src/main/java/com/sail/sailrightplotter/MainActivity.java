@@ -625,7 +625,9 @@ public class MainActivity extends AppCompatActivity {
         mCourseTextView.setText(raceCourse);
         mCourseDistTextView.setText(courseDist);
         mCourseListTextView.setText(courseSummary);
-        mDivisionTextView.setText("Div" + division);
+        String div = "Div" + division;
+        mDivisionTextView.setText(div);
+        Log.e("**Division ", div);
 
         if (posCourse == 0) {
             settingsBtn.setVisibility(View.VISIBLE);

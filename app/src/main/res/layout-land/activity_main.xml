@@ -124,6 +124,7 @@
         android:layout_width="48dp"
         android:layout_height="0dp"
         android:text="Div2"
+        android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@id/course_dist_unit"
