@@ -625,9 +625,7 @@ public class MainActivity extends AppCompatActivity {
         mCourseTextView.setText(raceCourse);
         mCourseDistTextView.setText(courseDist);
         mCourseListTextView.setText(courseSummary);
-        String div = "Div" + division;
-        mDivisionTextView.setText(div);
-        Log.e("**Division ", div);
+        mDivisionTextView.setText("Div" + division);
 
         if (posCourse == 0) {
             settingsBtn.setVisibility(View.VISIBLE);
@@ -971,11 +969,8 @@ public class MainActivity extends AppCompatActivity {
         mAccuracyTextView.setText(accuracy);
 
         batteryLevel = getBatteryPercentage();
-        String batteryLevelText = String.valueOf(batteryLevel) + "%";
-        Log.e(" Battery Level = ", batteryLevelText);
-        if(batteryLevelText != null) {
-            mBatteryLevelTextView.setText(batteryLevelText);
-        }
+        mBatteryLevelTextView.setText(batteryLevel + "%");
+
         if(batteryLevel < 15 ) {
             if(flagBatteryWarn) {
                 playSounds("siren");
