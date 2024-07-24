@@ -682,7 +682,7 @@ public class MainActivity extends AppCompatActivity {
         }
         startDirection = new Marker(map);
         startDirection.setPosition(startFin);
-        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up));
+        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_up2));
         startDirection.setRotation((float) rotateArrow);
     }
 
