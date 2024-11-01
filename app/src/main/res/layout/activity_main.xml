@@ -478,15 +478,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/course_details" />
 
-    <org.osmdroid.views.MapView android:id="@+id/map"
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/power_warning"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintVertical_bias="0.0">
 
     </org.osmdroid.views.MapView>
+
+    <Button
+        android:id="@+id/zoom_out"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="zoom out"
+        app:layout_constraintTop_toTopOf="@id/map"
+        app:layout_constraintStart_toStartOf="@id/map"
+        app:layout_constraintEnd_toStartOf="@id/zoom_in" />
+
+    <Button
+        android:id="@+id/zoom_in"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="zoom in"
+        app:layout_constraintTop_toTopOf="@id/map"
+        app:layout_constraintStart_toEndOf="@id/zoom_out"
+        app:layout_constraintEnd_toEndOf="@id/map" />
+
 
     <ImageView
         android:id="@+id/imageView"
