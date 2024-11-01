@@ -170,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
     String screenOrientation, division;
-    int zoomValue = 14;
+    Double zoomMax = 17.0;
+    Double zoomMin = 12.0;
+    Double zoomValue = 14.0;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -229,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inflate and create the map
         map = (MapView) findViewById(R.id.map);
-        setMapOfflineSource(zoomValue);
+        setMapOfflineSource();
         showMarks();
 
         // Create the ArrayList in the constructor, so only done once
@@ -330,16 +332,20 @@ public class MainActivity extends AppCompatActivity {
         mZoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomValue = zoomValue - 1;
-                setMapOfflineSource(zoomValue);
+                if ( zoomValue > zoomMin) {
+                    zoomValue = zoomValue - 1;
+                    setMapOfflineSource();
+                }
             }
         });
         mZoomIn = findViewById(R.id.zoom_in);
         mZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zoomValue = zoomValue + 1;
-                setMapOfflineSource(zoomValue);
+                if ( zoomValue < zoomMax) {
+                    zoomValue = zoomValue + 1;
+                    setMapOfflineSource();
+                }
             }
         });
 
@@ -472,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setMapOfflineSource(int zoomChange) {
+    void setMapOfflineSource() {
         File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SailRight/");
         if (f.exists()) {
             File[] list = f.listFiles();
@@ -513,8 +519,8 @@ public class MainActivity extends AppCompatActivity {
                             mapController.setZoom(zoomValue);
                             GeoPoint startPoint = new GeoPoint(-37.87, 144.954);
                             mapController.setCenter(startPoint);
-                            map.setMinZoomLevel(12.0);
-                            map.setMaxZoomLevel(17.0);
+                            map.setMinZoomLevel(zoomMin);
+                            map.setMaxZoomLevel(zoomMax);
                             map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
                             map.setScrollableAreaLimitLatitude(-37.82, -38.0, 0);
                             map.setScrollableAreaLimitLongitude(144.8, 145.05, 0);
