@@ -43,6 +43,7 @@ import androidx.core.app.ActivityCompat;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -76,6 +77,7 @@ import org.osmdroid.tileprovider.tilesource.FileBasedTileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
+    private Button mZoomOut, mZoomIn;
 
     // Define the 'Marks' and 'Courses' Arrays
     Marks theMarks = null;
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
     int deviceOffset,smoothSpeedFactor, smoothHeadFactor, distMarkProximity;
     Boolean autoAdvance, alarmProx, alarmFinish, maxBright, extPower;
     String screenOrientation, division;
+    int zoomValue = 14;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -225,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inflate and create the map
         map = (MapView) findViewById(R.id.map);
-        setMapOfflineSource();
+        setMapOfflineSource(zoomValue);
         showMarks();
 
         // Create the ArrayList in the constructor, so only done once
@@ -319,6 +323,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Locate Zoom buttons
+
+        mZoomOut = findViewById(R.id.zoom_out);
+        mZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomValue = zoomValue - 1;
+                setMapOfflineSource(zoomValue);
+            }
+        });
+        mZoomIn = findViewById(R.id.zoom_in);
+        mZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomValue = zoomValue + 1;
+                setMapOfflineSource(zoomValue);
+            }
+        });
+
+
 
         // Setup long click of "FINISHED" to close app
         mNextMarkTextView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -447,7 +472,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void setMapOfflineSource() {
+    void setMapOfflineSource(int zoomChange) {
         File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SailRight/");
         if (f.exists()) {
             File[] list = f.listFiles();
@@ -485,11 +510,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                             map.setUseDataConnection(false);
                             IMapController mapController = map.getController();
-                            mapController.setZoom(14.0);
+                            mapController.setZoom(zoomValue);
                             GeoPoint startPoint = new GeoPoint(-37.87, 144.954);
                             mapController.setCenter(startPoint);
                             map.setMinZoomLevel(12.0);
                             map.setMaxZoomLevel(17.0);
+                            map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
                             map.setScrollableAreaLimitLatitude(-37.82, -38.0, 0);
                             map.setScrollableAreaLimitLongitude(144.8, 145.05, 0);
                             map.invalidate();
@@ -545,6 +571,10 @@ public class MainActivity extends AppCompatActivity {
             map.invalidate();
         }
         return map;
+    }
+
+    private void zoomOut() {
+
     }
 
     /**
