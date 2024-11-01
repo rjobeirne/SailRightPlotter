@@ -15,5 +15,6 @@
     <color name="red">#EE0000</color>
     <color name="starboard">#4F007810</color>
     <color name="port">#36BA0028</color>
+    <color name="zoom">#C8EEEEEE</color>
 
 </resources>
