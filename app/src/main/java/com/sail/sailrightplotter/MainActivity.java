@@ -275,6 +275,8 @@ public class MainActivity extends AppCompatActivity {
         mKeepTextView = findViewById(R.id.keep_title);
         mCourseListTextView = findViewById(R.id.course_details);
         mPowerWarning = findViewById(R.id.power_warning);
+        mZoomOut = findViewById(R.id.zoom_out);
+        mZoomIn = findViewById(R.id.zoom_in);
 
         // Settings and preferences
         // Send Toast message on short click
@@ -326,31 +328,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Locate Zoom buttons
-
-        mZoomOut = findViewById(R.id.zoom_out);
-        mZoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( zoomValue > zoomMin) {
-                    zoomValue = zoomValue - 1;
-                    setMapOfflineSource();
-                }
-            }
-        });
-        mZoomIn = findViewById(R.id.zoom_in);
-        mZoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( zoomValue < zoomMax) {
-                    zoomValue = zoomValue + 1;
-                    setMapOfflineSource();
-                }
-            }
-        });
-
-
-
         // Setup long click of "FINISHED" to close app
         mNextMarkTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -367,6 +344,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Locate Zoom buttons. Required for Galaxy SM-T280 due to poor sensitivity at bottom of screen
+        mZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (zoomValue > zoomMin) {
+                    zoomValue = zoomValue - 1;
+                    setMapOfflineSource();
+                }
+            }
+        });
+
+        mZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (zoomValue < zoomMax) {
+                    zoomValue = zoomValue + 1;
+                    setMapOfflineSource();
+                }
+            }
+        });
+
         // Set audio volume to maximum
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC,
@@ -375,9 +373,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateGPS();
         startLocationUpdates();
-
     } // end onCreate method
-
 
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
@@ -534,7 +530,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public MapView showMarks() {
 
         Context ctx = getApplicationContext();
@@ -577,10 +572,6 @@ public class MainActivity extends AppCompatActivity {
             map.invalidate();
         }
         return map;
-    }
-
-    private void zoomOut() {
-
     }
 
     /**

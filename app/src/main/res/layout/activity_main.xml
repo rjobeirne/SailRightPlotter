@@ -488,7 +488,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/power_warning"
         app:layout_constraintVertical_bias="0.0">
-
     </org.osmdroid.views.MapView>
 
     <Button
@@ -516,7 +515,6 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/map"
         app:layout_constraintTop_toTopOf="@id/map" />
-
 
     <ImageView
         android:id="@+id/imageView"
