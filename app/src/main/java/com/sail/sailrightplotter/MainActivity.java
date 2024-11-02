@@ -32,6 +32,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mKeepTextView;
     private TextView mCourseListTextView;
     private TextView mPowerWarning;
+    private TextView mBatteryLevel;
     private Button mZoomOut, mZoomIn;
 
     // Define the 'Marks' and 'Courses' Arrays
@@ -275,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         mKeepTextView = findViewById(R.id.keep_title);
         mCourseListTextView = findViewById(R.id.course_details);
         mPowerWarning = findViewById(R.id.power_warning);
+        mBatteryLevel = findViewById(R.id.battery_level);
         mZoomOut = findViewById(R.id.zoom_out);
         mZoomIn = findViewById(R.id.zoom_in);
 
@@ -983,6 +986,7 @@ public class MainActivity extends AppCompatActivity {
         mClock.setFormat24Hour("HH:mm:ss");
         mTimeToMarkTextView.setText(ttmDisplay);
         mAccuracyTextView.setText(accuracy);
+        mBatteryLevel.setText(getBatteryPercentage() + "%");
 
         if (!charging && extPower) {
             mPowerWarning.setVisibility(View.VISIBLE);
@@ -1132,6 +1136,21 @@ public class MainActivity extends AppCompatActivity {
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
+    }
+
+    public int getBatteryPercentage() {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+             BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
+             return bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+        } else {
+             IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+             Intent batteryStatus = registerReceiver(null, iFilter);
+             int level = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) : -1;
+             int scale = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1) : -1;
+             double batteryPct = level / (double) scale;
+             return (int) (batteryPct * 100);
+       }
     }
 
 //Detect if device is charging
