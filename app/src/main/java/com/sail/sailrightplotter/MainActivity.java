@@ -570,23 +570,6 @@ public class MainActivity extends AppCompatActivity {
         mLocationOverlay.setPersonIcon(bitmapStationary);
         map.getOverlays().add(mLocationOverlay);
 
-        headingLine = new Polyline();
-        ArrayList lineHeading = new ArrayList();
-        if (mCurrentLocation != null) {
-            double currLat = mCurrentLocation.getLatitude();
-            double currLon = mCurrentLocation.getLongitude();
-            GeoPoint currPt = new GeoPoint(currLat, currLon);
-            double distLat = 2000 * Math.cos(Math.toRadians(90 - mCurrentLocation.getBearing()));
-            double distLon = 2000 * Math.sin(Math.toRadians(90 - mCurrentLocation.getBearing()));
-            GeoPoint distPt = new GeoPoint(distLat, distLon);
-            lineHeading.add(currPt);
-            lineHeading.add(distPt);
-            headingLine.setPoints(lineHeading);
-            headingLine.setColor(R.color.red);
-            headingLine.setWidth(3F);
-            map.getOverlays().add(headingLine);
-        }
-
         for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
             String nameMark = (String) theMarks.listNames.get(i);
             String nameMarkFull = nameMark;
@@ -996,6 +979,8 @@ public class MainActivity extends AppCompatActivity {
                     posMark = 0;
                 }
             }
+            map.getOverlays().remove(headingLine);
+            map.invalidate();
             updateLocationUI();
         }
     }
@@ -1024,6 +1009,26 @@ public class MainActivity extends AppCompatActivity {
             } else {
             // Display warning
             mPowerWarning.setVisibility(View.GONE);
+        }
+
+        headingLine = new Polyline();
+        ArrayList lineHeading = new ArrayList();
+        map.getOverlays().remove(headingLine);
+        map.invalidate();
+        if (mCurrentLocation != null) {
+            double currLat = mCurrentLocation.getLatitude();
+            double currLon = mCurrentLocation.getLongitude();
+            GeoPoint currPt = new GeoPoint(currLat, currLon);
+            double distLat = currLat + (.1 * Math.cos(Math.toRadians(90 - mSmoothHeading)));
+            double distLon = currLon + (.1 * Math.sin(Math.toRadians(90 - mSmoothHeading)));
+            GeoPoint distPt = new GeoPoint(distLat, distLon);
+            lineHeading.add(currPt);
+            lineHeading.add(distPt);
+            headingLine.setPoints(lineHeading);
+            headingLine.setColor(R.color.red);
+            headingLine.setWidth(3F);
+            map.getOverlays().add(headingLine);
+            map.invalidate();
         }
     }
 
