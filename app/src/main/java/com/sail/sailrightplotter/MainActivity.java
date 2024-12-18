@@ -81,6 +81,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
@@ -185,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
     final String h = "H"; // Finish Line Data
     final String twr = "Tower RMYS";
 
-    private Polyline courseLine, startLine;
+    private Polyline courseLine, startLine, headingLine;
     GeoPoint aMarkGeo, hMarkGeo;
     Marker startDirection;
-    Location firstMark;
+    Location firstMark, mCurrentLocation;
 
     // onCreate
     @SuppressLint("MissingInflatedId")
@@ -313,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onLocationResult(locationResult);
 
                 // save the location
-                Location mCurrentLocation = locationResult.getLastLocation();
+                mCurrentLocation = locationResult.getLastLocation();
                 updateLocationData(mCurrentLocation);
             }
         };
@@ -555,6 +556,23 @@ public class MainActivity extends AppCompatActivity {
         mLocationOverlay.setDirectionArrow(bitmapMoving, bitmapMoving);
         mLocationOverlay.setPersonIcon(bitmapStationary);
         map.getOverlays().add(mLocationOverlay);
+
+        headingLine = new Polyline();
+        ArrayList lineHeading = new ArrayList();
+        if (mCurrentLocation != null) {
+            double currLat = mCurrentLocation.getLatitude();
+            double currLon = mCurrentLocation.getLongitude();
+            GeoPoint currPt = new GeoPoint(currLat, currLon);
+            double distLat = 2000 * Math.cos(Math.toRadians(90 - mCurrentLocation.getBearing()));
+            double distLon = 2000 * Math.sin(Math.toRadians(90 - mCurrentLocation.getBearing()));
+            GeoPoint distPt = new GeoPoint(distLat, distLon);
+            lineHeading.add(currPt);
+            lineHeading.add(distPt);
+            headingLine.setPoints(lineHeading);
+            headingLine.setColor(R.color.red);
+            headingLine.setWidth(3F);
+            map.getOverlays().add(headingLine);
+        }
 
         for ( int i = 0; i < theMarks.listNames.size(); i++ ) {
             String nameMark = (String) theMarks.listNames.get(i);
@@ -906,7 +924,7 @@ public class MainActivity extends AppCompatActivity {
             // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed, smoothSpeedFactor);
-
+            
             // Convert to knots and display
             speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
