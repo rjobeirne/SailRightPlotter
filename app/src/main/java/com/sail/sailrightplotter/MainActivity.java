@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
     Double zoomMax = 17.0;
     Double zoomMin = 12.0;
     Double zoomValue = 14.0;
+    double pNorth, pEast;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
     Marker startDirection;
     Location firstMark, mCurrentLocation;
 
+    Boolean shMode;
     // onCreate
     @SuppressLint("MissingInflatedId")
     @Override
@@ -242,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
             theMarks.parseXML();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         // Load all courses
         try {
@@ -289,7 +292,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 shortClick();
             }
+
         });
+
+        // Set test mode map limits
+        pNorth = -37.82; // production mode
+        pEast = 145.05;  // production mode
+        Boolean shMode = TRUE;
+        if (shMode)  {
+            pNorth = -37.62;
+            pEast = 145.25;
+        }
 
         // Go to settings page on long click
         settingsBtn.setOnLongClickListener(new View.OnLongClickListener() {
@@ -522,8 +535,8 @@ public class MainActivity extends AppCompatActivity {
                             map.setMinZoomLevel(zoomMin);
                             map.setMaxZoomLevel(zoomMax);
                             map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
-                            map.setScrollableAreaLimitLatitude(-37.82, -38.0, 0);
-                            map.setScrollableAreaLimitLongitude(144.8, 145.05, 0);
+                            map.setScrollableAreaLimitLatitude(pNorth, -38.0, 0);
+                            map.setScrollableAreaLimitLongitude(144.8, pEast, 0);
                             map.invalidate();
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -588,7 +601,7 @@ public class MainActivity extends AppCompatActivity {
             courseMark.setTitle(nameMarkFull);
             courseMark.setPosition(new GeoPoint(lat, lon));
             courseMark.setIcon(getResources().getDrawable(R.drawable.course_mark));
-//            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787
+//            courseMark.setAnchor((float) 0.3, (float) .45); // set for Laser787Overlay
             map.getOverlays().add(courseMark);
             map.invalidate();
         }
@@ -924,7 +937,7 @@ public class MainActivity extends AppCompatActivity {
             // Process gps data for display on UI
             mSpeed = mCurrentLocation.getSpeed();
             mSmoothSpeed = theCalculator.getSmoothSpeed(mSpeed, smoothSpeedFactor);
-            
+
             // Convert to knots and display
             speedDisplay = new DecimalFormat("##0.0").format(mSmoothSpeed * 1.943844); //convert to knots
 
