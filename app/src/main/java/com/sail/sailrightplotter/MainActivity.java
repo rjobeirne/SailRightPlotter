@@ -669,6 +669,7 @@ public class MainActivity extends AppCompatActivity {
         // Display the course route
         if (courseLine != null) {
             map.getOverlays().remove(courseLine);
+            map.getOverlays().remove(headingLine);
         }
         map.getOverlays().remove(startDirection);
 
@@ -1019,8 +1020,8 @@ public class MainActivity extends AppCompatActivity {
             double currLat = mCurrentLocation.getLatitude();
             double currLon = mCurrentLocation.getLongitude();
             GeoPoint currPt = new GeoPoint(currLat, currLon);
-            double distLat = currLat + (.1 * Math.cos(Math.toRadians(90 - mSmoothHeading)));
-            double distLon = currLon + (.1 * Math.sin(Math.toRadians(90 - mSmoothHeading)));
+            double distLat = currLat + (.1 * Math.cos(Math.toRadians(mSmoothHeading)));
+            double distLon = currLon + (.1 * Math.sin(Math.toRadians(mSmoothHeading)));
             GeoPoint distPt = new GeoPoint(distLat, distLon);
             lineHeading.add(currPt);
             lineHeading.add(distPt);
