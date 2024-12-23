@@ -28,6 +28,7 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.media.AudioManager;
@@ -699,8 +700,8 @@ public class MainActivity extends AppCompatActivity {
                 route.add(wayPt);
             }
         }
-        courseLine.setColor(R.color.red);
-        courseLine.setWidth(3F);
+        courseLine.getOutlinePaint().setColor(Color.rgb(0,0,255));
+        courseLine.getOutlinePaint().setStrokeWidth(3);
         courseLine.setPoints(route);
 
         firstMark = theMarks.getNextMark((String) courseMarks.get(1));
@@ -1026,8 +1027,8 @@ public class MainActivity extends AppCompatActivity {
             lineHeading.add(currPt);
             lineHeading.add(distPt);
             headingLine.setPoints(lineHeading);
-            headingLine.setColor(R.color.red);
-            headingLine.setWidth(3F);
+            headingLine.getOutlinePaint().setColor(Color.rgb(55,180,49));
+            headingLine.getOutlinePaint().setStrokeWidth(3);
             map.getOverlays().add(headingLine);
             map.invalidate();
         }

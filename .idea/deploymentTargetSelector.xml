@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-18T22:31:00.070537863Z">
+        <DropdownSelection timestamp="2024-12-23T22:14:48.657170955Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=3100dd50c2af7400" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/richard/.android/avd/Galaxy_SM-T280_API_22.avd" />
             </handle>
           </Target>
         </DropdownSelection>
