@@ -338,9 +338,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (nextMark.equals("Start")) {
+                    map.getOverlays().remove(headingLine);
                     // Create theStart object here and pass in course, nextMark
                     theStart = new StartActivity();
                     openStartActivity();
+                    map.getOverlays().remove(headingLine);
                     flagStart = TRUE;
                 }
             }
