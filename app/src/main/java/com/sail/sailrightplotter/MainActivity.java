@@ -1086,10 +1086,10 @@ public class MainActivity extends AppCompatActivity {
                 if (v.isPressed() && System.currentTimeMillis() - startTime >+ LONG_PRESS_DELAY_MILLIS) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         finishAndRemoveTask();
+                    } else {
+                        finish();
+                        System.exit(0);
                     }
-                    return;
-                } else if (!v.isPressed()) {
-                    return;
                 }
             }
         }, LONG_PRESS_DELAY_MILLIS);
