@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         // Set test mode map limits
         pNorth = -37.82; // production mode
         pEast = 145.05;  // production mode
-        Boolean shMode = TRUE;
+        Boolean shMode = FALSE;
         if (shMode)  {
             pNorth = -37.62;
             pEast = 145.11;
