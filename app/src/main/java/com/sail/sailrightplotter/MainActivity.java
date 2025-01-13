@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     Double zoomMax = 17.0;
     Double zoomMin = 12.0;
     Double zoomValue = 14.0;
-    double pNorth, pEast;
+    double pNorth = -37.62, pEast = 145.11;
 
     int directionFactor;
     Location aMark, hMark, tower, lastMark, finishPoint;
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         // Set test mode map limits
         pNorth = -37.82; // production mode
         pEast = 145.05;  // production mode
-        Boolean shMode = FALSE;
+        Boolean shMode = TRUE;
         if (shMode)  {
             pNorth = -37.62;
             pEast = 145.11;
