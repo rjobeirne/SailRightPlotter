@@ -624,6 +624,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Set race course
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void setCourse() {
 
         if(division.equals("1")) {
@@ -719,7 +720,7 @@ public class MainActivity extends AppCompatActivity {
         }
         startDirection = new Marker(map);
         startDirection.setPosition(startFin);
-        startDirection.setIcon(getResources().getDrawable(R.drawable.balloon2));
+        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_start));
         startDirection.setRotation((float) rotateArrow);
     }
 
@@ -763,7 +764,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setNextMark() {
         if (!flagFinish) {
-//            mNextMarkTextView.setTextSize(32);
+            mNextMarkTextView.setTextSize(16);
 
             if (raceCourse.equals("RMYS")) {
                 listMarkSize = theMarks.marks.size();
@@ -976,7 +977,7 @@ public class MainActivity extends AppCompatActivity {
                     if (alarmFinish) {
                         playSounds("whoop");
                     }
-                    mNextMarkTextView.setTextSize(24);
+                    mNextMarkTextView.setTextSize(16);
                     mNextMarkTextView.setText(R.string.finished);
                     flagFinish = FALSE;
                     flagFinished = TRUE;
@@ -1030,7 +1031,7 @@ public class MainActivity extends AppCompatActivity {
             lineHeading.add(distPt);
             headingLine.setPoints(lineHeading);
             headingLine.getOutlinePaint().setColor(Color.rgb(55,180,49));
-            headingLine.getOutlinePaint().setStrokeWidth(3);
+            headingLine.getOutlinePaint().setStrokeWidth(5);
             map.getOverlays().add(headingLine);
             map.invalidate();
         }

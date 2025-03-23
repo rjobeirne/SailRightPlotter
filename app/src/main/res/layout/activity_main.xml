@@ -11,8 +11,8 @@
 
     <Button
         android:id="@+id/minusCourse"
-        android:layout_width="44dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:background="@color/button_background"
         android:gravity="center_horizontal|top"
@@ -20,7 +20,7 @@
         android:shadowColor="@color/white"
         android:text="@string/minus"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/course_name" />
@@ -54,8 +54,8 @@
 
     <Button
         android:id="@+id/plusCourse"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="4dp"
         android:background="@color/button_background"
         android:onClick="next_course"
@@ -65,7 +65,7 @@
         android:shadowRadius="1.6"
         android:text="@string/plus"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@id/course_dist"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/course_name"
@@ -122,8 +122,8 @@
 
     <Button
         android:id="@+id/minus"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@color/button_background"
         android:onClick="previous_mark"
         android:shadowColor="@color/white"
@@ -132,7 +132,7 @@
         android:shadowRadius="1.6"
         android:text="@string/lt"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@id/next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/course_dist"
@@ -157,8 +157,8 @@
 
     <Button
         android:id="@+id/plus"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:background="@color/button_background"
         android:onClick="next_mark"
@@ -168,7 +168,7 @@
         android:shadowRadius="1.6"
         android:text="@string/gt"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/next_mark_name"
