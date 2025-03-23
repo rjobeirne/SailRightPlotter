@@ -1030,7 +1030,7 @@ public class MainActivity extends AppCompatActivity {
             lineHeading.add(distPt);
             headingLine.setPoints(lineHeading);
             headingLine.getOutlinePaint().setColor(Color.rgb(55,180,49));
-            headingLine.getOutlinePaint().setStrokeWidth(3);
+            headingLine.getOutlinePaint().setStrokeWidth(5);
             map.getOverlays().add(headingLine);
             map.invalidate();
         }
