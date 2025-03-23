@@ -12,15 +12,15 @@
     <Button
         android:id="@+id/minusCourse"
         android:layout_width="44dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="24dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
         android:background="@color/button_background"
         android:gravity="center_horizontal|top"
         android:onClick="previous_course"
         android:shadowColor="@color/white"
         android:text="@string/minus"
         android:textColor="@color/black"
-        android:textSize="44sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/course_name" />
@@ -34,10 +34,10 @@
         android:text="@string/none"
         android:textAlignment="center"
         android:textColor="@color/normal_text"
-        android:textSize="32sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/plusCourse"
         app:layout_constraintStart_toEndOf="@id/minusCourse"
-        app:layout_constraintTop_toBottomOf="@+id/speed_text" />
+        app:layout_constraintTop_toBottomOf="@id/dist_unit" />
 
     <TextView
         android:id="@+id/course_details"
@@ -47,7 +47,7 @@
         android:text="sum"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/plusCourse"
         app:layout_constraintStart_toStartOf="@+id/minusCourse"
         app:layout_constraintTop_toBottomOf="@id/course_name" />
@@ -55,7 +55,7 @@
     <Button
         android:id="@+id/plusCourse"
         android:layout_width="48dp"
-        android:layout_height="68dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="4dp"
         android:background="@color/button_background"
         android:onClick="next_course"
@@ -65,7 +65,7 @@
         android:shadowRadius="1.6"
         android:text="@string/plus"
         android:textColor="@color/black"
-        android:textSize="44sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@id/course_dist"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/course_name"
@@ -79,8 +79,8 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintEnd_toStartOf="@id/minus"
+        app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintTop_toTopOf="@id/plusCourse" />
 
     <TextView
@@ -91,22 +91,21 @@
         android:textAlignment="center"
         android:textColor="@color/titles"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintEnd_toStartOf="@id/minus"
+        app:layout_constraintStart_toEndOf="@id/plusCourse"
         app:layout_constraintTop_toBottomOf="@id/course_dist" />
 
     <TextView
         android:id="@+id/batt_level_title"
         android:layout_width="72dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:text="Battery"
+        android:text="Batt"
         android:textAlignment="center"
         android:textColor="@color/titles"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/battery_level"
         app:layout_constraintStart_toEndOf="@id/heading_text"
-        app:layout_constraintTop_toBottomOf="@id/variance_text" />
+        app:layout_constraintTop_toBottomOf="@id/heading_text" />
 
     <TextView
         android:id="@+id/battery_level"
@@ -119,12 +118,12 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@id/bearing_text"
         app:layout_constraintStart_toEndOf="@id/batt_level_title"
-        app:layout_constraintTop_toBottomOf="@id/variance_text" />
+        app:layout_constraintTop_toBottomOf="@id/heading_text" />
 
     <Button
         android:id="@+id/minus"
         android:layout_width="48dp"
-        android:layout_height="72dp"
+        android:layout_height="48dp"
         android:background="@color/button_background"
         android:onClick="previous_mark"
         android:shadowColor="@color/white"
@@ -133,7 +132,7 @@
         android:shadowRadius="1.6"
         android:text="@string/lt"
         android:textColor="@color/black"
-        android:textSize="44sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@id/next_mark_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/course_dist"
@@ -142,25 +141,25 @@
     <TextView
         android:id="@+id/next_mark_name"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal|center_vertical"
-        android:text="@string/none"
         android:shadowColor="@color/white"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
         android:shadowRadius="1.6"
+        android:text="@string/none"
         android:textAlignment="center"
         android:textColor="@color/normal_text"
-        android:textSize="32sp"
-        app:layout_constraintStart_toEndOf="@+id/minus"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/plus"
+        app:layout_constraintStart_toEndOf="@+id/minus"
         app:layout_constraintTop_toTopOf="@id/minus" />
 
     <Button
         android:id="@+id/plus"
         android:layout_width="48dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/button_background"
         android:onClick="next_mark"
         android:shadowColor="@color/white"
@@ -169,7 +168,7 @@
         android:shadowRadius="1.6"
         android:text="@string/gt"
         android:textColor="@color/black"
-        android:textSize="44sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/next_mark_name"
@@ -197,12 +196,12 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
-        android:textAlignment="center"
         android:text="@string/none"
+        android:textAlignment="center"
         android:textColor="@color/normal_text"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/keep_title"
         app:layout_constraintEnd_toEndOf="@+id/next_mark_name"
+        app:layout_constraintStart_toEndOf="@id/keep_title"
         app:layout_constraintTop_toBottomOf="@id/next_mark_name" />
 
     <TextView
@@ -213,46 +212,42 @@
         android:text="@string/heading"
         android:textColor="@color/titles"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/heading_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/heading_text" />
 
     <TextView
         android:id="@+id/heading_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
-        android:textSize="56sp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/speed_text"
-        app:layout_constraintEnd_toStartOf="@+id/variance_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/heading_title"
-        app:layout_constraintTop_toTopOf="@+id/bearing_text" />
+        app:layout_constraintStart_toEndOf="@+id/heading_title"
+        app:layout_constraintTop_toBottomOf="@+id/time_text" />
 
     <TextView
         android:id="@+id/variance_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/variance"
         android:textColor="@color/titles"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/variance_text"
-        app:layout_constraintEnd_toStartOf="@+id/keep_title"
+        app:layout_constraintEnd_toStartOf="@id/minus"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/course_details"
         app:layout_constraintTop_toBottomOf="@+id/accuracy_text" />
 
     <TextView
         android:id="@+id/variance_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/_105"
-        android:textSize="48sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/bearing_text"
         app:layout_constraintStart_toEndOf="@+id/heading_text"
@@ -260,16 +255,15 @@
 
     <TextView
         android:id="@+id/bearing_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="333"
         android:textColor="@color/normal_text"
-        android:textSize="56sp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/bearing_title"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/variance_text"
+        app:layout_constraintEnd_toStartOf="@id/bearing_title"
         app:layout_constraintTop_toBottomOf="@+id/time_to_mark" />
 
     <TextView
@@ -280,10 +274,8 @@
         android:text="@string/bearing"
         android:textColor="@color/titles"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bearing_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bearing_text"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/bearing_text" />
 
     <TextView
         android:id="@+id/speed_title"
@@ -294,25 +286,21 @@
         android:textColor="@color/titles"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/speed_text"
-        app:layout_constraintEnd_toStartOf="@+id/speed_text"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/speed_text"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintTop_toTopOf="@+id/speed_text" />
 
     <TextView
         android:id="@+id/speed_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/speed"
         android:textColor="@color/normal_text"
-        android:textSize="56sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/course_name"
-        app:layout_constraintEnd_toStartOf="@id/distance_text"
-        app:layout_constraintStart_toEndOf="@id/speed_title"
-        app:layout_constraintTop_toBottomOf="@+id/heading_text" />
+        app:layout_constraintStart_toEndOf="@+id/speed_title"
+        app:layout_constraintTop_toBottomOf="@id/batt_level_title" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/speed_unit"-->
@@ -327,32 +315,27 @@
 
     <TextView
         android:id="@+id/distance_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:text="@string/distance"
         android:textColor="@color/normal_text"
-        android:textSize="56sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/minus"
         app:layout_constraintEnd_toStartOf="@+id/dist_title"
-        app:layout_constraintStart_toEndOf="@id/speed_text"
         app:layout_constraintTop_toTopOf="@id/speed_text" />
 
     <TextView
         android:id="@+id/dist_title"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/dist_to_mark"
         android:textColor="@color/titles"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/dist_unit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/distance_text"
-        app:layout_constraintTop_toTopOf="@+id/distance_text" />
+        app:layout_constraintBottom_toTopOf="@+id/dist_unit"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/dist_unit"
@@ -362,14 +345,13 @@
         android:text="@string/nm"
         android:textColor="@color/titles"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/distance_text"
-        app:layout_constraintTop_toBottomOf="@+id/dist_title" />
+        app:layout_constraintBottom_toTopOf="@+id/next_mark_name"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
         android:id="@+id/button_settings"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:background="@color/white"
         android:contentDescription="@string/hammer_spanner"
@@ -377,8 +359,8 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/course_dist"
-        app:layout_constraintEnd_toStartOf="@+id/distance_text"
-        app:layout_constraintStart_toEndOf="@+id/speed_text"
+        app:layout_constraintEnd_toStartOf="@+id/minus"
+        app:layout_constraintStart_toEndOf="@+id/plusCourse"
         app:layout_constraintTop_toBottomOf="@+id/batt_level_title" />
 
     <TextView
@@ -403,7 +385,7 @@
         android:gravity="center"
         android:text="@string/clock_time"
         android:textColor="@color/normal_text"
-        android:textSize="34sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/accuracy_text"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -418,10 +400,8 @@
         android:textColor="@color/titles"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/accuracy_text"
-        app:layout_constraintEnd_toEndOf="@+id/accuracy_text"
         app:layout_constraintEnd_toStartOf="@+id/time_to_mark"
         app:layout_constraintStart_toEndOf="@+id/time_text"
-        app:layout_constraintStart_toStartOf="@+id/accuracy_text"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -433,10 +413,10 @@
         android:text="@string/m"
         android:textColor="@color/normal_text"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/accuracy_title"
         app:layout_constraintEnd_toStartOf="@+id/time_to_mark"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/time_text" />
+        app:layout_constraintStart_toEndOf="@+id/time_text"
+        app:layout_constraintTop_toBottomOf="@id/accuracy_title" />
 
     <TextView
         android:id="@+id/eta_title"
@@ -458,7 +438,7 @@
         android:gravity="center"
         android:text="@string/eta"
         android:textColor="@color/normal_text"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/accuracy_text"
@@ -468,12 +448,12 @@
         android:id="@+id/power_warning"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/red"
+        android:gravity="center_vertical"
         android:text="POWER DISCONNECTED"
         android:textAlignment="center"
-        android:gravity="center_vertical"
-        android:background="@color/red"
-        android:textStyle="bold"
         android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/course_details" />
@@ -487,8 +467,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/power_warning"
-        app:layout_constraintVertical_bias="0.0">
-    </org.osmdroid.views.MapView>
+        app:layout_constraintVertical_bias="0.0"></org.osmdroid.views.MapView>
 
     <Button
         android:id="@+id/zoom_out"
@@ -518,18 +497,18 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/bearing_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bearing_text"
         app:layout_constraintTop_toTopOf="@+id/bearing_text"
         app:srcCompat="@drawable/buoys" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:layout_constraintEnd_toStartOf="@+id/heading_text"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/heading_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/heading_text"
         app:srcCompat="@drawable/boat" />

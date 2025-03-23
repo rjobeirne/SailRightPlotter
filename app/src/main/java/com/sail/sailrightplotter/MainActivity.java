@@ -711,7 +711,7 @@ public class MainActivity extends AppCompatActivity {
         double latStart = startFin.getLatitude();
         double lonFirstMark = firstMark.getLongitude();
         double latFirstMark = firstMark.getLatitude();
-        double arrowCorrectionFactor = 0.8;  // Required to make startDirection align with route
+        double arrowCorrectionFactor = 1.0;  // Required to make startDirection align with route
         double rotateArrow = - Math.atan((lonFirstMark - lonStart)/(latFirstMark - latStart))
                 * 180 / Math.PI * arrowCorrectionFactor;
         if ( latFirstMark < latStart ) {
@@ -719,7 +719,7 @@ public class MainActivity extends AppCompatActivity {
         }
         startDirection = new Marker(map);
         startDirection.setPosition(startFin);
-        startDirection.setIcon(getResources().getDrawable(R.drawable.arrow_start));
+        startDirection.setIcon(getResources().getDrawable(R.drawable.balloon2));
         startDirection.setRotation((float) rotateArrow);
     }
 
@@ -763,7 +763,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setNextMark() {
         if (!flagFinish) {
-            mNextMarkTextView.setTextSize(32);
+//            mNextMarkTextView.setTextSize(32);
 
             if (raceCourse.equals("RMYS")) {
                 listMarkSize = theMarks.marks.size();
